@@ -1,0 +1,11 @@
+# Archivos pesados del modelo (no se suben a GitHub)
+modelo/*.safetensors
+modelo/*.bin
+modelo/checkpoint-*/
+
+# Credenciales y claves
+.env
+
+# Archivos temporales de Python y Jupyter
+__pycache__/
+.ipynb_checkpoints/
