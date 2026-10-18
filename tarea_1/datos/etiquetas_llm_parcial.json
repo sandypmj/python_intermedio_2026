@@ -1,0 +1,2007 @@
+{
+ "0": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "1": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "2": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "3": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "4": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "5": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "6": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "7": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "8": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "9": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "10": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "11": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "12": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "13": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "14": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "15": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "16": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "17": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "18": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "19": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "20": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "21": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "22": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "23": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "24": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:42"
+ },
+ "25": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "26": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.7,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "27": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "28": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "29": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "30": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "31": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.92,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "32": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "33": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "34": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "35": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.75,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "36": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "37": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.88,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "38": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "39": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "40": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "41": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "42": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "43": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "44": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "45": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "46": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.92,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "47": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "48": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.65,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "49": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:45:53"
+ },
+ "50": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "51": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "52": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "53": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "54": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "55": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "56": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "57": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "58": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "59": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "60": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "61": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "62": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.8,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "63": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "64": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "65": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "66": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "67": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "68": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "69": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "70": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "71": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "72": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "73": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "74": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:10"
+ },
+ "75": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "76": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "77": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "78": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "79": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "80": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "81": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "82": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.75,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "83": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "84": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "85": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "86": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "87": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "88": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "89": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "90": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "91": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.7,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "92": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "93": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.7,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "94": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "95": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "96": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "97": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "98": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.7,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "99": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:22"
+ },
+ "100": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "101": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "102": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "103": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "104": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "105": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "106": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "107": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "108": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.75,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "109": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "110": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "111": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "112": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "113": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "114": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "115": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "116": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "117": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "118": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "119": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "120": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "121": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "122": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "123": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "124": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:46:43"
+ },
+ "125": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "126": {
+  "etiqueta_llm": "deportes",
+  "confianza": 1.0,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "127": {
+  "etiqueta_llm": "deportes",
+  "confianza": 1.0,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "128": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "129": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.65,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "130": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "131": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "132": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 1.0,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "133": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.92,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "134": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "135": {
+  "etiqueta_llm": "economia",
+  "confianza": 1.0,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "136": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "137": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "138": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.93,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "139": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.88,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "140": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 1.0,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "141": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "142": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "143": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "144": {
+  "etiqueta_llm": "economia",
+  "confianza": 1.0,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "145": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "146": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "147": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.92,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "148": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "149": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:08"
+ },
+ "150": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "151": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "152": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "153": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "154": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "155": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "156": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "157": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "158": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "159": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "160": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "161": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "162": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "163": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "164": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "165": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "166": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "167": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "168": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "169": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "170": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "171": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "172": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "173": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "174": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:22"
+ },
+ "175": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "176": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "177": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "178": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "179": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "180": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "181": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "182": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "183": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "184": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "185": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "186": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "187": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "188": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "189": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "190": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.75,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "191": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "192": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "193": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "194": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "195": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "196": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "197": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.7,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "198": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "199": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.7,
+  "fecha": "2026-10-18 11:47:41"
+ },
+ "200": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "201": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "202": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "203": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "204": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "205": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "206": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "207": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "208": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "209": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "210": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.8,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "211": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.75,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "212": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "213": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "214": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "215": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "216": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "217": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "218": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "219": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "220": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "221": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "222": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.7,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "223": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "224": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:47:55"
+ },
+ "225": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "226": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "227": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "228": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "229": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "230": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "231": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "232": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "233": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "234": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "235": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "236": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "237": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "238": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "239": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "240": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "241": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "242": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "243": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "244": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "245": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "246": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.92,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "247": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "248": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "249": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:09"
+ },
+ "250": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "251": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "252": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "253": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "254": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "255": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "256": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "257": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "258": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "259": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "260": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "261": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.92,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "262": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "263": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.97,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "264": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "265": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "266": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "267": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "268": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "269": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "270": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.97,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "271": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "272": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "273": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "274": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:21"
+ },
+ "275": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "276": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "277": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "278": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "279": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "280": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "281": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "282": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "283": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "284": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "285": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "286": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "287": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "288": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "289": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "290": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "291": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "292": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "293": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "294": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "295": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "296": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "297": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "298": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "299": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:33"
+ },
+ "300": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "301": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "302": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "303": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "304": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "305": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "306": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "307": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "308": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "309": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "310": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "311": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "312": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "313": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "314": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "315": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "316": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "317": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "318": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "319": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "320": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "321": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "322": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "323": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "324": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:48:47"
+ },
+ "325": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "326": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "327": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "328": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "329": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "330": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.92,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "331": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "332": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "333": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "334": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "335": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "336": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "337": {
+  "etiqueta_llm": "deportes",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "338": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "339": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "340": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "341": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "342": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "343": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "344": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "345": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "346": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "347": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "348": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "349": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:02"
+ },
+ "350": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "351": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "352": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "353": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "354": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "355": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "356": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.92,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "357": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "358": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "359": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "360": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "361": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "362": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "363": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "364": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "365": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "366": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "367": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "368": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "369": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "370": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "371": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "372": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "373": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "374": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:13"
+ },
+ "375": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "376": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "377": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "378": {
+  "etiqueta_llm": "economia",
+  "confianza": 1.0,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "379": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "380": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.8,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "381": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "382": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "383": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "384": {
+  "etiqueta_llm": "economia",
+  "confianza": 1.0,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "385": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "386": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "387": {
+  "etiqueta_llm": "economia",
+  "confianza": 1.0,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "388": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "389": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "390": {
+  "etiqueta_llm": "ciencia_tecnologia",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "391": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.8,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "392": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "393": {
+  "etiqueta_llm": "economia",
+  "confianza": 1.0,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "394": {
+  "etiqueta_llm": "politica",
+  "confianza": 0.9,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "395": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.95,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "396": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.85,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "397": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "398": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.99,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "399": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:31"
+ },
+ "400": {
+  "etiqueta_llm": "economia",
+  "confianza": 0.98,
+  "fecha": "2026-10-18 11:49:41"
+ }
+}

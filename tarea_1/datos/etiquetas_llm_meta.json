@@ -1,0 +1,8 @@
+{
+ "modelo_llm": "gemini-3.8-flash",
+ "llamadas": 17,
+ "titulares": 401,
+ "tam_lote": 25,
+ "segundos_api": 149.2,
+ "ms_por_titular": 372.0
+}
