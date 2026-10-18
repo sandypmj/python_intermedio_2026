@@ -29,7 +29,7 @@ COLORES = {"Política": "#4C72B0", "Economía": "#DD8452",
 F1_RESPALDO = 0.920
 ACUERDO_RESPALDO = (19, 20)
 
-st.set_page_config(page_title="Clasificador de titulares peruanos", page_icon="📰", layout="wide")
+st.set_page_config(page_title="Clasificador de titulares peruanos", page_icon="📊", layout="wide")
 
 
 # ------------------------------------------------------------------ carga de datos
@@ -38,7 +38,7 @@ def cargar_noticias():
     df = pd.read_csv(DATOS / "noticias.csv")
     llm = pd.read_csv(DATOS / "etiquetas_llm.csv")  # mismo orden de filas que noticias.csv
     df["etiqueta_llm"] = llm["etiqueta_llm"].values
-    df["confianza_llm"] = llm["confianza"].values
+    df["confianza"] = llm["confianza"].values
     df["categoria"] = df["etiqueta"].map(NOMBRES)
     return df
 
@@ -89,15 +89,19 @@ df = cargar_noticias()
 f1_test, (aciertos, auditados) = leer_metricas_notebook()
 
 # ------------------------------------------------------------------ encabezado
-st.markdown("<h1 style='text-align:center'>¿Pueden convertir titulares peruanos en un clasificador de noticias?</h1>",
+st.markdown("<h1 style='text-align:center'>📊 ¿Pueden convertir titulares peruanos en un clasificador de noticias?</h1>",
             unsafe_allow_html=True)
+st.markdown("### *¿Cómo se hizo?*")
 st.markdown(
     """
-**Cómo se hizo:** se recolectaron **401 titulares de La República** (Perú) desde sus RSS y portadas de sección,
-etiquetados en 4 categorías: política, economía, deportes y ciencia y tecnología.
-Luego **Gemini** (`gemini-3.8-flash`) etiquetó todas las noticias con un prompt estructurado (*supervisión débil*);
-una auditoría humana de 20 casos validó esas etiquetas. Con ellas se hizo **fine-tuning de DistilBERT multilingüe**
-y se evaluó en un conjunto de test aislado contra la etiqueta original, comparándolo con un baseline zero-shot.
+1. **Recolección:** 401 noticias de **La República** (Perú): 44 de sus RSS oficiales y 357 de páginas de artículo,
+   alcanzadas con un recorrido que partió de los enlaces del RSS y de las portadas de sección y siguió los enlaces
+   internos entre artículos, verificando `robots.txt` antes de cada solicitud.
+2. **Etiquetado con Gemini:** `gemini-3.8-flash` asignó una de 4 categorías (política, economía, deportes,
+   ciencia y tecnología) a cada noticia con un prompt estructurado (*supervisión débil*).
+3. **Auditoría humana:** se revisaron a mano 20 etiquetas del LLM al azar.
+4. **Fine-tuning:** se entrenó **DistilBERT multilingüe** con las etiquetas de Gemini.
+5. **Evaluación:** en un conjunto de test aislado, contra la etiqueta original, comparado con un baseline zero-shot.
 """
 )
 
@@ -131,13 +135,14 @@ else:
     st.plotly_chart(fig, width="stretch")
 
 st.subheader("Noticias")
-tabla = filtrado[["fecha", "categoria", "etiqueta_llm", "confianza_llm", "titular", "bajada", "medio", "url"]]
+# mismo orden que noticias.csv, seguido de las columnas del LLM (el CSV descargado usa este orden)
+COLUMNAS_TABLA = ["titular", "bajada", "medio", "seccion_original", "url", "fecha", "etiqueta",
+                  "etiqueta_llm", "confianza"]
+tabla = filtrado[COLUMNAS_TABLA]
 st.dataframe(
     tabla, width="stretch", hide_index=True,
     column_config={
-        "categoria": "categoría",
-        "etiqueta_llm": "etiqueta Gemini",
-        "confianza_llm": st.column_config.NumberColumn("confianza Gemini", format="%.2f"),
+        "confianza": st.column_config.NumberColumn("confianza", format="%.2f"),
         "url": st.column_config.LinkColumn("url"),
     },
 )
@@ -163,6 +168,8 @@ else:
             probs = clasificar(texto, *recursos)
             ganadora = max(probs, key=probs.get)
             st.success(f"Categoría predicha: **{NOMBRES[ganadora]}** — probabilidad {probs[ganadora]:.1%}")
+            if probs[ganadora] < 0.80:
+                st.warning("Confianza baja: este titular podría no pertenecer claramente a ninguna de las 4 categorías")
             dfp = pd.DataFrame({"categoría": [NOMBRES[e] for e in ETIQUETAS],
                                 "probabilidad": [probs[e] for e in ETIQUETAS]})
             figp = px.bar(dfp, x="probabilidad", y="categoría", orientation="h", color="categoría",
