@@ -1,0 +1,50 @@
+{
+  "medio": "La República",
+  "url_base": "https://larepublica.pe",
+  "fecha_descarga": "2026-10-18T01:27:06",
+  "user_agent": "TareaPythonIntermedio/1.0 (proyecto academico individual del curso Python Intermedio; recoleccion de titulares para clasificacion; python-requests)",
+  "pausa_segundos": [
+    1.0,
+    2.0
+  ],
+  "max_reintentos": 1,
+  "feeds": [
+    {
+      "feed": "https://larepublica.pe/rss/politica.xml",
+      "http": 200,
+      "items": 16
+    },
+    {
+      "feed": "https://larepublica.pe/rss/economia.xml",
+      "http": 200,
+      "items": 9
+    },
+    {
+      "feed": "https://larepublica.pe/rss/deportes.xml",
+      "http": 200,
+      "items": 9
+    },
+    {
+      "feed": "https://larepublica.pe/rss/ciencia.xml",
+      "http": 200,
+      "items": 10
+    },
+    {
+      "feed": "https://larepublica.pe/rss/tecnologia.xml",
+      "http": 410,
+      "items": 0
+    },
+    {
+      "feed": "https://larepublica.pe/rss/home.xml",
+      "http": 200,
+      "items": 194
+    }
+  ],
+  "cuota_por_grupo": 100,
+  "solicitudes": {
+    "http_200": 411,
+    "http_410": 1,
+    "http_404": 7
+  },
+  "registros_crudos": 638
+}
