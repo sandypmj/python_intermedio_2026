@@ -5,3 +5,7 @@ beautifulsoup4
 transformers
 torch
 jupyter
+plotly
+scikit-learn
+seaborn
+ipykernel
