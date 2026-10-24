@@ -1,0 +1,16 @@
+﻿# Archivos pesados y privados: NO se suben a GitHub
+datos/raw/
+datos/referencias/
+modelos/*.safetensors
+modelos/*.bin
+modelos/checkpoint-*/
+
+# Claves y credenciales (nunca subirlas)
+.env
+
+# Basura de Python / Jupyter / sistema
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+.DS_Store
+Thumbs.db
