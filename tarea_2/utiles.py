@@ -135,13 +135,14 @@ def quitar_marcas(texto: str) -> str:
 
 # ───────────────────────────────────────────── gráficos visibles en GitHub
 def mostrar(fig):
-    """Muestra un gráfico Plotly interactivo Y como imagen PNG.
+    """Muestra el gráfico Plotly interactivo (VS Code) y además una copia PNG estática.
 
-    GitHub no ejecuta JavaScript, así que sin la versión PNG los gráficos no se verían
-    en el notebook publicado. La imagen necesita el paquete `kaleido`.
+    GitHub no ejecuta JavaScript: la copia PNG es la que se ve en el notebook publicado.
+    La imagen necesita el paquete `kaleido`.
     """
+    fig.show()  # interactivo
     try:
-        fig.show(renderer="notebook_connected+png")
-    except Exception as e:  # sin kaleido: al menos se ve el interactivo
+        from IPython.display import Image, display
+        display(Image(fig.to_image(format="png", width=1000, height=500)))  # copia para GitHub
+    except Exception as e:
         print(f"(No se pudo generar PNG: {e}. Instala kaleido: pip install -U kaleido)")
-        fig.show()
