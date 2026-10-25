@@ -1,0 +1,4 @@
+# Solo para el tablero (app.py). Versiones exactas del .venv donde se desarrolló (Python 3.12).
+streamlit==1.66.0
+pandas==3.0.6
+plotly==7.1.0
