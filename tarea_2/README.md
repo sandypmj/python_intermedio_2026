@@ -45,7 +45,7 @@ Fecha de extracción: **2026-10-24**. La licencia, el autor y la URL de cada arc
 | Audio | Qwen3-ASR 0.6B | alternativo | WER | 0.18 | RTF 0.76 |
 | Extracción | Gemini 3.5 Flash-Lite | — | acuerdo con humano | 15/20 | — |
 
-**Casos difíciles:** los manuscritos (apuntes de otra persona, cursiva) y la página de periódico fotografiada con inclinación concentran el mayor CER; incluso en la transcripción manual hubo palabras ilegibles. En audio, las entrevistas en la calle (ruido y voces superpuestas) tienen más WER que la lectura limpia de OpenSLR 73.
+**Casos difíciles:** con PaddleOCR lo que más falla son las fotos (inclinación, sombra, periódico con columnas; CER 0.55), mientras que los manuscritos salen mejor de lo esperado (CER 0.26); con EasyOCR los manuscritos sí fallan (CER 0.60). Incluso en la transcripción manual hubo palabras ilegibles. En audio, las entrevistas en la calle (ruido y voces superpuestas) tienen más WER que la lectura limpia de OpenSLR 73 (0.22 vs 0.05 con faster-whisper). Todos los valores son error global por grupo.
 
 **Decisión:** elegiría PaddleOCR (CER 0.42 vs 0.61 de EasyOCR) y faster-whisper small (WER 0.16 vs 0.18 de Qwen3-ASR): son más precisos y corren en CPU sin GPU.
 
@@ -53,8 +53,8 @@ Las tablas completas están en [`datos/metricas.csv`](datos/metricas.csv), [`dat
 
 ### Hallazgos
 
-1. PaddleOCR supera a EasyOCR en todos los tipos, pero ambos fallan en manuscritos.
-2. El ruido de calle aumenta el WER frente a la lectura en estudio.
+1. PaddleOCR supera a EasyOCR en todos los tipos (impreso 0.31 vs 0.37, foto 0.55 vs 0.65, manuscrito 0.26 vs 0.60); la mayor diferencia está en los manuscritos.
+2. El ruido de calle aumenta el WER frente a la lectura en estudio (0.22 vs 0.05 con faster-whisper; 0.23 vs 0.09 con Qwen3-ASR).
 
 ### Limitaciones
 
@@ -88,4 +88,4 @@ El dashboard **solo lee** los CSV/JSON de `datos/` y los ejemplos de `datos/ejem
   - escribió las celdas de evaluación, extracción con LLM y auditoría de `02_evaluacion.ipynb`;
   - escribió `app.py` y la estructura de este README.
 - **Qué no hizo la IA:** las transcripciones de referencia son manuales y no se copiaron de ningún modelo; la auditoría de las 20 extracciones, los hallazgos y la elección de modelos son de la estudiante.
-- Capturas de las conversaciones: [`evidencias_ia/`](evidencias_ia/) [COMPLETAR: agregar las capturas].
+- Capturas de las conversaciones: [`evidencias_ia/`](evidencias_ia/). Capturas en orden cronológico de las conversaciones con Claude (chat) y Claude Code, sin claves ni datos personales.
