@@ -39,26 +39,30 @@ Fecha de extracción: **2026-10-24**. La licencia, el autor y la URL de cada arc
 
 | Modalidad | Modelo | Rol | Métrica | Error global | Latencia |
 |---|---|---|---|---|---|
-| Documentos | PaddleOCR 3.7.0 | línea base | CER | [COMPLETAR] | [COMPLETAR] s/página |
-| Documentos | EasyOCR | alternativo | CER | [COMPLETAR] | [COMPLETAR] s/página |
-| Audio | faster-whisper small | línea base | WER | [COMPLETAR] | RTF [COMPLETAR] |
-| Audio | Qwen3-ASR 0.6B | alternativo | WER | [COMPLETAR] | RTF [COMPLETAR] |
-| Extracción | Gemini 3.5 Flash-Lite | — | acuerdo con humano | [COMPLETAR]/20 | — |
+| Documentos | PaddleOCR 3.7.0 | línea base | CER | 0.42 | 121.4 s/página |
+| Documentos | EasyOCR | alternativo | CER | 0.61 | 26.7 s/página |
+| Audio | faster-whisper small | línea base | WER | 0.16 | RTF 0.29 |
+| Audio | Qwen3-ASR 0.6B | alternativo | WER | 0.18 | RTF 0.76 |
+| Extracción | Gemini 3.5 Flash-Lite | — | acuerdo con humano | 15/20 | — |
+
+**Casos difíciles:** los manuscritos (apuntes de otra persona, cursiva) y la página de periódico fotografiada con inclinación concentran el mayor CER; incluso en la transcripción manual hubo palabras ilegibles. En audio, las entrevistas en la calle (ruido y voces superpuestas) tienen más WER que la lectura limpia de OpenSLR 73.
+
+**Decisión:** elegiría PaddleOCR (CER 0.42 vs 0.61 de EasyOCR) y faster-whisper small (WER 0.16 vs 0.18 de Qwen3-ASR): son más precisos y corren en CPU sin GPU.
 
 Las tablas completas están en [`datos/metricas.csv`](datos/metricas.csv), [`datos/resultados_evaluacion.csv`](datos/resultados_evaluacion.csv) y [`datos/resumen_resultados.json`](datos/resumen_resultados.json).
 
 ### Hallazgos
 
-1. [COMPLETAR]
-2. [COMPLETAR]
+1. PaddleOCR supera a EasyOCR en todos los tipos, pero ambos fallan en manuscritos.
+2. El ruido de calle aumenta el WER frente a la lectura en estudio.
 
 ### Limitaciones
 
-1. **El ASR alternativo previsto no cargó.** Parakeet TDT 0.6B v3 falló por falta de `librosa`, así que se usó **Qwen3-ASR 0.6B**. Ese plan B se fijó antes de calcular cualquier métrica, para no elegir el alternativo según el resultado.
-2. **Problemas de entorno en Windows/CPU:**
+1. Parakeet no cargó (falta librosa) y Gemini 2.5/3.8 Flash no estuvieron disponibles: se usaron Qwen3-ASR y Gemini 3.5 Flash-Lite, decididos antes de ver resultados.
+2. Solo 10 casos por modalidad y la diarización sobreestima hablantes en clips cortos.
+3. **Problemas de entorno en Windows/CPU:**
    - Escribir audio en OGG/Vorbis con `soundfile` hacía caer el kernel, así que los ejemplos publicados son **WAV recortados a 30 s**.
    - PaddleOCR 3.x solo funcionó con `enable_mkldnn=False`, lo que lo hace más lento en CPU.
-3. La muestra de evaluación es pequeña (10 + 10). Las diferencias entre modelos son orientativas y no tienen significación estadística.
 
 ## Cómo ejecutar el dashboard en local
 
