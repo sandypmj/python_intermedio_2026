@@ -2,7 +2,7 @@
 
 **Estudiante:** Sandy Patricia Martinez Jara (@sandypmj) · Curso Data Science con Python (d2cml-ai), 2026
 
-**Dashboard:** [COMPLETAR: enlace de Streamlit Community Cloud]
+**Dashboard:** https://tarea2-sandy.streamlit.app
 
 ## Pregunta del proyecto
 
