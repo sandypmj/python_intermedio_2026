@@ -1,6 +1,8 @@
 id,modalidad,entidad,n
 doc_003,documento,DNI,1
+doc_012,documento,NOMBRE,1
+doc_016,documento,NOMBRE,1
 doc_018,documento,DNI,1
-clip_001,audio,NOMBRE,1
-clip_003,audio,NOMBRE,5
-clip_004,audio,NOMBRE,2
+clip_001,audio,NOMBRE,2
+clip_003,audio,NOMBRE,6
+clip_004,audio,NOMBRE,4

@@ -33,7 +33,7 @@ Fecha de extracción: **2026-10-24**. La licencia, el autor y la URL de cada arc
    - Se sorteó una muestra de 10 documentos y 10 clips (semilla 2026), y la estudiante los transcribió a mano como referencia.
    - Se midió el **CER** en documentos y el **WER** en audio, con la misma normalización para referencia y salida.
    - Se compararon contra modelos alternativos y se midió la latencia: segundos por página en OCR y RTF en ASR.
-7. **Extracción estructurada:** Gemini 2.5 Flash (temperatura 0, respuesta JSON con esquema fijo, `null` si el dato no aparece). Se auditaron a mano 20 extracciones.
+7. **Extracción estructurada:** Gemini 3.5 Flash-Lite (temperatura 0; reemplazó, antes de ver resultados, a 2.5 Flash —no disponible para claves nuevas— y a 3.8 Flash —saturado: 503 y cuota diaria agotada—; respuesta JSON con esquema fijo, `null` si el dato no aparece). Se auditaron a mano 20 extracciones.
 
 ## Resultados
 
@@ -43,7 +43,7 @@ Fecha de extracción: **2026-10-24**. La licencia, el autor y la URL de cada arc
 | Documentos | EasyOCR | alternativo | CER | [COMPLETAR] | [COMPLETAR] s/página |
 | Audio | faster-whisper small | línea base | WER | [COMPLETAR] | RTF [COMPLETAR] |
 | Audio | Qwen3-ASR 0.6B | alternativo | WER | [COMPLETAR] | RTF [COMPLETAR] |
-| Extracción | Gemini 2.5 Flash | — | acuerdo con humano | [COMPLETAR]/20 | — |
+| Extracción | Gemini 3.5 Flash-Lite | — | acuerdo con humano | [COMPLETAR]/20 | — |
 
 Las tablas completas están en [`datos/metricas.csv`](datos/metricas.csv), [`datos/resultados_evaluacion.csv`](datos/resultados_evaluacion.csv) y [`datos/resumen_resultados.json`](datos/resumen_resultados.json).
 

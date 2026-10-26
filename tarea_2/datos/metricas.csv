@@ -1,0 +1,5 @@
+modalidad,modelo,rol,metrica,valor_global,promedio_por_caso,segundos_medios,rtf_medio
+documento,PaddleOCR 3.7.0,línea base,CER,0.4255,0.3361,121.36,
+documento,EasyOCR,alternativo,CER,0.6101,0.4886,26.66,
+audio,faster-whisper 1.2.1 small,línea base,WER,0.1559,0.1239,19.63,0.291
+audio,Qwen3-ASR 0.6B,alternativo,WER,0.1786,0.1544,50.65,0.756

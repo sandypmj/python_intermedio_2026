@@ -351,7 +351,7 @@ def a_texto(segmentos: list[Segmento]) -> str:
 def seudonimizar(texto: str, reemplazos: dict[str, str], parecido: int = 80) -> str:
     """Cambia nombres por seudónimos aunque el modelo los haya escrito mal.
 
-    'Isabel Vásquez' también atrapa 'Isabel Vázquez' (comparación difusa con rapidfuzz).
+    'Ana Pérez' también atrapa 'Ana Peres' y 'Ana Perez' (comparación difusa con rapidfuzz).
     Revisa siempre el resultado: ningún método automático garantiza el anonimato.
     """
     from rapidfuzz import fuzz

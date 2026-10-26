@@ -32,6 +32,15 @@ def leer_csv(nombre: str) -> pd.DataFrame | None:
 
 
 @st.cache_data
+def leer_auditoria() -> pd.DataFrame | None:
+    """La auditoría la edita la estudiante (Excel puede guardar con ';'), así que se detecta el separador."""
+    ruta = DATOS / "auditoria_llm.csv"
+    if not ruta.exists():
+        return None
+    return pd.read_csv(ruta, sep=None, engine="python", encoding="utf-8-sig", dtype=str, keep_default_na=False)
+
+
+@st.cache_data
 def leer_json(nombre: str) -> dict | None:
     ruta = DATOS / nombre
     return json.loads(ruta.read_text(encoding="utf-8")) if ruta.exists() else None
@@ -71,6 +80,7 @@ aud = leer_csv("transcripciones.csv")
 metricas = leer_csv("metricas.csv")
 resultados = leer_csv("resultados_evaluacion.csv")
 extraccion = leer_csv("extraccion_llm.csv")
+auditoria = leer_auditoria()
 resumen = leer_json("resumen_resultados.json")
 
 if docs is None or aud is None:
@@ -120,7 +130,7 @@ with st.expander("Resumen metodológico", expanded=False):
 - **Evaluación:** muestra fija de 10 documentos y 10 clips (semilla 2026) con **transcripción manual** como referencia.
   **CER** para documentos y **WER** para audio, con la misma normalización. Se compara con **EasyOCR** y **Qwen3-ASR 0.6B**,
   y se mide la latencia (segundos por página y RTF).
-- **Extracción estructurada:** **Gemini 2.5 Flash** (temperatura 0, JSON con esquema) saca tema, resumen, emisor, fecha y monto
+- **Extracción estructurada:** **Gemini 3.5 Flash-Lite** (temperatura 0, JSON con esquema) saca tema, resumen, emisor, fecha y monto
   (documentos) o citas y número de hablantes (audios), con `null` si el dato no está. **20 extracciones auditadas a mano.**
 """)
 
@@ -136,8 +146,9 @@ c[2].metric("CER (OCR elegido)", f"{num('cer'):.2f}" if num("cer") is not None e
 c[3].metric("WER (ASR elegido)", f"{num('wer'):.2f}" if num("wer") is not None else "—",
             help=f"Modelo: {num('asr_elegido')}" if resumen else "Pendiente: ejecuta 02_evaluacion.ipynb")
 c[4].metric("Acuerdo LLM-humano",
-            f"{num('acuerdo_llm') / num('auditados'):.0%}" if num("auditados") else "—",
-            help=f"{num('acuerdo_llm')}/{num('auditados')} extracciones correctas" if num("auditados") else "Pendiente: auditoría")
+            f"{num('acuerdo_llm') / num('auditados'):.0%}" if num("auditados") and num("acuerdo_llm") is not None else "—",
+            help=f"{num('acuerdo_llm')}/{num('auditados')} extracciones correctas"
+            if num("auditados") and num("acuerdo_llm") is not None else "Pendiente: auditoría")
 
 if consulta.strip():
     st.info(f"Búsqueda «{consulta}»: {len(f_docs)} documentos y {len(f_aud)} audios contienen todas las palabras.")
@@ -251,6 +262,12 @@ with tab_eval:
         st.subheader("Caso por caso")
         st.dataframe(f_resultados[["id", "modalidad", "grupo", "modelo", "rol", "metrica", "valor", "segundos", "rtf"]],
                      hide_index=True, width="stretch")
+        if auditoria is not None:
+            st.subheader("Auditoría humana de la extracción con LLM")
+            hechas = auditoria["correcta"].str.strip().ne("").sum()
+            st.caption(f"{hechas} de {len(auditoria)} extracciones revisadas a mano (1 = correcta, 0 = incorrecta).")
+            st.dataframe(auditoria[["id", "modalidad", "campos_json", "correcta", "comentario"]], hide_index=True, width="stretch")
         if resumen:
+            acuerdo = resumen.get("acuerdo_llm")
             st.success(f"Resultados Test: WER: {resumen['wer']:.2f} | CER: {resumen['cer']:.2f} | "
-                       f"Acuerdo LLM-Humano: {resumen['acuerdo_llm']}/{resumen['auditados']}")
+                       f"Acuerdo LLM-Humano: {acuerdo if acuerdo is not None else 'pendiente'}/{resumen['auditados']}")

@@ -1,0 +1,10 @@
+{
+  "cer": 0.4255,
+  "wer": 0.1559,
+  "ocr_elegido": "PaddleOCR 3.7.0",
+  "asr_elegido": "faster-whisper 1.2.1 small",
+  "acuerdo_llm": null,
+  "auditados": 20,
+  "modelo_llm": "gemini-3.5-flash-lite",
+  "fecha": "2026-10-25"
+}
