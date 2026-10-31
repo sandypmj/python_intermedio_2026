@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Violencia contra la mujer en el Perú</title>
+<style>
+  body { font-family: sans-serif; max-width: 1000px; margin: 0 auto; padding: 16px; background: #f6f4f1; color: #222; }
+  header { border-bottom: 1px solid #ddd; padding-bottom: 12px; margin-bottom: 16px; }
+  .pregunta { font-size: 18px; color: #444; }
+  .meta { font-size: 14px; color: #555; }
+  .controles { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+  .controles label { display: flex; flex-direction: column; font-size: 12px; font-weight: bold; color: #666; }
+  .controles select { font-size: 14px; padding: 4px; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .kpi { background: white; border-radius: 12px; padding: 14px; }
+  .kpi b { display: block; font-size: 28px; margin: 4px 0; }
+  .kpi small { color: #777; }
+    .tarjeta { background: white; border-radius: 12px; padding: 14px; margin-top: 16px; }
+  .leyenda span { display: inline-block; margin-right: 14px; font-size: 13px; }
+  .leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; }
+    .forma { margin: 10px 0; }
+  .forma .nombre { font-size: 14px; font-weight: bold; margin-bottom: 3px; }
+  .forma .linea { display: flex; align-items: center; gap: 8px; font-size: 12px; margin: 2px 0; }
+  .forma .linea em { width: 40px; color: #777; font-style: normal; }
+  .forma .b { height: 14px; border-radius: 0 4px 4px 0; }
+  .fila { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 13px; }
+  .fila span { width: 150px; text-align: right; }
+  .barra { background: #2a78d6; height: 16px; border-radius: 0 4px 4px 0; }
+  .fila.elegida .barra { background: #5a2a82; }
+  @media (max-width: 700px) { .kpis { grid-template-columns: 1fr 1fr; } }
+</style>
+<script src="datos.js"></script>
+</head>
+<body>
+  <header>
+    <h1>¿Dónde es mayor la violencia contra las mujeres en el Perú?</h1>
+    <p class="pregunta"><b>Pregunta:</b> ¿Qué territorios presentan mayores niveles de violencia contra las mujeres y qué ha cambiado?</p>
+    <p class="meta">
+      <b>Cobertura:</b> 24 departamentos, Callao, Lima Metropolitana y Lima Provincias · 2021–2025<br>
+      <b>Población:</b> mujeres de 15 a 49 años alguna vez unidas (violencia ejercida por el esposo o compañero)<br>
+      <b>Fuente:</b> INEI, Encuesta Demográfica y de Salud Familiar (ENDES) 2025, capítulo 12
+    </p>
+  </header>
+
+  <div class="controles">
+    <label>Indicador
+      <select id="indicador">
+        <option value="cualquiera">Algún tipo de violencia</option>
+        <option value="psicologica">Psicológica</option>
+        <option value="fisica">Física</option>
+        <option value="sexual">Sexual</option>
+        <option value="fis_sex_12m">Física y/o sexual, últimos 12 meses</option>
+      </select>
+    </label>
+    <label>Año
+      <select id="anio">
+        <option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option>
+      </select>
+    </label>
+    <label>Comparar con
+      <select id="base">
+        <option>2022</option><option>2021</option><option>2023</option><option>2024</option>
+      </select>
+    </label>
+    <label>Departamento <select id="departamento"></select></label>
+  </div>
+
+  <div class="kpis" id="kpis"></div>
+  
+  <div class="tarjeta">
+    <h2 id="titulo-evolucion"></h2>
+    <div class="leyenda" id="leyenda-evolucion"></div>
+    <div id="evolucion"></div>
+  </div>
+  
+  <div class="tarjeta">
+    <h2 id="titulo-formas"></h2>
+    <div class="leyenda" id="leyenda-formas"></div>
+    <div id="formas"></div>
+  </div>
+  <h2 id="titulo-grafico"></h2>
+  <div id="grafico"></div>
+
+<script>
+  // 1. El estado: lo que eligió la persona
+  const estado = { indicador: "cualquiera", anio: 2025, base: 2022, departamento: "Perú" };
+
+  // 2. Llenar la lista de departamentos a partir de los datos
+  const nombres = [...new Set(DATOS.map(f => f.categoria))].sort();
+  const selDep = document.getElementById("departamento");
+  for (const n of nombres) selDep.add(new Option(n, n));
+  selDep.value = estado.departamento;
+
+  // 3. Funciones de ayuda
+  function valor(anio, categoria, indicador) {
+    const f = DATOS.find(f => f.anio === anio && f.categoria === categoria && f.indicador === indicador);
+    return f ? f.valor : null;
+  }
+  const fmt = v => v === null ? "–" : v.toFixed(1).replace(".", ",");
+
+  // 4. Dibujar todo según el estado
+  function dibujar() {
+    const filas = DATOS.filter(f => f.anio === estado.anio && f.indicador === estado.indicador && f.categoria !== "Perú")
+                       .sort((a, b) => b.valor - a.valor);
+    const peru = valor(estado.anio, "Perú", estado.indicador);
+    const elegido = valor(estado.anio, estado.departamento, estado.indicador);
+    const antes = valor(estado.base, estado.departamento, estado.indicador);
+    const cambio = elegido !== null && antes !== null ? elegido - antes : null;
+    const mayor = filas[0], menor = filas[filas.length - 1];
+
+    document.getElementById("kpis").innerHTML = `
+      <div class="kpi">Perú, ${estado.anio}<b>${fmt(peru)} %</b><small>promedio nacional</small></div>
+      <div class="kpi">${estado.departamento}, ${estado.anio}<b>${fmt(elegido)} %</b><small>territorio elegido</small></div>
+      <div class="kpi">Cambio en ${estado.departamento} desde ${estado.base}<b>${cambio === null ? "–" : (cambio > 0 ? "+" : "") + fmt(cambio)} pp</b><small>${fmt(antes)} % → ${fmt(elegido)} %</small></div>
+      <div class="kpi">Más alto: ${mayor.categoria}<b>${fmt(mayor.valor)} %</b><small>el más bajo: ${menor.categoria} (${fmt(menor.valor)} %)</small></div>`;
+
+    document.getElementById("titulo-grafico").textContent = "Ranking por territorio, " + estado.anio;
+    document.getElementById("grafico").innerHTML = filas.map(f => `
+      <div class="fila ${f.categoria === estado.departamento ? "elegida" : ""}">
+        <span>${f.categoria}</span>
+        <div class="barra" style="width:${f.valor * 6}px"></div> ${fmt(f.valor)}
+      </div>`).join("");
+
+    dibujarEvolucion();
+    dibujarFormas();
+  }
+
+    // 4b. Gráfico de evolución: una línea para el territorio elegido y otra para el Perú
+  function dibujarEvolucion() {
+    const anios = [2021, 2022, 2023, 2024, 2025];
+    const W = 700, H = 260, izq = 45, der = 25, arr = 25, abj = 30;   // tamaño y márgenes del dibujo
+    const series = [{ nombre: "Perú", color: "#999999" }];
+    if (estado.departamento !== "Perú") series.push({ nombre: estado.departamento, color: "#5a2a82" });
+    for (const s of series) s.valores = anios.map(a => valor(a, s.nombre, estado.indicador));
+
+    const todos = series.flatMap(s => s.valores).filter(v => v !== null);
+    const maximo = Math.ceil((Math.max(...todos) + 5) / 10) * 10;      // eje Y con un poco de espacio arriba
+    const x = i => izq + 25 + i * (W - izq - der - 50) / (anios.length - 1);   // año -> posición horizontal
+    const y = v => H - abj - v / maximo * (H - arr - abj);               // valor -> posición vertical
+
+    let svg = `<svg viewBox="0 0 ${W} ${H}" width="100%">`;
+    for (let v = 0; v <= maximo; v += 10) {                              // líneas guía horizontales
+      svg += `<line x1="${izq}" x2="${W - der}" y1="${y(v)}" y2="${y(v)}" stroke="#e5e5e5"/>`;
+      svg += `<text x="${izq - 8}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="#777">${v}%</text>`;
+    }
+    anios.forEach((a, i) => svg += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="12" fill="#555">${a}</text>`);
+    for (const s of series) {
+      const puntos = s.valores.map((v, i) => v === null ? null : [x(i), y(v)]).filter(p => p);
+      svg += `<polyline points="${puntos.map(p => p.join(",")).join(" ")}" fill="none" stroke="${s.color}" stroke-width="3"/>`;
+      s.valores.forEach((v, i) => {
+        if (v === null) return;
+        svg += `<circle cx="${x(i)}" cy="${y(v)}" r="5" fill="${s.color}"><title>${s.nombre} ${anios[i]}: ${fmt(v)} %</title></circle>`;
+        if (s === series[series.length - 1]) {                            // etiquetas solo en la línea principal
+          const debajo = series.length > 1 && v < series[0].valores[i];   // si está bajo el Perú, la etiqueta va debajo
+          svg += `<text x="${x(i)}" y="${debajo ? y(v) + 22 : y(v) - 12}" text-anchor="middle" font-size="12" font-weight="bold" fill="${s.color}">${fmt(v)}</text>`;
+        }
+      });
+    }
+    svg += "</svg>";
+
+    document.getElementById("titulo-evolucion").textContent = "Evolución 2021–2025: " + (estado.departamento === "Perú" ? "Perú" : estado.departamento + " frente al Perú");
+    document.getElementById("leyenda-evolucion").innerHTML = series.map(s => `<span><i style="background:${s.color}"></i>${s.nombre}</span>`).join("");
+    document.getElementById("evolucion").innerHTML = svg;
+  }
+    // 4c. Formas de violencia del territorio elegido: año de comparación (gris) frente al año elegido (morado)
+  function dibujarFormas() {
+    const formas = [
+      ["psicologica", "Psicológica y/o verbal"],
+      ["fisica", "Física"],
+      ["sexual", "Sexual"],
+      ["fis_sex_12m", "Física y/o sexual, últimos 12 meses"],
+    ];
+    const lugar = estado.departamento;
+    let html = "";
+    for (const [clave, nombre] of formas) {
+      const antes = valor(estado.base, lugar, clave);
+      const ahora = valor(estado.anio, lugar, clave);
+      html += `<div class="forma"><div class="nombre">${nombre}</div>
+        <div class="linea"><em>${estado.base}</em><div class="b" style="width:${(antes || 0) * 8}px; background:#bbbbbb"></div>${fmt(antes)} %</div>
+        <div class="linea"><em>${estado.anio}</em><div class="b" style="width:${(ahora || 0) * 8}px; background:#5a2a82"></div><b>${fmt(ahora)} %</b></div>
+      </div>`;
+    }
+    document.getElementById("titulo-formas").textContent = `Formas de violencia en ${lugar}`;
+    document.getElementById("leyenda-formas").innerHTML =
+      `<span><i style="background:#bbbbbb"></i>${estado.base}</span><span><i style="background:#5a2a82"></i>${estado.anio}</span>`;
+    document.getElementById("formas").innerHTML = html;
+  }
+  // 5. Cuando cambia un control: actualizar el estado y volver a dibujar
+  document.getElementById("indicador").onchange = e => { estado.indicador = e.target.value; dibujar(); };
+  document.getElementById("anio").onchange = e => { estado.anio = Number(e.target.value); dibujar(); };
+  document.getElementById("base").onchange = e => { estado.base = Number(e.target.value); dibujar(); };
+  selDep.onchange = e => { estado.departamento = e.target.value; dibujar(); };
+
+  dibujar();
+</script>
+</body>
+</html>

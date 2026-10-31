@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi primer dashboard</title>
+<style>
+  body { font-family: sans-serif; max-width: 800px; margin: 0 auto; padding: 16px; background: #f6f4f1; }
+  .kpi { background: white; border-radius: 12px; padding: 16px; display: inline-block; min-width: 200px; margin: 6px; }
+  .kpi b { display: block; font-size: 32px; }
+  .fila { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 13px; }
+  .fila span { width: 150px; text-align: right; }
+  .barra { background: #2a78d6; height: 16px; border-radius: 0 4px 4px 0; }
+  .fila.elegida .barra { background: #5a2a82; }
+</style>
+<script src="datos.js"></script>
+</head>
+<body>
+  <h1>Violencia contra la mujer en el Perú</h1>
+  <p>Fuente: INEI, ENDES 2025.</p>
+
+  <label>Indicador
+    <select id="indicador">
+      <option value="cualquiera">Algún tipo de violencia</option>
+      <option value="psicologica">Psicológica</option>
+      <option value="fisica">Física</option>
+      <option value="sexual">Sexual</option>
+      <option value="fis_sex_12m">Física y/o sexual, últimos 12 meses</option>
+    </select>
+  </label>
+  <label>Año
+    <select id="anio">
+      <option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option>
+    </select>
+  </label>
+  <label>Departamento <select id="departamento"></select></label>
+
+  <div id="kpis"></div>
+  <h2 id="titulo-grafico"></h2>
+  <div id="grafico"></div>
+
+<script>
+  // 1. El estado: lo que eligió la persona
+  const estado = { indicador: "cualquiera", anio: 2025, departamento: "Perú" };
+
+  // 2. Llenar la lista de departamentos a partir de los datos
+  const nombres = [...new Set(DATOS.map(f => f.categoria))].sort();
+  const selDep = document.getElementById("departamento");
+  for (const n of nombres) selDep.add(new Option(n, n));
+  selDep.value = estado.departamento;
+
+  // 3. Una función que busca un valor
+  function valor(anio, categoria, indicador) {
+    const f = DATOS.find(f => f.anio === anio && f.categoria === categoria && f.indicador === indicador);
+    return f ? f.valor : null;
+  }
+
+  // 4. Dibujar todo según el estado
+  function dibujar() {
+    const filas = DATOS.filter(f => f.anio === estado.anio && f.indicador === estado.indicador && f.categoria !== "Perú")
+                       .sort((a, b) => b.valor - a.valor);
+    const peru = valor(estado.anio, "Perú", estado.indicador);
+    const elegido = valor(estado.anio, estado.departamento, estado.indicador);
+    const mayor = filas[0];
+
+    document.getElementById("kpis").innerHTML = `
+      <div class="kpi">Perú, ${estado.anio}<b>${peru} %</b></div>
+      <div class="kpi">${estado.departamento}<b>${elegido} %</b></div>
+      <div class="kpi">Más alto: ${mayor.categoria}<b>${mayor.valor} %</b></div>`;
+
+    document.getElementById("titulo-grafico").textContent = "Ranking por territorio, " + estado.anio;
+    document.getElementById("grafico").innerHTML = filas.map(f => `
+      <div class="fila ${f.categoria === estado.departamento ? "elegida" : ""}">
+        <span>${f.categoria}</span>
+        <div class="barra" style="width:${f.valor * 6}px"></div> ${f.valor}
+      </div>`).join("");
+  }
+
+  // 5. Cuando cambia un control: actualizar el estado y volver a dibujar
+  document.getElementById("indicador").onchange = e => { estado.indicador = e.target.value; dibujar(); };
+  document.getElementById("anio").onchange = e => { estado.anio = Number(e.target.value); dibujar(); };
+  selDep.onchange = e => { estado.departamento = e.target.value; dibujar(); };
+
+  dibujar();
+</script>
+</body>
+</html>
