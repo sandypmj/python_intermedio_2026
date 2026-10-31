@@ -1,0 +1,676 @@
+anio,categoria,indicador,valor,ic_inf,ic_sup
+2021,Perú,cualquiera,54.9,,
+2022,Perú,cualquiera,55.7,54.2,57.1
+2023,Perú,cualquiera,53.8,52.4,55.1
+2024,Perú,cualquiera,52.0,50.5,53.4
+2025,Perú,cualquiera,49.1,47.4,50.7
+2021,Amazonas,cualquiera,49.6,,
+2022,Amazonas,cualquiera,51.3,46.8,55.8
+2023,Amazonas,cualquiera,51.1,46.2,56.0
+2024,Amazonas,cualquiera,49.5,45.5,53.5
+2025,Amazonas,cualquiera,47.2,42.1,52.2
+2021,Áncash,cualquiera,50.6,,
+2022,Áncash,cualquiera,54.7,49.5,59.9
+2023,Áncash,cualquiera,58.2,52.9,63.5
+2024,Áncash,cualquiera,53.1,48.1,58.0
+2025,Áncash,cualquiera,51.7,45.8,57.5
+2021,Apurímac,cualquiera,64.1,,
+2022,Apurímac,cualquiera,65.3,60.2,70.3
+2023,Apurímac,cualquiera,67.4,63.0,71.8
+2024,Apurímac,cualquiera,66.4,61.5,71.4
+2025,Apurímac,cualquiera,66.1,61.0,71.1
+2021,Arequipa,cualquiera,60.7,,
+2022,Arequipa,cualquiera,59.0,52.9,65.1
+2023,Arequipa,cualquiera,57.9,53.3,62.6
+2024,Arequipa,cualquiera,53.2,47.6,58.9
+2025,Arequipa,cualquiera,54.6,48.4,60.8
+2021,Ayacucho,cualquiera,56.3,,
+2022,Ayacucho,cualquiera,53.1,48.8,57.5
+2023,Ayacucho,cualquiera,58.4,53.9,62.9
+2024,Ayacucho,cualquiera,49.0,44.6,53.3
+2025,Ayacucho,cualquiera,51.4,45.8,57.0
+2021,Cajamarca,cualquiera,53.9,,
+2022,Cajamarca,cualquiera,51.3,46.9,55.7
+2023,Cajamarca,cualquiera,45.8,41.1,50.6
+2024,Cajamarca,cualquiera,35.9,31.4,40.4
+2025,Cajamarca,cualquiera,36.8,31.5,42.2
+2021,Prov. Const. del Callao,cualquiera,59.9,,
+2022,Prov. Const. del Callao,cualquiera,56.5,51.1,61.8
+2023,Prov. Const. del Callao,cualquiera,56.3,50.9,61.8
+2024,Prov. Const. del Callao,cualquiera,57.6,52.3,62.9
+2025,Prov. Const. del Callao,cualquiera,53.8,46.5,61.2
+2021,Cusco,cualquiera,62.2,,
+2022,Cusco,cualquiera,60.4,54.6,66.3
+2023,Cusco,cualquiera,58.3,53.2,63.5
+2024,Cusco,cualquiera,59.3,54.0,64.6
+2025,Cusco,cualquiera,56.6,50.3,62.9
+2021,Huancavelica,cualquiera,57.9,,
+2022,Huancavelica,cualquiera,58.2,53.4,63.0
+2023,Huancavelica,cualquiera,55.6,51.0,60.2
+2024,Huancavelica,cualquiera,56.5,51.7,61.3
+2025,Huancavelica,cualquiera,58.3,53.6,63.0
+2021,Huánuco,cualquiera,52.7,,
+2022,Huánuco,cualquiera,47.1,41.5,52.6
+2023,Huánuco,cualquiera,51.8,46.2,57.3
+2024,Huánuco,cualquiera,48.5,43.2,53.8
+2025,Huánuco,cualquiera,44.2,39.2,49.2
+2021,Ica,cualquiera,49.6,,
+2022,Ica,cualquiera,52.7,47.2,58.1
+2023,Ica,cualquiera,48.9,43.5,54.4
+2024,Ica,cualquiera,50.9,45.8,56.0
+2025,Ica,cualquiera,44.2,38.5,49.9
+2021,Junín,cualquiera,59.0,,
+2022,Junín,cualquiera,69.1,64.3,73.9
+2023,Junín,cualquiera,57.4,52.7,62.1
+2024,Junín,cualquiera,59.2,53.8,64.6
+2025,Junín,cualquiera,54.4,48.7,60.1
+2021,La Libertad,cualquiera,52.8,,
+2022,La Libertad,cualquiera,58.4,53.3,63.5
+2023,La Libertad,cualquiera,55.1,49.9,60.3
+2024,La Libertad,cualquiera,51.6,45.9,57.3
+2025,La Libertad,cualquiera,49.2,43.3,55.1
+2021,Lambayeque,cualquiera,46.7,,
+2022,Lambayeque,cualquiera,44.7,39.4,49.9
+2023,Lambayeque,cualquiera,47.9,43.1,52.8
+2024,Lambayeque,cualquiera,49.6,44.4,54.8
+2025,Lambayeque,cualquiera,52.6,45.9,59.2
+2021,Lima Metropolitana,cualquiera,56.0,,
+2022,Lima Metropolitana,cualquiera,56.3,52.3,60.4
+2023,Lima Metropolitana,cualquiera,54.6,50.7,58.6
+2024,Lima Metropolitana,cualquiera,52.5,48.5,56.6
+2025,Lima Metropolitana,cualquiera,48.2,43.7,52.7
+2021,Departamento de Lima,cualquiera,57.5,,
+2022,Departamento de Lima,cualquiera,56.2,51.2,61.2
+2023,Departamento de Lima,cualquiera,56.2,50.5,61.9
+2024,Departamento de Lima,cualquiera,56.1,50.1,62.0
+2025,Departamento de Lima,cualquiera,53.9,47.8,60.1
+2021,Loreto,cualquiera,40.0,,
+2022,Loreto,cualquiera,54.2,49.6,58.9
+2023,Loreto,cualquiera,53.2,48.8,57.7
+2024,Loreto,cualquiera,47.8,43.0,52.6
+2025,Loreto,cualquiera,40.3,35.0,45.6
+2021,Madre de Dios,cualquiera,70.6,,
+2022,Madre de Dios,cualquiera,65.6,60.5,70.7
+2023,Madre de Dios,cualquiera,59.5,54.4,64.6
+2024,Madre de Dios,cualquiera,57.5,52.8,62.1
+2025,Madre de Dios,cualquiera,52.6,46.8,58.4
+2021,Moquegua,cualquiera,58.7,,
+2022,Moquegua,cualquiera,60.8,55.8,65.9
+2023,Moquegua,cualquiera,56.6,50.3,63.0
+2024,Moquegua,cualquiera,54.0,47.8,60.2
+2025,Moquegua,cualquiera,51.8,45.0,58.7
+2021,Pasco,cualquiera,55.5,,
+2022,Pasco,cualquiera,49.6,43.8,55.3
+2023,Pasco,cualquiera,50.2,44.6,55.8
+2024,Pasco,cualquiera,50.6,46.1,55.1
+2025,Pasco,cualquiera,44.9,38.6,51.2
+2021,Piura,cualquiera,53.9,,
+2022,Piura,cualquiera,56.0,50.7,61.3
+2023,Piura,cualquiera,48.9,44.5,53.3
+2024,Piura,cualquiera,48.6,43.0,54.1
+2025,Piura,cualquiera,47.8,42.4,53.2
+2021,Puno,cualquiera,62.2,,
+2022,Puno,cualquiera,54.4,48.8,60.0
+2023,Puno,cualquiera,54.7,49.5,59.9
+2024,Puno,cualquiera,59.9,55.4,64.4
+2025,Puno,cualquiera,46.0,38.6,53.3
+2021,San Martín,cualquiera,52.7,,
+2022,San Martín,cualquiera,56.1,51.2,61.0
+2023,San Martín,cualquiera,54.7,49.9,59.4
+2024,San Martín,cualquiera,53.5,48.5,58.5
+2025,San Martín,cualquiera,52.0,46.4,57.5
+2021,Tacna,cualquiera,56.9,,
+2022,Tacna,cualquiera,47.8,42.4,53.2
+2023,Tacna,cualquiera,44.5,39.0,50.1
+2024,Tacna,cualquiera,39.7,34.4,44.9
+2025,Tacna,cualquiera,44.2,38.1,50.4
+2021,Tumbes,cualquiera,54.8,,
+2022,Tumbes,cualquiera,55.4,51.0,59.8
+2023,Tumbes,cualquiera,60.4,56.0,64.8
+2024,Tumbes,cualquiera,56.2,50.8,61.5
+2025,Tumbes,cualquiera,57.1,51.4,62.9
+2021,Ucayali,cualquiera,42.2,,
+2022,Ucayali,cualquiera,42.7,38.6,46.8
+2023,Ucayali,cualquiera,39.3,34.1,44.4
+2024,Ucayali,cualquiera,39.5,35.0,43.9
+2025,Ucayali,cualquiera,37.2,32.0,42.5
+2021,Perú,psicologica,50.8,,
+2022,Perú,psicologica,51.9,50.4,53.4
+2023,Perú,psicologica,49.3,47.9,50.8
+2024,Perú,psicologica,48.4,46.9,49.9
+2025,Perú,psicologica,45.6,44.0,47.2
+2021,Amazonas,psicologica,44.7,,
+2022,Amazonas,psicologica,45.8,41.3,50.2
+2023,Amazonas,psicologica,45.4,40.6,50.3
+2024,Amazonas,psicologica,44.2,40.0,48.4
+2025,Amazonas,psicologica,43.6,38.6,48.6
+2021,Áncash,psicologica,47.8,,
+2022,Áncash,psicologica,50.3,44.8,55.8
+2023,Áncash,psicologica,54.5,49.3,59.6
+2024,Áncash,psicologica,50.0,44.9,55.1
+2025,Áncash,psicologica,44.8,39.3,50.4
+2021,Apurímac,psicologica,60.7,,
+2022,Apurímac,psicologica,60.7,55.5,66.0
+2023,Apurímac,psicologica,62.7,57.9,67.6
+2024,Apurímac,psicologica,63.2,58.2,68.2
+2025,Apurímac,psicologica,60.0,54.8,65.2
+2021,Arequipa,psicologica,54.0,,
+2022,Arequipa,psicologica,55.0,48.9,61.0
+2023,Arequipa,psicologica,54.4,49.7,59.2
+2024,Arequipa,psicologica,48.5,43.0,54.0
+2025,Arequipa,psicologica,52.3,46.3,58.4
+2021,Ayacucho,psicologica,50.8,,
+2022,Ayacucho,psicologica,45.7,41.4,49.9
+2023,Ayacucho,psicologica,52.4,48.0,56.8
+2024,Ayacucho,psicologica,42.4,38.0,46.9
+2025,Ayacucho,psicologica,45.5,40.4,50.6
+2021,Cajamarca,psicologica,47.7,,
+2022,Cajamarca,psicologica,48.9,44.5,53.3
+2023,Cajamarca,psicologica,39.6,34.7,44.5
+2024,Cajamarca,psicologica,31.9,27.3,36.5
+2025,Cajamarca,psicologica,33.1,28.1,38.1
+2021,Prov. Const. del Callao,psicologica,55.6,,
+2022,Prov. Const. del Callao,psicologica,53.4,47.9,58.8
+2023,Prov. Const. del Callao,psicologica,52.6,46.7,58.6
+2024,Prov. Const. del Callao,psicologica,53.3,47.9,58.7
+2025,Prov. Const. del Callao,psicologica,51.2,43.9,58.6
+2021,Cusco,psicologica,58.6,,
+2022,Cusco,psicologica,57.5,51.5,63.4
+2023,Cusco,psicologica,52.5,47.4,57.6
+2024,Cusco,psicologica,55.9,50.5,61.2
+2025,Cusco,psicologica,53.9,47.5,60.3
+2021,Huancavelica,psicologica,51.9,,
+2022,Huancavelica,psicologica,53.5,48.4,58.5
+2023,Huancavelica,psicologica,50.9,46.2,55.7
+2024,Huancavelica,psicologica,52.6,47.8,57.3
+2025,Huancavelica,psicologica,51.6,46.6,56.5
+2021,Huánuco,psicologica,48.5,,
+2022,Huánuco,psicologica,41.7,36.6,46.7
+2023,Huánuco,psicologica,48.9,43.2,54.5
+2024,Huánuco,psicologica,45.0,39.5,50.4
+2025,Huánuco,psicologica,40.7,35.9,45.5
+2021,Ica,psicologica,46.6,,
+2022,Ica,psicologica,49.8,44.4,55.2
+2023,Ica,psicologica,44.5,39.2,49.8
+2024,Ica,psicologica,45.9,40.6,51.2
+2025,Ica,psicologica,40.2,34.8,45.7
+2021,Junín,psicologica,54.0,,
+2022,Junín,psicologica,63.6,58.4,68.8
+2023,Junín,psicologica,49.9,44.7,55.0
+2024,Junín,psicologica,55.0,49.3,60.7
+2025,Junín,psicologica,49.4,43.7,55.2
+2021,La Libertad,psicologica,49.2,,
+2022,La Libertad,psicologica,54.5,49.3,59.7
+2023,La Libertad,psicologica,51.7,46.5,57.0
+2024,La Libertad,psicologica,49.8,43.9,55.7
+2025,La Libertad,psicologica,46.7,40.9,52.5
+2021,Lambayeque,psicologica,43.5,,
+2022,Lambayeque,psicologica,42.1,36.8,47.5
+2023,Lambayeque,psicologica,44.2,39.5,49.0
+2024,Lambayeque,psicologica,46.5,41.4,51.5
+2025,Lambayeque,psicologica,49.3,42.7,56.0
+2021,Lima Metropolitana,psicologica,52.8,,
+2022,Lima Metropolitana,psicologica,53.4,49.3,57.4
+2023,Lima Metropolitana,psicologica,50.7,46.7,54.7
+2024,Lima Metropolitana,psicologica,49.9,45.9,53.9
+2025,Lima Metropolitana,psicologica,46.4,41.9,50.9
+2021,Departamento de Lima,psicologica,54.1,,
+2022,Departamento de Lima,psicologica,53.4,48.3,58.5
+2023,Departamento de Lima,psicologica,53.2,47.3,59.0
+2024,Departamento de Lima,psicologica,52.3,46.7,58.0
+2025,Departamento de Lima,psicologica,50.2,44.3,56.1
+2021,Loreto,psicologica,36.5,,
+2022,Loreto,psicologica,49.0,44.3,53.7
+2023,Loreto,psicologica,50.0,45.6,54.5
+2024,Loreto,psicologica,44.4,39.6,49.2
+2025,Loreto,psicologica,33.2,28.1,38.2
+2021,Madre de Dios,psicologica,63.6,,
+2022,Madre de Dios,psicologica,60.1,54.8,65.5
+2023,Madre de Dios,psicologica,53.4,48.2,58.6
+2024,Madre de Dios,psicologica,53.6,48.8,58.4
+2025,Madre de Dios,psicologica,48.5,42.9,54.1
+2021,Moquegua,psicologica,53.3,,
+2022,Moquegua,psicologica,56.2,51.0,61.5
+2023,Moquegua,psicologica,50.9,44.6,57.2
+2024,Moquegua,psicologica,48.8,42.5,55.1
+2025,Moquegua,psicologica,47.1,40.2,54.1
+2021,Pasco,psicologica,49.5,,
+2022,Pasco,psicologica,45.1,39.3,50.9
+2023,Pasco,psicologica,45.2,40.1,50.3
+2024,Pasco,psicologica,44.6,40.0,49.2
+2025,Pasco,psicologica,41.0,35.0,47.0
+2021,Piura,psicologica,50.3,,
+2022,Piura,psicologica,51.6,46.9,56.3
+2023,Piura,psicologica,43.0,38.5,47.4
+2024,Piura,psicologica,45.7,40.4,51.0
+2025,Piura,psicologica,43.8,38.4,49.2
+2021,Puno,psicologica,57.8,,
+2022,Puno,psicologica,50.7,45.4,56.1
+2023,Puno,psicologica,51.8,46.8,56.9
+2024,Puno,psicologica,54.2,49.2,59.3
+2025,Puno,psicologica,39.3,31.7,47.0
+2021,San Martín,psicologica,47.1,,
+2022,San Martín,psicologica,51.9,46.7,57.2
+2023,San Martín,psicologica,49.2,44.1,54.4
+2024,San Martín,psicologica,48.4,43.3,53.6
+2025,San Martín,psicologica,47.9,42.6,53.1
+2021,Tacna,psicologica,49.7,,
+2022,Tacna,psicologica,43.9,38.4,49.5
+2023,Tacna,psicologica,41.3,35.4,47.1
+2024,Tacna,psicologica,32.8,27.8,37.8
+2025,Tacna,psicologica,37.9,32.1,43.8
+2021,Tumbes,psicologica,52.2,,
+2022,Tumbes,psicologica,50.3,46.1,54.5
+2023,Tumbes,psicologica,55.0,50.2,59.8
+2024,Tumbes,psicologica,53.1,47.7,58.5
+2025,Tumbes,psicologica,54.2,48.4,59.9
+2021,Ucayali,psicologica,36.8,,
+2022,Ucayali,psicologica,34.8,31.1,38.5
+2023,Ucayali,psicologica,33.5,28.5,38.6
+2024,Ucayali,psicologica,33.4,29.2,37.6
+2025,Ucayali,psicologica,32.2,27.3,37.1
+2021,Perú,fisica,26.7,,
+2022,Perú,fisica,27.8,26.5,29.0
+2023,Perú,fisica,27.2,26.0,28.4
+2024,Perú,fisica,25.5,24.2,26.7
+2025,Perú,fisica,23.2,21.9,24.6
+2021,Amazonas,fisica,24.2,,
+2022,Amazonas,fisica,26.8,22.9,30.6
+2023,Amazonas,fisica,28.3,24.2,32.5
+2024,Amazonas,fisica,27.6,23.6,31.7
+2025,Amazonas,fisica,23.6,19.2,28.0
+2021,Áncash,fisica,27.2,,
+2022,Áncash,fisica,26.0,21.3,30.6
+2023,Áncash,fisica,32.3,26.3,38.4
+2024,Áncash,fisica,22.7,17.4,27.9
+2025,Áncash,fisica,26.6,21.6,31.5
+2021,Apurímac,fisica,37.8,,
+2022,Apurímac,fisica,37.0,32.2,41.7
+2023,Apurímac,fisica,40.6,34.9,46.3
+2024,Apurímac,fisica,32.4,27.4,37.3
+2025,Apurímac,fisica,33.1,27.4,38.9
+2021,Arequipa,fisica,36.3,,
+2022,Arequipa,fisica,32.1,26.2,38.0
+2023,Arequipa,fisica,31.1,26.2,35.9
+2024,Arequipa,fisica,29.0,23.4,34.7
+2025,Arequipa,fisica,26.3,20.5,32.1
+2021,Ayacucho,fisica,36.3,,
+2022,Ayacucho,fisica,34.1,29.7,38.5
+2023,Ayacucho,fisica,38.6,34.2,42.9
+2024,Ayacucho,fisica,31.3,27.0,35.5
+2025,Ayacucho,fisica,30.7,25.9,35.4
+2021,Cajamarca,fisica,27.2,,
+2022,Cajamarca,fisica,23.2,19.4,27.1
+2023,Cajamarca,fisica,23.8,20.0,27.7
+2024,Cajamarca,fisica,20.6,17.2,23.9
+2025,Cajamarca,fisica,21.9,17.8,25.9
+2021,Prov. Const. del Callao,fisica,27.5,,
+2022,Prov. Const. del Callao,fisica,25.2,20.7,29.7
+2023,Prov. Const. del Callao,fisica,24.9,20.2,29.6
+2024,Prov. Const. del Callao,fisica,24.6,19.4,29.8
+2025,Prov. Const. del Callao,fisica,24.7,18.6,30.7
+2021,Cusco,fisica,38.7,,
+2022,Cusco,fisica,35.9,30.7,41.2
+2023,Cusco,fisica,34.8,30.1,39.4
+2024,Cusco,fisica,30.5,25.5,35.5
+2025,Cusco,fisica,32.2,25.7,38.7
+2021,Huancavelica,fisica,35.9,,
+2022,Huancavelica,fisica,33.8,29.5,38.2
+2023,Huancavelica,fisica,29.0,24.7,33.3
+2024,Huancavelica,fisica,31.7,26.9,36.5
+2025,Huancavelica,fisica,27.6,22.8,32.3
+2021,Huánuco,fisica,26.2,,
+2022,Huánuco,fisica,24.7,19.9,29.5
+2023,Huánuco,fisica,24.1,18.5,29.7
+2024,Huánuco,fisica,20.6,16.6,24.6
+2025,Huánuco,fisica,18.6,14.7,22.5
+2021,Ica,fisica,21.4,,
+2022,Ica,fisica,25.3,20.7,30.0
+2023,Ica,fisica,25.0,20.4,29.6
+2024,Ica,fisica,23.0,18.4,27.7
+2025,Ica,fisica,23.3,18.2,28.3
+2021,Junín,fisica,34.5,,
+2022,Junín,fisica,40.8,35.5,46.2
+2023,Junín,fisica,31.9,27.2,36.6
+2024,Junín,fisica,34.7,29.7,39.7
+2025,Junín,fisica,23.6,19.0,28.2
+2021,La Libertad,fisica,21.5,,
+2022,La Libertad,fisica,24.5,20.0,28.9
+2023,La Libertad,fisica,23.7,18.5,28.9
+2024,La Libertad,fisica,22.6,17.6,27.7
+2025,La Libertad,fisica,19.1,14.9,23.3
+2021,Lambayeque,fisica,20.7,,
+2022,Lambayeque,fisica,21.3,16.8,25.7
+2023,Lambayeque,fisica,23.5,19.1,28.0
+2024,Lambayeque,fisica,23.7,18.9,28.5
+2025,Lambayeque,fisica,25.3,20.2,30.5
+2021,Lima Metropolitana,fisica,23.8,,
+2022,Lima Metropolitana,fisica,26.6,23.2,30.0
+2023,Lima Metropolitana,fisica,25.4,22.2,28.6
+2024,Lima Metropolitana,fisica,23.5,20.1,26.9
+2025,Lima Metropolitana,fisica,21.0,17.3,24.7
+2021,Departamento de Lima,fisica,28.3,,
+2022,Departamento de Lima,fisica,27.1,22.2,32.0
+2023,Departamento de Lima,fisica,27.1,22.1,32.0
+2024,Departamento de Lima,fisica,23.9,19.2,28.6
+2025,Departamento de Lima,fisica,25.7,20.0,31.5
+2021,Loreto,fisica,18.4,,
+2022,Loreto,fisica,26.0,21.8,30.2
+2023,Loreto,fisica,26.4,22.4,30.4
+2024,Loreto,fisica,23.6,19.8,27.4
+2025,Loreto,fisica,20.6,16.2,25.0
+2021,Madre de Dios,fisica,42.9,,
+2022,Madre de Dios,fisica,32.4,27.3,37.5
+2023,Madre de Dios,fisica,33.4,28.4,38.5
+2024,Madre de Dios,fisica,28.5,24.1,32.8
+2025,Madre de Dios,fisica,25.9,20.8,31.0
+2021,Moquegua,fisica,38.7,,
+2022,Moquegua,fisica,31.4,26.7,36.1
+2023,Moquegua,fisica,33.9,27.3,40.5
+2024,Moquegua,fisica,29.3,23.0,35.5
+2025,Moquegua,fisica,34.3,27.5,41.0
+2021,Pasco,fisica,33.2,,
+2022,Pasco,fisica,30.3,25.9,34.6
+2023,Pasco,fisica,28.9,24.3,33.6
+2024,Pasco,fisica,25.5,21.3,29.6
+2025,Pasco,fisica,20.1,15.2,25.0
+2021,Piura,fisica,23.6,,
+2022,Piura,fisica,24.2,18.9,29.5
+2023,Piura,fisica,25.4,21.6,29.2
+2024,Piura,fisica,24.4,20.3,28.6
+2025,Piura,fisica,21.6,16.6,26.6
+2021,Puno,fisica,36.3,,
+2022,Puno,fisica,33.7,28.6,38.8
+2023,Puno,fisica,33.5,27.9,39.0
+2024,Puno,fisica,38.1,32.6,43.5
+2025,Puno,fisica,26.8,21.4,32.2
+2021,San Martín,fisica,26.4,,
+2022,San Martín,fisica,30.5,25.8,35.2
+2023,San Martín,fisica,27.9,24.3,31.6
+2024,San Martín,fisica,28.8,24.2,33.4
+2025,San Martín,fisica,23.6,19.1,28.1
+2021,Tacna,fisica,32.7,,
+2022,Tacna,fisica,24.7,20.3,29.2
+2023,Tacna,fisica,24.7,20.4,29.0
+2024,Tacna,fisica,26.2,21.5,30.9
+2025,Tacna,fisica,27.8,22.0,33.5
+2021,Tumbes,fisica,25.2,,
+2022,Tumbes,fisica,29.3,24.7,34.0
+2023,Tumbes,fisica,25.9,21.3,30.4
+2024,Tumbes,fisica,25.8,21.3,30.3
+2025,Tumbes,fisica,27.7,22.2,33.2
+2021,Ucayali,fisica,23.0,,
+2022,Ucayali,fisica,26.3,22.6,30.0
+2023,Ucayali,fisica,19.9,16.5,23.2
+2024,Ucayali,fisica,23.3,19.5,27.0
+2025,Ucayali,fisica,18.3,14.2,22.3
+2021,Perú,sexual,5.9,,
+2022,Perú,sexual,6.7,6.0,7.4
+2023,Perú,sexual,6.5,5.7,7.2
+2024,Perú,sexual,5.6,5.0,6.2
+2025,Perú,sexual,5.6,4.8,6.4
+2021,Amazonas,sexual,5.7,,
+2022,Amazonas,sexual,5.4,3.5,7.3
+2023,Amazonas,sexual,6.6,4.3,8.9
+2024,Amazonas,sexual,7.5,5.2,9.7
+2025,Amazonas,sexual,6.0,3.7,8.4
+2021,Áncash,sexual,4.2,,
+2022,Áncash,sexual,5.5,3.3,7.6
+2023,Áncash,sexual,5.2,2.8,7.7
+2024,Áncash,sexual,4.4,2.1,6.7
+2025,Áncash,sexual,3.0,1.3,4.7
+2021,Apurímac,sexual,11.8,,
+2022,Apurímac,sexual,12.4,9.1,15.7
+2023,Apurímac,sexual,11.8,7.6,16.1
+2024,Apurímac,sexual,9.3,6.5,12.0
+2025,Apurímac,sexual,9.2,6.0,12.4
+2021,Arequipa,sexual,9.5,,
+2022,Arequipa,sexual,8.2,5.1,11.3
+2023,Arequipa,sexual,8.2,5.2,11.1
+2024,Arequipa,sexual,8.3,4.3,12.3
+2025,Arequipa,sexual,3.0,1.0,5.1
+2021,Ayacucho,sexual,7.0,,
+2022,Ayacucho,sexual,4.0,2.3,5.8
+2023,Ayacucho,sexual,9.9,7.3,12.5
+2024,Ayacucho,sexual,6.8,4.5,9.1
+2025,Ayacucho,sexual,8.5,5.5,11.5
+2021,Cajamarca,sexual,4.9,,
+2022,Cajamarca,sexual,7.2,4.7,9.7
+2023,Cajamarca,sexual,4.2,2.4,5.9
+2024,Cajamarca,sexual,3.6,1.7,5.4
+2025,Cajamarca,sexual,5.2,3.0,7.3
+2021,Prov. Const. del Callao,sexual,7.0,,
+2022,Prov. Const. del Callao,sexual,4.9,2.3,7.5
+2023,Prov. Const. del Callao,sexual,5.8,2.9,8.8
+2024,Prov. Const. del Callao,sexual,2.6,0.9,4.3
+2025,Prov. Const. del Callao,sexual,5.9,2.7,9.1
+2021,Cusco,sexual,11.4,,
+2022,Cusco,sexual,10.8,7.3,14.3
+2023,Cusco,sexual,11.8,8.1,15.5
+2024,Cusco,sexual,7.5,4.9,10.2
+2025,Cusco,sexual,12.1,7.8,16.5
+2021,Huancavelica,sexual,10.0,,
+2022,Huancavelica,sexual,10.6,7.1,14.0
+2023,Huancavelica,sexual,6.8,4.7,8.9
+2024,Huancavelica,sexual,9.8,6.2,13.3
+2025,Huancavelica,sexual,6.3,3.7,9.0
+2021,Huánuco,sexual,5.1,,
+2022,Huánuco,sexual,4.2,2.5,6.0
+2023,Huánuco,sexual,5.5,2.4,8.6
+2024,Huánuco,sexual,4.8,2.5,7.0
+2025,Huánuco,sexual,4.8,2.6,7.1
+2021,Ica,sexual,4.6,,
+2022,Ica,sexual,7.2,3.7,10.6
+2023,Ica,sexual,6.8,4.3,9.4
+2024,Ica,sexual,4.3,2.0,6.6
+2025,Ica,sexual,7.3,4.4,10.2
+2021,Junín,sexual,9.5,,
+2022,Junín,sexual,9.7,6.4,12.9
+2023,Junín,sexual,8.6,5.6,11.6
+2024,Junín,sexual,8.0,4.9,11.2
+2025,Junín,sexual,5.9,3.1,8.7
+2021,La Libertad,sexual,3.7,,
+2022,La Libertad,sexual,5.3,3.0,7.6
+2023,La Libertad,sexual,5.2,2.7,7.6
+2024,La Libertad,sexual,5.3,2.7,8.0
+2025,La Libertad,sexual,5.9,3.0,8.9
+2021,Lambayeque,sexual,3.7,,
+2022,Lambayeque,sexual,4.9,2.5,7.3
+2023,Lambayeque,sexual,5.7,3.4,8.0
+2024,Lambayeque,sexual,7.5,4.2,10.7
+2025,Lambayeque,sexual,7.2,3.9,10.4
+2021,Lima Metropolitana,sexual,5.0,,
+2022,Lima Metropolitana,sexual,6.8,4.8,8.7
+2023,Lima Metropolitana,sexual,6.4,4.4,8.4
+2024,Lima Metropolitana,sexual,4.6,3.0,6.1
+2025,Lima Metropolitana,sexual,6.3,4.0,8.6
+2021,Departamento de Lima,sexual,7.6,,
+2022,Departamento de Lima,sexual,8.0,5.3,10.7
+2023,Departamento de Lima,sexual,6.3,2.4,10.3
+2024,Departamento de Lima,sexual,7.1,3.6,10.6
+2025,Departamento de Lima,sexual,4.9,2.4,7.3
+2021,Loreto,sexual,2.7,,
+2022,Loreto,sexual,5.2,3.1,7.3
+2023,Loreto,sexual,5.8,3.6,8.1
+2024,Loreto,sexual,5.4,3.2,7.5
+2025,Loreto,sexual,3.4,1.6,5.3
+2021,Madre de Dios,sexual,8.7,,
+2022,Madre de Dios,sexual,6.2,4.2,8.1
+2023,Madre de Dios,sexual,8.9,6.4,11.5
+2024,Madre de Dios,sexual,7.4,5.0,9.8
+2025,Madre de Dios,sexual,6.4,3.9,9.0
+2021,Moquegua,sexual,8.6,,
+2022,Moquegua,sexual,5.6,3.1,8.0
+2023,Moquegua,sexual,9.4,5.6,13.3
+2024,Moquegua,sexual,7.2,3.8,10.6
+2025,Moquegua,sexual,11.2,6.9,15.5
+2021,Pasco,sexual,7.3,,
+2022,Pasco,sexual,6.4,3.9,8.9
+2023,Pasco,sexual,4.0,2.4,5.7
+2024,Pasco,sexual,5.2,2.8,7.6
+2025,Pasco,sexual,2.8,0.6,5.0
+2021,Piura,sexual,3.5,,
+2022,Piura,sexual,5.7,3.4,7.9
+2023,Piura,sexual,5.3,3.1,7.4
+2024,Piura,sexual,4.8,2.2,7.3
+2025,Piura,sexual,2.6,0.9,4.3
+2021,Puno,sexual,12.2,,
+2022,Puno,sexual,7.9,4.7,11.0
+2023,Puno,sexual,6.4,3.5,9.4
+2024,Puno,sexual,8.6,5.4,11.9
+2025,Puno,sexual,4.2,1.4,6.9
+2021,San Martín,sexual,5.5,,
+2022,San Martín,sexual,7.5,4.3,10.8
+2023,San Martín,sexual,7.1,4.7,9.4
+2024,San Martín,sexual,6.4,3.7,9.1
+2025,San Martín,sexual,5.3,2.4,8.3
+2021,Tacna,sexual,5.7,,
+2022,Tacna,sexual,3.4,1.3,5.5
+2023,Tacna,sexual,4.3,2.2,6.5
+2024,Tacna,sexual,6.1,3.3,8.9
+2025,Tacna,sexual,5.3,3.0,7.7
+2021,Tumbes,sexual,5.0,,
+2022,Tumbes,sexual,6.0,3.5,8.5
+2023,Tumbes,sexual,5.2,2.7,7.7
+2024,Tumbes,sexual,7.5,4.8,10.3
+2025,Tumbes,sexual,8.2,4.8,11.5
+2021,Ucayali,sexual,3.7,,
+2022,Ucayali,sexual,3.3,1.6,5.1
+2023,Ucayali,sexual,1.6,0.7,2.5
+2024,Ucayali,sexual,3.3,1.6,4.9
+2025,Ucayali,sexual,1.1,0.5,1.8
+2021,Perú,fis_sex_12m,7.6,,
+2022,Perú,fis_sex_12m,8.6,7.8,9.4
+2023,Perú,fis_sex_12m,8.3,7.5,9.0
+2024,Perú,fis_sex_12m,7.5,6.8,8.2
+2025,Perú,fis_sex_12m,6.8,6.0,7.6
+2021,Amazonas,fis_sex_12m,7.7,,
+2022,Amazonas,fis_sex_12m,10.2,7.6,12.8
+2023,Amazonas,fis_sex_12m,8.2,6.0,10.3
+2024,Amazonas,fis_sex_12m,7.0,5.1,8.9
+2025,Amazonas,fis_sex_12m,6.9,4.8,8.9
+2021,Áncash,fis_sex_12m,6.1,,
+2022,Áncash,fis_sex_12m,6.9,4.6,9.2
+2023,Áncash,fis_sex_12m,9.6,7.0,12.3
+2024,Áncash,fis_sex_12m,5.8,3.5,8.1
+2025,Áncash,fis_sex_12m,5.0,2.9,7.1
+2021,Apurímac,fis_sex_12m,13.9,,
+2022,Apurímac,fis_sex_12m,14.4,10.6,18.1
+2023,Apurímac,fis_sex_12m,14.2,10.3,18.0
+2024,Apurímac,fis_sex_12m,11.0,7.5,14.4
+2025,Apurímac,fis_sex_12m,11.1,7.6,14.6
+2021,Arequipa,fis_sex_12m,9.7,,
+2022,Arequipa,fis_sex_12m,13.5,9.8,17.3
+2023,Arequipa,fis_sex_12m,9.6,6.9,12.3
+2024,Arequipa,fis_sex_12m,10.3,6.8,13.7
+2025,Arequipa,fis_sex_12m,7.2,4.4,10.1
+2021,Ayacucho,fis_sex_12m,10.4,,
+2022,Ayacucho,fis_sex_12m,7.9,5.7,10.1
+2023,Ayacucho,fis_sex_12m,8.8,6.4,11.2
+2024,Ayacucho,fis_sex_12m,8.2,5.8,10.6
+2025,Ayacucho,fis_sex_12m,6.1,4.0,8.2
+2021,Cajamarca,fis_sex_12m,6.7,,
+2022,Cajamarca,fis_sex_12m,8.4,5.9,10.9
+2023,Cajamarca,fis_sex_12m,6.0,4.0,8.0
+2024,Cajamarca,fis_sex_12m,5.6,3.6,7.6
+2025,Cajamarca,fis_sex_12m,5.9,3.7,8.2
+2021,Prov. Const. del Callao,fis_sex_12m,7.2,,
+2022,Prov. Const. del Callao,fis_sex_12m,7.3,4.4,10.2
+2023,Prov. Const. del Callao,fis_sex_12m,10.3,6.8,13.8
+2024,Prov. Const. del Callao,fis_sex_12m,8.7,5.3,12.0
+2025,Prov. Const. del Callao,fis_sex_12m,9.0,5.3,12.8
+2021,Cusco,fis_sex_12m,11.5,,
+2022,Cusco,fis_sex_12m,15.5,11.7,19.2
+2023,Cusco,fis_sex_12m,10.8,7.3,14.3
+2024,Cusco,fis_sex_12m,9.3,6.3,12.3
+2025,Cusco,fis_sex_12m,10.9,6.5,15.4
+2021,Huancavelica,fis_sex_12m,11.6,,
+2022,Huancavelica,fis_sex_12m,12.9,9.5,16.2
+2023,Huancavelica,fis_sex_12m,8.8,6.4,11.1
+2024,Huancavelica,fis_sex_12m,8.4,5.3,11.5
+2025,Huancavelica,fis_sex_12m,6.9,4.2,9.6
+2021,Huánuco,fis_sex_12m,8.9,,
+2022,Huánuco,fis_sex_12m,6.3,4.1,8.4
+2023,Huánuco,fis_sex_12m,10.5,6.6,14.4
+2024,Huánuco,fis_sex_12m,4.8,3.0,6.5
+2025,Huánuco,fis_sex_12m,6.2,3.9,8.4
+2021,Ica,fis_sex_12m,7.0,,
+2022,Ica,fis_sex_12m,6.7,4.2,9.2
+2023,Ica,fis_sex_12m,6.6,4.3,8.8
+2024,Ica,fis_sex_12m,8.1,5.3,11.0
+2025,Ica,fis_sex_12m,6.0,3.7,8.3
+2021,Junín,fis_sex_12m,10.4,,
+2022,Junín,fis_sex_12m,11.3,7.4,15.2
+2023,Junín,fis_sex_12m,10.1,6.8,13.4
+2024,Junín,fis_sex_12m,11.1,7.7,14.6
+2025,Junín,fis_sex_12m,5.3,3.0,7.6
+2021,La Libertad,fis_sex_12m,6.8,,
+2022,La Libertad,fis_sex_12m,6.8,4.1,9.4
+2023,La Libertad,fis_sex_12m,6.5,3.8,9.2
+2024,La Libertad,fis_sex_12m,6.9,4.1,9.7
+2025,La Libertad,fis_sex_12m,5.5,3.1,7.9
+2021,Lambayeque,fis_sex_12m,5.7,,
+2022,Lambayeque,fis_sex_12m,5.8,3.9,7.7
+2023,Lambayeque,fis_sex_12m,9.1,6.0,12.2
+2024,Lambayeque,fis_sex_12m,8.3,5.0,11.6
+2025,Lambayeque,fis_sex_12m,3.5,1.8,5.3
+2021,Lima Metropolitana,fis_sex_12m,6.3,,
+2022,Lima Metropolitana,fis_sex_12m,8.2,6.0,10.4
+2023,Lima Metropolitana,fis_sex_12m,7.4,5.5,9.3
+2024,Lima Metropolitana,fis_sex_12m,6.3,4.5,8.1
+2025,Lima Metropolitana,fis_sex_12m,7.9,5.4,10.3
+2021,Departamento de Lima,fis_sex_12m,7.7,,
+2022,Departamento de Lima,fis_sex_12m,6.2,4.1,8.3
+2023,Departamento de Lima,fis_sex_12m,5.5,3.5,7.6
+2024,Departamento de Lima,fis_sex_12m,6.3,4.0,8.6
+2025,Departamento de Lima,fis_sex_12m,5.9,3.3,8.5
+2021,Loreto,fis_sex_12m,6.6,,
+2022,Loreto,fis_sex_12m,10.4,7.8,13.1
+2023,Loreto,fis_sex_12m,13.4,10.4,16.4
+2024,Loreto,fis_sex_12m,9.5,7.0,12.0
+2025,Loreto,fis_sex_12m,7.4,5.0,9.8
+2021,Madre de Dios,fis_sex_12m,13.1,,
+2022,Madre de Dios,fis_sex_12m,10.5,7.0,14.1
+2023,Madre de Dios,fis_sex_12m,9.7,6.8,12.6
+2024,Madre de Dios,fis_sex_12m,9.9,7.4,12.4
+2025,Madre de Dios,fis_sex_12m,10.0,7.0,13.0
+2021,Moquegua,fis_sex_12m,6.9,,
+2022,Moquegua,fis_sex_12m,6.4,3.9,8.8
+2023,Moquegua,fis_sex_12m,8.2,4.5,11.9
+2024,Moquegua,fis_sex_12m,8.3,5.1,11.5
+2025,Moquegua,fis_sex_12m,6.4,3.2,9.6
+2021,Pasco,fis_sex_12m,11.9,,
+2022,Pasco,fis_sex_12m,7.9,5.4,10.5
+2023,Pasco,fis_sex_12m,6.6,4.1,9.1
+2024,Pasco,fis_sex_12m,7.2,4.2,10.1
+2025,Pasco,fis_sex_12m,5.8,3.1,8.4
+2021,Piura,fis_sex_12m,6.0,,
+2022,Piura,fis_sex_12m,9.1,6.3,11.9
+2023,Piura,fis_sex_12m,8.6,6.1,11.1
+2024,Piura,fis_sex_12m,8.5,6.1,11.0
+2025,Piura,fis_sex_12m,5.2,3.0,7.4
+2021,Puno,fis_sex_12m,11.8,,
+2022,Puno,fis_sex_12m,8.5,6.2,10.8
+2023,Puno,fis_sex_12m,9.3,5.7,12.9
+2024,Puno,fis_sex_12m,10.8,6.8,14.7
+2025,Puno,fis_sex_12m,4.9,2.4,7.3
+2021,San Martín,fis_sex_12m,9.5,,
+2022,San Martín,fis_sex_12m,6.5,4.1,9.0
+2023,San Martín,fis_sex_12m,8.2,5.9,10.6
+2024,San Martín,fis_sex_12m,6.8,4.4,9.3
+2025,San Martín,fis_sex_12m,9.5,6.3,12.8
+2021,Tacna,fis_sex_12m,5.3,,
+2022,Tacna,fis_sex_12m,4.9,2.7,7.1
+2023,Tacna,fis_sex_12m,4.4,2.4,6.5
+2024,Tacna,fis_sex_12m,3.4,1.6,5.2
+2025,Tacna,fis_sex_12m,4.4,2.2,6.6
+2021,Tumbes,fis_sex_12m,8.6,,
+2022,Tumbes,fis_sex_12m,10.1,7.1,13.2
+2023,Tumbes,fis_sex_12m,6.8,4.5,9.0
+2024,Tumbes,fis_sex_12m,6.5,4.4,8.6
+2025,Tumbes,fis_sex_12m,8.7,5.3,12.1
+2021,Ucayali,fis_sex_12m,5.9,,
+2022,Ucayali,fis_sex_12m,4.2,2.7,5.6
+2023,Ucayali,fis_sex_12m,3.7,2.1,5.3
+2024,Ucayali,fis_sex_12m,5.8,3.9,7.6
+2025,Ucayali,fis_sex_12m,3.1,1.7,4.4
