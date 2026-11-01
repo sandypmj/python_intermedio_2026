@@ -14,6 +14,19 @@ BLOQUES = [
     ("12.4", "B", "fis_sex_12m"),
 ]
 
+# Encabezados de sección de los cuadros y el nivel que les toca (None = no se usa)
+SECCIONES = {
+    "Grupo de edad": None,
+    "Estado conyugal": None,
+    "Nivel de educación": None,
+    "Quintil de riqueza": None,
+    "Autoidentificación étnica": "etnia",
+    "Lengua materna": "lengua",
+    "Área de residencia": "area",
+    "Región natural": None,
+    "Departamento": "departamento",
+}
+
 
 def a_numero(valor):
     """54.86 -> 54.86 ;  "(16,9)" -> 16.9 ;  "¬" o vacío -> None"""
@@ -46,17 +59,20 @@ def leer_bloque(hoja, letra_inicio, indicador):
         etiqueta = str(etiqueta).strip()
         if etiqueta.startswith("Nota"):
             break
-        if etiqueta == "Departamento":
-            seccion = "departamento"
+        if etiqueta in SECCIONES:
+            seccion = SECCIONES[etiqueta]
             continue
-        if etiqueta != "Total" and seccion != "departamento":
-            continue                      # por ahora solo Perú y departamentos
+        if etiqueta != "Total" and seccion is None:
+            continue                      # sección que no se analiza
+        if etiqueta == "Extranjera":
+            continue                      # muy pocos casos: CV de 67,6 % e IC de 0 a 90,7 en 2025
+        nivel = "nacional" if etiqueta == "Total" else seccion
         nombre = "Perú" if etiqueta == "Total" else re.sub(r"\s+\d+/$", "", etiqueta)
         for anio, col in columna_anio.items():
             valor = a_numero(hoja.cell(fila, col).value)
             if valor is None:
                 continue
-            fila_nueva = {"anio": anio, "categoria": nombre, "indicador": indicador, "valor": round(valor, 1)}
+            fila_nueva = {"anio": anio, "categoria": nombre, "nivel": nivel, "indicador": indicador, "valor": round(valor, 1)}
             if anio >= 2022:              # desde 2022 hay intervalo de confianza
                 fila_nueva["ic_inf"] = round(a_numero(hoja.cell(fila, col + 2).value), 1)
                 fila_nueva["ic_sup"] = round(a_numero(hoja.cell(fila, col + 3).value), 1)

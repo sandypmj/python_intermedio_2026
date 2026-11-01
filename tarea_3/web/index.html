@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Violencia contra la mujer en el Perú</title>
+<title>La violencia contra las mujeres persiste: territorios e identidad en el Perú</title>
 <style>
   body { font-family: sans-serif; max-width: 1000px; margin: 0 auto; padding: 16px; background: #f6f4f1; color: #222; }
   header { border-bottom: 1px solid #ddd; padding-bottom: 12px; margin-bottom: 16px; }
@@ -24,20 +24,31 @@
   .forma .linea { display: flex; align-items: center; gap: 8px; font-size: 12px; margin: 2px 0; }
   .forma .linea em { width: 40px; color: #777; font-style: normal; }
   .forma .b { height: 14px; border-radius: 0 4px 4px 0; }
+  .grupo { position: relative; }
+  .grupo .ref { position: absolute; top: 0; bottom: 0; border-left: 1px dashed #222; }
+  .grupo .dato { position: relative; background: white; }
+    .dos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  .escala { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #555; }
+  .escala .degradado { width: 160px; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #e8dff1, #3b1366); }
+  #mapa path { cursor: pointer; }
+  #mapa path:hover { opacity: 0.8; }
+  @media (max-width: 700px) { .dos { grid-template-columns: 1fr; } }
   .fila { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 13px; }
   .fila span { width: 150px; text-align: right; }
-  .barra { background: #2a78d6; height: 16px; border-radius: 0 4px 4px 0; }
+  .barra { background: #a0a0a0; height: 16px; border-radius: 0 4px 4px 0; }
   .fila.elegida .barra { background: #5a2a82; }
   @media (max-width: 700px) { .kpis { grid-template-columns: 1fr 1fr; } }
 </style>
 <script src="datos.js"></script>
+<script src="geo.js"></script>
 </head>
 <body>
   <header>
-    <h1>¿Dónde es mayor la violencia contra las mujeres en el Perú?</h1>
-    <p class="pregunta"><b>Pregunta:</b> ¿Qué territorios presentan mayores niveles de violencia contra las mujeres y qué ha cambiado?</p>
+    <h1>La violencia contra las mujeres persiste: territorios e identidad en el Perú</h1>
+    <p class="pregunta"><b>Pregunta:</b> ¿Dónde y a quiénes golpea más? ¿Qué ha cambiado?</p>
     <p class="meta">
       <b>Cobertura:</b> 24 departamentos, Callao, Lima Metropolitana y Lima Provincias · 2021–2025<br>
+      <b>Grupos analizados:</b> autoidentificación étnica, lengua materna y área de residencia<br>
       <b>Población:</b> mujeres de 15 a 49 años alguna vez unidas (violencia ejercida por el esposo o compañero)<br>
       <b>Fuente:</b> INEI, Encuesta Demográfica y de Salud Familiar (ENDES) 2025, capítulo 12
     </p>
@@ -67,27 +78,80 @@
   </div>
 
   <div class="kpis" id="kpis"></div>
-  
+
   <div class="tarjeta">
     <h2 id="titulo-evolucion"></h2>
     <div class="leyenda" id="leyenda-evolucion"></div>
     <div id="evolucion"></div>
   </div>
-  
+
   <div class="tarjeta">
     <h2 id="titulo-formas"></h2>
     <div class="leyenda" id="leyenda-formas"></div>
     <div id="formas"></div>
   </div>
-  <h2 id="titulo-grafico"></h2>
-  <div id="grafico"></div>
 
-<script>
+  <div class="tarjeta">
+    <h2>¿A quiénes golpea más?</h2>
+    <div class="leyenda" id="leyenda-grupos"></div>
+    <small id="nota-grupos"></small>
+    <div id="grupos"></div>
+  </div>
+
+  <div class="dos">
+    <div class="tarjeta">
+      <h2 id="titulo-mapa"></h2>
+      <div class="escala" id="escala-mapa"></div>
+      <div id="mapa"></div>
+      <small>Haz clic en un departamento para elegirlo.</small>
+    </div>
+    <div class="tarjeta">
+      <h2 id="titulo-grafico"></h2>
+      <div id="grafico"></div>
+    </div>
+  </div>
+
+  <div class="tarjeta">
+    <h2>Hallazgos principales</h2>
+    <ol>
+      <li><b>Disminuye, pero sigue siendo alta.</b> Si bien los porcentajes de violencia hacia las mujeres han disminuido en los últimos años, aún son muy elevados: casi la mitad de las mujeres de 15 a 49 años alguna vez unidas ha sufrido algún tipo de violencia ejercida por el esposo o compañero. En 2025, el 49,1 % de estas mujeres sufrió violencia por parte de su pareja, en comparación con el 76,9 % registrado en 2009. La forma más común es la violencia psicológica y/o verbal, que alcanza el 45,6 %.</li>
+      <li><b>Existen disparidades territoriales marcadas.</b> Apurímac, con 66,1 %, tiene el nivel más alto de violencia por tercer año consecutivo, mientras que Cajamarca, con 36,8 %, presenta la cifra más baja. En 14 de los 26 territorios analizados, más de la mitad de las mujeres alguna vez unidas ha experimentado alguna forma de violencia.</li>
+      <li><b>La disminución no ha sido igual en todo el territorio.</b> Entre 2022 y 2025, 9 de los 26 territorios mostraron una disminución estadísticamente significativa, entre ellos Junín (−14,7 puntos porcentuales), Cajamarca (−14,5) y Loreto (−13,9). Ningún territorio incrementó significativamente sus cifras, aunque Apurímac, Huancavelica y Tumbes continúan con niveles altos y estancados.</li>
+      <li><b>La identidad también marca diferencias.</b> En 2025, las mujeres de origen nativo (54,4 %) y con lengua materna nativa (53,2 %) registran niveles de violencia más altos que las mestizas (48,2 %) y las de lengua castellana (48,3 %). En cambio, el área urbana (49,8 %) supera ligeramente a la rural (46,5 %).</li>
+    </ol>
+  </div>
+
+  <div class="dos">
+    <div class="tarjeta">
+      <h2>Metodología</h2>
+      <p><b>Datos:</b> los datos provienen de los cuadros oficiales del capítulo 12 del informe «Perú: Encuesta Demográfica y de Salud Familiar 2025 – Nacional y departamental», del Instituto Nacional de Estadística e Informática (INEI), en formato Excel.</p>
+      <p><b>Población:</b> mujeres de 15 a 49 años que han estado alguna vez casadas o en convivencia, considerando la violencia ejercida por el esposo o compañero.</p>
+      <p><b>Procesamiento:</b> se emplearon herramientas de programación en Python (bibliotecas pandas y openpyxl) para leer los cuadros 12.1, 12.4 y 12.1.1 (serie nacional 2009–2025). Se limpiaron los nombres y los valores referenciales, que estaban escritos como texto, y se transformaron todos los datos a formato largo.</p>
+      <p><b>Prueba de cambio:</b> a partir del intervalo de confianza al 95 % publicado por el INEI se calculó el error estándar, ee = (superior − inferior) / 3,92, y el estadístico z = (valor 2025 − valor 2022) / √(ee₂₀₂₂² + ee₂₀₂₅²). Un cambio se considera significativo si |z| &gt; 1,96.</p>
+    </div>
+    <div class="tarjeta">
+      <h2>Limitaciones</h2>
+      <ul>
+        <li>La muestra de la encuesta se limita a mujeres de 15 a 49 años que han estado alguna vez unidas, y excluye otras poblaciones.</li>
+        <li>Los datos reflejan violencia declarada en una encuesta: el miedo o la vergüenza pueden conducir a un subregistro.</li>
+        <li>A nivel departamental, la muestra es de unos pocos cientos de mujeres, por lo que las diferencias pequeñas no son concluyentes.</li>
+        <li>El análisis es de carácter descriptivo: una disminución en los índices no prueba por sí sola el efecto de una política específica.</li>
+      </ul>
+      <h2>Fuentes</h2>
+      <ul>
+        <li>INEI, <a href="https://www.gob.pe/institucion/inei/informes-publicaciones/8284085-peru-encuesta-demografica-y-de-salud-familiar-endes-2025">Perú: Encuesta Demográfica y de Salud Familiar – ENDES 2025</a>, capítulo 12.</li>
+        <li>Límites territoriales: <a href="https://github.com/juaneladio/peru-geojson">juaneladio/peru-geojson</a> (cartografía del INEI).</li>
+      </ul>
+    </div>
+  </div>
+
+  <p style="color:#777; font-size:13px; margin-top:20px;">Elaborado por <b>Sandy Patricia Martinez Jara</b> · Tarea 3, Python Intermedio · Si tú o alguien que conoces vive violencia, llama gratis a la <b>Línea 100</b>.</p>
+  <script>
   // 1. El estado: lo que eligió la persona
   const estado = { indicador: "cualquiera", anio: 2025, base: 2022, departamento: "Perú" };
 
   // 2. Llenar la lista de departamentos a partir de los datos
-  const nombres = [...new Set(DATOS.map(f => f.categoria))].sort();
+  const nombres = [...new Set(DATOS.filter(f => f.nivel === "departamento" || f.nivel === "nacional").map(f => f.categoria))].sort();
   const selDep = document.getElementById("departamento");
   for (const n of nombres) selDep.add(new Option(n, n));
   selDep.value = estado.departamento;
@@ -101,7 +165,7 @@
 
   // 4. Dibujar todo según el estado
   function dibujar() {
-    const filas = DATOS.filter(f => f.anio === estado.anio && f.indicador === estado.indicador && f.categoria !== "Perú")
+    const filas = DATOS.filter(f => f.anio === estado.anio && f.indicador === estado.indicador && f.nivel === "departamento")
                        .sort((a, b) => b.valor - a.valor);
     const peru = valor(estado.anio, "Perú", estado.indicador);
     const elegido = valor(estado.anio, estado.departamento, estado.indicador);
@@ -124,6 +188,8 @@
 
     dibujarEvolucion();
     dibujarFormas();
+    dibujarGrupos();
+    dibujarMapa();
   }
 
     // 4b. Gráfico de evolución: una línea para el territorio elegido y otra para el Perú
@@ -185,6 +251,84 @@
     document.getElementById("leyenda-formas").innerHTML =
       `<span><i style="background:#bbbbbb"></i>${estado.base}</span><span><i style="background:#5a2a82"></i>${estado.anio}</span>`;
     document.getElementById("formas").innerHTML = html;
+  }
+    // 4d. Mapa: cada territorio coloreado según su valor (más oscuro = más violencia)
+  function dibujarMapa() {
+    // a) Los límites del dibujo: la longitud y latitud mínima y máxima de todo el Perú
+    const puntos = GEO.flatMap(t => (t.tipo === "Polygon" ? [t.coords] : t.coords).flat(2));
+    const lons = puntos.map(p => p[0]), lats = puntos.map(p => p[1]);
+    const minLon = Math.min(...lons), maxLon = Math.max(...lons);
+    const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+    const W = 400, escala = W / (maxLon - minLon), H = (maxLat - minLat) * escala;
+    const x = lon => (lon - minLon) * escala;            // longitud -> posición horizontal
+    const y = lat => (maxLat - lat) * escala;            // latitud -> posición vertical (el norte arriba)
+
+    // b) El color: de lila claro (valor mínimo) a morado oscuro (valor máximo)
+    const valores = GEO.map(t => valor(estado.anio, t.nombre, estado.indicador)).filter(v => v !== null);
+    const minimo = Math.min(...valores), maximo = Math.max(...valores);
+    function color(v) {
+      if (v === null) return "#dddddd";
+      const p = (v - minimo) / (maximo - minimo);                   // 0 = el más bajo, 1 = el más alto
+      const r = Math.round(232 + (59 - 232) * p), g = Math.round(223 + (19 - 223) * p), b = Math.round(241 + (102 - 241) * p);
+      return `rgb(${r},${g},${b})`;
+    }
+
+    // c) Cada anillo de coordenadas se convierte en un trazo SVG: "M x,y L x,y L x,y ... Z"
+    const anillo = a => "M" + a.map(p => x(p[0]).toFixed(1) + "," + y(p[1]).toFixed(1)).join("L") + "Z";
+    let svg = `<svg viewBox="0 0 ${W} ${H.toFixed(0)}" width="100%">`;
+    for (const t of GEO) {
+      const poligonos = t.tipo === "Polygon" ? [t.coords] : t.coords;
+      const d = poligonos.map(pol => pol.map(anillo).join("")).join("");
+      const v = valor(estado.anio, t.nombre, estado.indicador);
+      const elegido = t.nombre === estado.departamento;
+      svg += `<path d="${d}" fill="${color(v)}" stroke="${elegido ? "#f08a4b" : "white"}" stroke-width="${elegido ? 3 : 0.8}"
+                data-nombre="${t.nombre}"><title>${t.nombre}: ${fmt(v)} %</title></path>`;
+    }
+    svg += "</svg>";
+
+    document.getElementById("titulo-mapa").textContent = "Mapa, " + estado.anio;
+    document.getElementById("escala-mapa").innerHTML = `${fmt(minimo)} % <span class="degradado"></span> ${fmt(maximo)} %`;
+    document.getElementById("mapa").innerHTML = svg;
+
+    // d) Clic en un departamento = elegirlo en el menú
+    document.querySelectorAll("#mapa path").forEach(p => p.onclick = () => {
+      estado.departamento = p.dataset.nombre;
+      selDep.value = estado.departamento;
+      dibujar();
+    });
+  }
+    // 4e. Grupos de población (cifras nacionales): año de comparación (gris) frente al año elegido (morado)
+  function dibujarGrupos() {
+    const grupos = [
+      ["Área de residencia", [["Urbana", "Urbana"], ["Rural", "Rural"]]],
+      ["Autoidentificación étnica", [["Origen nativo", "Origen nativo"], ["Mestizo", "Mestizo"], ["Negro, moreno, zambo", "Negro/moreno/zambo"], ["Blanco", "Blanco"]]],
+      ["Lengua materna", [["Lengua nativa", "Lengua nativa"], ["Castellano", "Castellano"]]],
+    ];
+    const peru = valor(estado.anio, "Perú", estado.indicador);
+    const todos = grupos.flatMap(g => g[1]).flatMap(([c]) => [valor(estado.base, c, estado.indicador), valor(estado.anio, c, estado.indicador)]);
+    const maximo = Math.max(peru, ...todos);                               // la barra más larga ocupa todo el ancho
+    const largo = v => `(100% - 110px) * ${(v || 0) / maximo}`;            // 110px: año, separaciones y cifra
+
+    let html = "";
+    for (const [titulo, categorias] of grupos) {
+      html += `<h3>${titulo}</h3><div class="grupo"><div class="ref" style="left:calc(48px + ${largo(peru)})"></div>`;
+      for (const [clave, nombre] of categorias) {
+        const antes = valor(estado.base, clave, estado.indicador);
+        const ahora = valor(estado.anio, clave, estado.indicador);
+        html += `<div class="forma"><div class="nombre">${nombre}</div>
+          <div class="linea"><em>${estado.base}</em><div class="b" style="width:calc(${largo(antes)}); background:#bbbbbb"></div><span class="dato">${fmt(antes)} %</span></div>
+          <div class="linea"><em>${estado.anio}</em><div class="b" style="width:calc(${largo(ahora)}); background:#5a2a82"></div><span class="dato"><b>${fmt(ahora)} %</b></span></div>
+        </div>`;
+      }
+      html += "</div>";
+    }
+    const indicador = document.getElementById("indicador");
+    document.getElementById("leyenda-grupos").innerHTML =
+      `<span><i style="background:#bbbbbb"></i>${estado.base}</span><span><i style="background:#5a2a82"></i>${estado.anio}</span>
+       <span><i style="width:0; height:12px; border-radius:0; border-left:1px dashed #222"></i>Promedio del Perú, ${estado.anio}: ${fmt(peru)} %</span>`;
+    document.getElementById("nota-grupos").textContent =
+      `${indicador.options[indicador.selectedIndex].text}. Cifras nacionales: este gráfico no cambia con el menú Departamento.`;
+    document.getElementById("grupos").innerHTML = html;
   }
   // 5. Cuando cambia un control: actualizar el estado y volver a dibujar
   document.getElementById("indicador").onchange = e => { estado.indicador = e.target.value; dibujar(); };

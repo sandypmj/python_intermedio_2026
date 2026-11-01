@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 t = pd.read_csv("datos/procesados/indicadores_mi_version.csv")
-dep = t[(t.indicador == "cualquiera") & (t.categoria != "Perú")]
+dep = t[(t.indicador == "cualquiera") & (t.nivel == "departamento")]
 
 # Hallazgo 2: ranking y brecha en 2025
 d25 = dep[dep.anio == 2025].sort_values("valor", ascending=False)
