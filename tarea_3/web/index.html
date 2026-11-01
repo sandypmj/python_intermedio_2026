@@ -4,55 +4,105 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>La violencia contra las mujeres persiste: territorios e identidad en el Perú</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Public+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  body { font-family: sans-serif; max-width: 1000px; margin: 0 auto; padding: 16px; background: #f6f4f1; color: #222; }
-  header { border-bottom: 1px solid #ddd; padding-bottom: 12px; margin-bottom: 16px; }
-  .pregunta { font-size: 18px; color: #444; }
-  .meta { font-size: 14px; color: #555; }
-  .controles { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
-  .controles label { display: flex; flex-direction: column; font-size: 12px; font-weight: bold; color: #666; }
-  .controles select { font-size: 14px; padding: 4px; }
-  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .kpi { background: white; border-radius: 12px; padding: 14px; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { font-family: "Public Sans", sans-serif; line-height: 1.5; max-width: 1000px; margin: 0 auto; padding: 24px 16px 32px; background: #f6f4f1; color: #222; }
+  h1, h2, h3 { font-family: "Fraunces", serif; line-height: 1.2; }
+  h1 { font-size: clamp(30px, 6vw, 46px); font-weight: 800; margin: 0 0 24px; }
+  h2 { font-size: 24px; font-weight: 600; margin: 0 0 12px; }
+  h3 { font-size: 18px; font-weight: 600; margin: 24px 0 8px; }
+  header { border-bottom: 1px solid #ddd; padding-bottom: 20px; margin-bottom: 12px; }
+  .antetitulo { margin: 0 0 10px; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5a2a82; }
+  .pregunta { font-size: 18px; color: #444; background: #f3eef8; border-left: 4px solid #5a2a82; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 0 0 20px; }
+  .meta { list-style: none; margin: 0; padding: 0; font-size: 14px; color: #555; }
+  .meta li { margin: 3px 0; }
+  .secciones { display: flex; flex-wrap: wrap; gap: 2px 4px; margin-bottom: 4px; }
+  .secciones a { padding: 6px 10px; border-radius: 6px; font-size: 14px; font-weight: 600; color: #5a2a82; text-decoration: none; }
+  .secciones a:hover, .secciones a:focus-visible { background: #f3eef8; }
+  [id^="seccion-"] { scroll-margin-top: 92px; }
+  .controles { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; gap: 12px; margin: 0 -16px 8px; padding: 10px 16px; background: rgba(246, 244, 241, 0.92); backdrop-filter: blur(6px); }
+  .controles label { display: flex; flex-direction: column; min-width: 0; font-size: 12px; font-weight: 700; color: #666; }
+  .controles select { font: inherit; font-size: 14px; font-weight: 400; color: #222; padding: 4px; max-width: 100%; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .kpi { min-width: 0; background: white; border-radius: 12px; padding: 14px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08); }
   .kpi b { display: block; font-size: 28px; margin: 4px 0; }
   .kpi small { color: #777; }
-    .tarjeta { background: white; border-radius: 12px; padding: 14px; margin-top: 16px; }
+  .tarjeta { background: white; border-radius: 12px; padding: 20px; margin-top: 28px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08); }
+  .cabecera-tarjeta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 12px; }
+  .cabecera-tarjeta h2 { margin: 0; }
+  .boton { font: inherit; font-size: 13px; font-weight: 600; color: #5a2a82; background: white; border: 1px solid #5a2a82; border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  .boton:hover, .boton:focus-visible { background: #f3eef8; }
   .leyenda span { display: inline-block; margin-right: 14px; font-size: 13px; }
   .leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; }
-    .forma { margin: 10px 0; }
-  .forma .nombre { font-size: 14px; font-weight: bold; margin-bottom: 3px; }
-  .forma .linea { display: flex; align-items: center; gap: 8px; font-size: 12px; margin: 2px 0; }
-  .forma .linea em { width: 40px; color: #777; font-style: normal; }
+  #nota-grupos { display: block; margin-top: 4px; color: #555; }
+  .forma { margin: 10px 0; }
+  .forma .nombre { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+  .forma .linea { display: flex; align-items: center; gap: 8px; font-size: 12px; margin: 2px 0; white-space: nowrap; }
+  .forma .linea em { flex: none; width: 40px; color: #777; font-style: normal; }
   .forma .b { height: 14px; border-radius: 0 4px 4px 0; }
   .grupo { position: relative; }
   .grupo .ref { position: absolute; top: 0; bottom: 0; border-left: 1px dashed #222; }
   .grupo .dato { position: relative; background: white; }
-    .dos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+  .dos { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; align-items: start; }
+  .dos > * { min-width: 0; }
   .escala { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #555; }
   .escala .degradado { width: 160px; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #e8dff1, #3b1366); }
   #mapa path { cursor: pointer; }
   #mapa path:hover { opacity: 0.8; }
-  @media (max-width: 700px) { .dos { grid-template-columns: 1fr; } }
-  .fila { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 13px; }
-  .fila span { width: 150px; text-align: right; }
+  .fila { --etiqueta: 150px; display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 13px; line-height: 1.2; white-space: nowrap; }
+  .fila span { flex: none; width: var(--etiqueta); text-align: right; white-space: normal; }
   .barra { background: #a0a0a0; height: 16px; border-radius: 0 4px 4px 0; }
   .fila.elegida .barra { background: #5a2a82; }
-  @media (max-width: 700px) { .kpis { grid-template-columns: 1fr 1fr; } }
+  .seccion-hallazgos { margin-top: 36px; }
+  .hallazgos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .hallazgo { min-width: 0; margin-top: 0; }
+  .hallazgo .cifra { margin: 0 0 8px; font-family: "Fraunces", serif; font-size: 32px; font-weight: 800; line-height: 1.15; color: #5a2a82; }
+  .hallazgo p:last-child { margin: 0; }
+  @media (max-width: 700px) {
+    body { padding-top: 16px; }
+    [id^="seccion-"] { scroll-margin-top: 136px; }
+    .pregunta { font-size: 16px; }
+    .controles { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; padding: 8px 16px; }
+    .controles select { width: 100%; font-size: 16px; padding: 2px; }
+    .kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .kpi b { font-size: 24px; }
+    .tarjeta { padding: 16px; margin-top: 20px; }
+    .dos, .hallazgos { grid-template-columns: 1fr; }
+    .hallazgo { margin-top: 0; }
+    .hallazgo .cifra { font-size: 28px; }
+    .fila { --etiqueta: 100px; }
+    .secciones a { padding: 6px 8px; }
+  }
 </style>
 <script src="datos.js"></script>
 <script src="geo.js"></script>
 </head>
 <body>
   <header>
+    <p class="antetitulo">PERÚ · ENDES 2021–2025 · INEI</p>
     <h1>La violencia contra las mujeres persiste: territorios e identidad en el Perú</h1>
     <p class="pregunta"><b>Pregunta:</b> ¿Dónde y a quiénes golpea más? ¿Qué ha cambiado?</p>
-    <p class="meta">
-      <b>Cobertura:</b> 24 departamentos, Callao, Lima Metropolitana y Lima Provincias · 2021–2025<br>
-      <b>Grupos analizados:</b> autoidentificación étnica, lengua materna y área de residencia<br>
-      <b>Población:</b> mujeres de 15 a 49 años alguna vez unidas (violencia ejercida por el esposo o compañero)<br>
-      <b>Fuente:</b> INEI, Encuesta Demográfica y de Salud Familiar (ENDES) 2025, capítulo 12
-    </p>
+    <ul class="meta">
+      <li><b>Cobertura:</b> 26 territorios: 23 departamentos, Lima Metropolitana, Departamento de Lima (Lima Provincias) y el Callao (como los publica el INEI) · 2021–2025</li>
+      <li><b>Población:</b> mujeres de 15 a 49 años alguna vez unidas (violencia ejercida por el esposo o compañero)</li>
+      <li><b>Grupos analizados:</b> autoidentificación étnica, lengua materna y área de residencia</li>
+      <li><b>Fuente:</b> INEI, Encuesta Demográfica y de Salud Familiar (ENDES) 2025, capítulo 12</li>
+    </ul>
   </header>
+
+  <nav class="secciones" aria-label="Secciones">
+    <a href="#seccion-explorar">Explorar</a>
+    <a href="#seccion-evolucion">Evolución</a>
+    <a href="#seccion-formas">Formas</a>
+    <a href="#seccion-identidad">Identidad</a>
+    <a href="#seccion-territorio">Territorio</a>
+    <a href="#seccion-hallazgos">Hallazgos</a>
+    <a href="#seccion-metodologia">Metodología</a>
+  </nav>
 
   <div class="controles">
     <label>Indicador
@@ -77,28 +127,28 @@
     <label>Departamento <select id="departamento"></select></label>
   </div>
 
-  <div class="kpis" id="kpis"></div>
+  <div id="seccion-explorar"><div class="kpis" id="kpis"></div></div>
 
-  <div class="tarjeta">
+  <div class="tarjeta" id="seccion-evolucion">
     <h2 id="titulo-evolucion"></h2>
     <div class="leyenda" id="leyenda-evolucion"></div>
     <div id="evolucion"></div>
   </div>
 
-  <div class="tarjeta">
+  <div class="tarjeta" id="seccion-formas">
     <h2 id="titulo-formas"></h2>
     <div class="leyenda" id="leyenda-formas"></div>
     <div id="formas"></div>
   </div>
 
-  <div class="tarjeta">
+  <div class="tarjeta" id="seccion-identidad">
     <h2>¿A quiénes golpea más?</h2>
     <div class="leyenda" id="leyenda-grupos"></div>
     <small id="nota-grupos"></small>
     <div id="grupos"></div>
   </div>
 
-  <div class="dos">
+  <div class="dos" id="seccion-territorio">
     <div class="tarjeta">
       <h2 id="titulo-mapa"></h2>
       <div class="escala" id="escala-mapa"></div>
@@ -106,22 +156,37 @@
       <small>Haz clic en un departamento para elegirlo.</small>
     </div>
     <div class="tarjeta">
-      <h2 id="titulo-grafico"></h2>
+      <div class="cabecera-tarjeta">
+        <h2 id="titulo-grafico"></h2>
+        <button type="button" class="boton" id="descargar">Descargar CSV</button>
+      </div>
       <div id="grafico"></div>
     </div>
   </div>
 
-  <div class="tarjeta">
+  <section class="seccion-hallazgos" id="seccion-hallazgos">
     <h2>Hallazgos principales</h2>
-    <ol>
-      <li><b>Disminuye, pero sigue siendo alta.</b> Si bien los porcentajes de violencia hacia las mujeres han disminuido en los últimos años, aún son muy elevados: casi la mitad de las mujeres de 15 a 49 años alguna vez unidas ha sufrido algún tipo de violencia ejercida por el esposo o compañero. En 2025, el 49,1 % de estas mujeres sufrió violencia por parte de su pareja, en comparación con el 76,9 % registrado en 2009. La forma más común es la violencia psicológica y/o verbal, que alcanza el 45,6 %.</li>
-      <li><b>Existen disparidades territoriales marcadas.</b> Apurímac, con 66,1 %, tiene el nivel más alto de violencia por tercer año consecutivo, mientras que Cajamarca, con 36,8 %, presenta la cifra más baja. En 14 de los 26 territorios analizados, más de la mitad de las mujeres alguna vez unidas ha experimentado alguna forma de violencia.</li>
-      <li><b>La disminución no ha sido igual en todo el territorio.</b> Entre 2022 y 2025, 9 de los 26 territorios mostraron una disminución estadísticamente significativa, entre ellos Junín (−14,7 puntos porcentuales), Cajamarca (−14,5) y Loreto (−13,9). Ningún territorio incrementó significativamente sus cifras, aunque Apurímac, Huancavelica y Tumbes continúan con niveles altos y estancados.</li>
-      <li><b>La identidad también marca diferencias.</b> En 2025, las mujeres de origen nativo (54,4 %) y con lengua materna nativa (53,2 %) registran niveles de violencia más altos que las mestizas (48,2 %) y las de lengua castellana (48,3 %). En cambio, el área urbana (49,8 %) supera ligeramente a la rural (46,5 %).</li>
-    </ol>
-  </div>
+    <div class="hallazgos">
+      <article class="tarjeta hallazgo">
+        <p class="cifra">76,9 % → 49,1 %</p>
+        <p><b>Disminuye, pero sigue siendo alta.</b> Si bien los porcentajes de violencia hacia las mujeres han disminuido en los últimos años, aún son muy elevados: casi la mitad de las mujeres de 15 a 49 años alguna vez unidas ha sufrido algún tipo de violencia ejercida por el esposo o compañero. En 2025, el 49,1 % de estas mujeres sufrió violencia por parte de su pareja, en comparación con el 76,9 % registrado en 2009. La forma más común es la violencia psicológica y/o verbal, que alcanza el 45,6 %.</p>
+      </article>
+      <article class="tarjeta hallazgo">
+        <p class="cifra">66,1 % vs 36,8 %</p>
+        <p><b>Existen disparidades territoriales marcadas.</b> Apurímac, con 66,1 %, tiene el nivel más alto de violencia por tercer año consecutivo, mientras que Cajamarca, con 36,8 %, presenta la cifra más baja. En 14 de los 26 territorios analizados, más de la mitad de las mujeres alguna vez unidas ha experimentado alguna forma de violencia.</p>
+      </article>
+      <article class="tarjeta hallazgo">
+        <p class="cifra">9 de 26</p>
+        <p><b>La disminución no ha sido igual en todo el territorio.</b> Entre 2022 y 2025, 9 de los 26 territorios mostraron una disminución estadísticamente significativa, entre ellos Junín (−14,7 puntos porcentuales), Cajamarca (−14,5) y Loreto (−13,9). Ningún territorio incrementó significativamente sus cifras, aunque Apurímac, Huancavelica y Tumbes continúan con niveles altos y estancados.</p>
+      </article>
+      <article class="tarjeta hallazgo">
+        <p class="cifra">54,4 %</p>
+        <p><b>La identidad también marca diferencias.</b> En 2025, las mujeres de origen nativo (54,4 %) y con lengua materna nativa (53,2 %) registran niveles de violencia más altos que las mestizas (48,2 %) y las de lengua castellana (48,3 %). En cambio, el área urbana (49,8 %) supera ligeramente a la rural (46,5 %).</p>
+      </article>
+    </div>
+  </section>
 
-  <div class="dos">
+  <div class="dos" id="seccion-metodologia">
     <div class="tarjeta">
       <h2>Metodología</h2>
       <p><b>Datos:</b> los datos provienen de los cuadros oficiales del capítulo 12 del informe «Perú: Encuesta Demográfica y de Salud Familiar 2025 – Nacional y departamental», del Instituto Nacional de Estadística e Informática (INEI), en formato Excel.</p>
@@ -136,6 +201,7 @@
         <li>Los datos reflejan violencia declarada en una encuesta: el miedo o la vergüenza pueden conducir a un subregistro.</li>
         <li>A nivel departamental, la muestra es de unos pocos cientos de mujeres, por lo que las diferencias pequeñas no son concluyentes.</li>
         <li>El análisis es de carácter descriptivo: una disminución en los índices no prueba por sí sola el efecto de una política específica.</li>
+        <li>Algunos valores son referenciales: el INEI publica entre paréntesis los estimadores con un coeficiente de variación de 15,0 % a 49,9 %. Este dashboard los muestra sin paréntesis, por lo que deben leerse con cautela; por ejemplo, las cifras de mujeres negras, morenas o zambas y de mujeres blancas en violencia sexual y en los últimos 12 meses (2025). La categoría «Extranjera» de lengua materna se omitió por ser muy imprecisa.</li>
       </ul>
       <h2>Fuentes</h2>
       <ul>
@@ -162,6 +228,11 @@
     return f ? f.valor : null;
   }
   const fmt = v => v === null ? "–" : v.toFixed(1).replace(".", ",");
+  function nombreIndicador() {
+    const sel = document.getElementById("indicador");
+    return sel.options[sel.selectedIndex].text;
+  }
+  let filasRanking = [];   // lo que muestra el ranking ahora, para el botón de descarga
 
   // 4. Dibujar todo según el estado
   function dibujar() {
@@ -172,6 +243,7 @@
     const antes = valor(estado.base, estado.departamento, estado.indicador);
     const cambio = elegido !== null && antes !== null ? elegido - antes : null;
     const mayor = filas[0], menor = filas[filas.length - 1];
+    filasRanking = filas;
 
     document.getElementById("kpis").innerHTML = `
       <div class="kpi">Perú, ${estado.anio}<b>${fmt(peru)} %</b><small>promedio nacional</small></div>
@@ -183,7 +255,7 @@
     document.getElementById("grafico").innerHTML = filas.map(f => `
       <div class="fila ${f.categoria === estado.departamento ? "elegida" : ""}">
         <span>${f.categoria}</span>
-        <div class="barra" style="width:${f.valor * 6}px"></div> ${fmt(f.valor)}
+        <div class="barra" style="width:calc((100% - var(--etiqueta) - 50px) * ${f.valor / mayor.valor})"></div> ${fmt(f.valor)}
       </div>`).join("");
 
     dibujarEvolucion();
@@ -195,7 +267,7 @@
     // 4b. Gráfico de evolución: una línea para el territorio elegido y otra para el Perú
   function dibujarEvolucion() {
     const anios = [2021, 2022, 2023, 2024, 2025];
-    const W = 700, H = 260, izq = 45, der = 25, arr = 25, abj = 30;   // tamaño y márgenes del dibujo
+    const W = window.innerWidth < 600 ? 420 : 700, H = 260, izq = 45, der = 25, arr = 25, abj = 30;   // tamaño y márgenes del dibujo
     const series = [{ nombre: "Perú", color: "#999999" }];
     if (estado.departamento !== "Perú") series.push({ nombre: estado.departamento, color: "#5a2a82" });
     for (const s of series) s.valores = anios.map(a => valor(a, s.nombre, estado.indicador));
@@ -238,13 +310,15 @@
       ["fis_sex_12m", "Física y/o sexual, últimos 12 meses"],
     ];
     const lugar = estado.departamento;
+    const maximo = Math.max(...formas.flatMap(([clave]) => [valor(estado.base, lugar, clave), valor(estado.anio, lugar, clave)]));
+    const largo = v => `min(${(v || 0) * 8}px, calc((100% - 110px) * ${(v || 0) / maximo}))`;   // se encoge si no cabe
     let html = "";
     for (const [clave, nombre] of formas) {
       const antes = valor(estado.base, lugar, clave);
       const ahora = valor(estado.anio, lugar, clave);
       html += `<div class="forma"><div class="nombre">${nombre}</div>
-        <div class="linea"><em>${estado.base}</em><div class="b" style="width:${(antes || 0) * 8}px; background:#bbbbbb"></div>${fmt(antes)} %</div>
-        <div class="linea"><em>${estado.anio}</em><div class="b" style="width:${(ahora || 0) * 8}px; background:#5a2a82"></div><b>${fmt(ahora)} %</b></div>
+        <div class="linea"><em>${estado.base}</em><div class="b" style="width:${largo(antes)}; background:#bbbbbb"></div>${fmt(antes)} %</div>
+        <div class="linea"><em>${estado.anio}</em><div class="b" style="width:${largo(ahora)}; background:#5a2a82"></div><b>${fmt(ahora)} %</b></div>
       </div>`;
     }
     document.getElementById("titulo-formas").textContent = `Formas de violencia en ${lugar}`;
@@ -322,19 +396,29 @@
       }
       html += "</div>";
     }
-    const indicador = document.getElementById("indicador");
     document.getElementById("leyenda-grupos").innerHTML =
       `<span><i style="background:#bbbbbb"></i>${estado.base}</span><span><i style="background:#5a2a82"></i>${estado.anio}</span>
        <span><i style="width:0; height:12px; border-radius:0; border-left:1px dashed #222"></i>Promedio del Perú, ${estado.anio}: ${fmt(peru)} %</span>`;
     document.getElementById("nota-grupos").textContent =
-      `${indicador.options[indicador.selectedIndex].text}. Cifras nacionales: este gráfico no cambia con el menú Departamento.`;
+      `${nombreIndicador()}. Cifras nacionales: este gráfico no cambia con el menú Departamento.`;
     document.getElementById("grupos").innerHTML = html;
+  }
+    // 4f. Descargar lo que muestra el ranking
+  function descargarCSV() {
+    const lineas = filasRanking.map(f => `"${f.categoria}";${f.anio};"${nombreIndicador()}";${fmt(f.valor)}`);
+    const csv = "\ufeff" + ["territorio;año;indicador;valor", ...lineas].join("\r\n");   // \ufeff: para que Excel lea las tildes
+    const enlace = document.createElement("a");
+    enlace.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+    enlace.download = `ranking_${estado.indicador}_${estado.anio}.csv`;
+    enlace.click();
+    setTimeout(() => URL.revokeObjectURL(enlace.href), 1000);
   }
   // 5. Cuando cambia un control: actualizar el estado y volver a dibujar
   document.getElementById("indicador").onchange = e => { estado.indicador = e.target.value; dibujar(); };
   document.getElementById("anio").onchange = e => { estado.anio = Number(e.target.value); dibujar(); };
   document.getElementById("base").onchange = e => { estado.base = Number(e.target.value); dibujar(); };
   selDep.onchange = e => { estado.departamento = e.target.value; dibujar(); };
+  document.getElementById("descargar").onclick = descargarCSV;
 
   dibujar();
 </script>
