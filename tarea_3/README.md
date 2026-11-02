@@ -21,7 +21,7 @@ El proyecto tiene dos productos, construidos con Python a partir de los cuadros 
 
 - **Dashboard:** https://sandypmj.github.io/python_intermedio_2026/tarea_3/web/
 - **Video:** [reel/salidas/reel.mp4](reel/salidas/reel.mp4)
-- **LinkedIn:** [ENLACE_LINKEDIN]
+- **Reel (Google Drive):** https://drive.google.com/file/d/13Ku_Iz42vzkBC2-YK4foLPJA1n3ppz3N/view?usp=sharing
 
 ## Hallazgos
 
