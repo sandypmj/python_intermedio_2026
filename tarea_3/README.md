@@ -23,6 +23,16 @@ El proyecto tiene dos productos, construidos con Python a partir de los cuadros 
 - **Video:** [reel/salidas/reel.mp4](reel/salidas/reel.mp4)
 - **Reel (Google Drive):** https://drive.google.com/file/d/13Ku_Iz42vzkBC2-YK4foLPJA1n3ppz3N/view?usp=sharing
 
+## Capturas del dashboard
+
+![Título, pregunta, KPIs y evolución](imagenes/dashboard_1.png)
+
+![Mapa y ranking por territorio, 2025](imagenes/dashboard_2.png)
+
+![¿A quiénes golpea más? Área, etnia y lengua materna](imagenes/dashboard_3.png)
+
+![Hallazgos principales](imagenes/dashboard_4.png)
+
 ## Hallazgos
 
 1. **Disminuye, pero sigue siendo alta.** Si bien los porcentajes de violencia hacia las mujeres han disminuido en los últimos años, aún son muy elevados: casi la mitad de las mujeres de 15 a 49 años alguna vez unidas ha sufrido algún tipo de violencia ejercida por el esposo o compañero. En 2025, el 49,1 % de estas mujeres sufrió violencia por parte de su pareja, en comparación con el 76,9 % registrado en 2009. La forma más común es la violencia psicológica y/o verbal, que alcanza el 45,6 %.
