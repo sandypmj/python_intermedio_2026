@@ -93,9 +93,7 @@ Para revisar solo el diseño, sin voz ni modelos, se puede usar `--prueba` en lu
 
 ## Uso de IA
 
-- Usé Claude (chat y Claude Code) para guiarme, escribir y depurar código y mejorar el diseño.
-- Revisé las cifras contra los cuadros del INEI.
-- La voz del reel es mi propia voz clonada con Qwen3-TTS, y los subtítulos se hicieron con Whisper.
+Realicé la limpieza de datos, el análisis, la verificación de cifras contra los cuadros del INEI y la redacción de hallazgos, metodología y limitaciones. Usé Claude Code en VS Code para las mejoras de diseño del dashboard, generación del reel y redacción del README. Los commits hechos por Claude Code llevan la línea "Co-Authored-By: Claude". La narración del reel es mi propia voz clonada con Qwen3-TTS, y los subtítulos se generaron con Whisper.
 
 ---
 
