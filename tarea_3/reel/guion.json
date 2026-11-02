@@ -1,0 +1,66 @@
+{
+  "titulo": "La violencia contra las mujeres persiste",
+  "escenas": [
+    {
+      "frase": "En el Perú, casi la mitad de las mujeres que alguna vez tuvieron pareja sufrió violencia de su esposo o compañero.",
+      "cifra": "49,1 %",
+      "etiqueta": "Mujeres de 15 a 49 años alguna vez unidas, 2025",
+      "imagen": "recursos/escena_1.png",
+      "fuente_cifra": "Cuadro 12.1, Total 2025"
+    },
+    {
+      "frase": "Es la cifra más baja desde dos mil nueve, cuando llegaba a setenta y seis coma nueve por ciento.",
+      "cifra": "−27,8 puntos",
+      "etiqueta": "76,9 % en 2009 y 49,1 % en 2025",
+      "imagen": "recursos/escena_2.png",
+      "fuente_cifra": "Cuadro 12.1.1: 49,1 − 76,9 = −27,8"
+    },
+    {
+      "frase": "Pero el país no avanza igual. En Apurímac llega a sesenta y seis por ciento; en Cajamarca, a treinta y siete.",
+      "cifra": "29 puntos",
+      "etiqueta": "de diferencia entre Apurímac y Cajamarca",
+      "imagen": "recursos/escena_3.png",
+      "fuente_cifra": "Cuadro 12.1: Apurímac 66,1; Cajamarca 36,8"
+    },
+    {
+      "frase": "Desde dos mil veintidós, nueve territorios redujeron la violencia de forma significativa, como Junín, Cajamarca y Loreto.",
+      "cifra": "9 de 26",
+      "etiqueta": "territorios con baja significativa, 2022–2025",
+      "imagen": "recursos/escena_4.png",
+      "fuente_cifra": "analizar_datos.py: prueba z con los IC del cuadro 12.1"
+    },
+    {
+      "frase": "En cambio, Apurímac, Huancavelica y Tumbes siguen estancados, muy por encima del promedio nacional.",
+      "cifra": "",
+      "etiqueta": "Estancados en niveles altos",
+      "imagen": "recursos/escena_5.png",
+      "fuente_cifra": "Cuadro 12.1: 65,3→66,1; 58,2→58,3; 55,4→57,1"
+    },
+    {
+      "frase": "Y golpea más a las mujeres de origen nativo: cincuenta y cuatro coma cuatro por ciento, frente a cuarenta y ocho coma dos de las mestizas.",
+      "cifra": "54,4 %",
+      "etiqueta": "Mujeres de origen nativo, 2025",
+      "imagen": "recursos/escena_6.png",
+      "fuente_cifra": "Cuadro 12.1, autoidentificación étnica 2025: Origen nativo 54,4 (IC 51,5–57,2); Mestizo 48,2 (IC 45,7–50,6)"
+    },
+    {
+      "frase": "Analicé los datos oficiales de la ENDES en un tablero interactivo. Explóralo con el enlace de la publicación.",
+      "cifra": "",
+      "etiqueta": "Explora el dashboard: enlace en la publicación",
+      "imagen": "recursos/escena_7.png",
+      "fuente_cifra": ""
+    }
+  ],
+  "hashtags": [
+    "#ViolenciaDeGénero",
+    "#DataScience",
+    "#Python",
+    "#DatosAbiertos",
+    "#Perú"
+  ],
+  "posts": {
+    "linkedin": "La violencia contra las mujeres persiste: ¿dónde y a quiénes golpea más? ¿Qué ha cambiado?\n\nConstruí un dashboard interactivo con los cuadros oficiales de la ENDES 2025 (INEI). Cuatro hallazgos:\n\n🔹 En 2025, el 49,1 % de las mujeres de 15 a 49 años alguna vez unidas sufrió violencia de su pareja: la cifra más baja desde 2009 (76,9 %), pero aún casi la mitad.\n🔹 La brecha territorial es de casi 30 puntos: Apurímac 66,1 % frente a Cajamarca 36,8 %.\n🔹 Entre 2022 y 2025, 9 de 26 territorios bajaron de forma estadísticamente significativa; Apurímac, Huancavelica y Tumbes siguen estancados en niveles altos.\n🔹 Golpea más a las mujeres de origen nativo (54,4 %) que a las mestizas (48,2 %).\n\n📊 Dashboard: https://sandypmj.github.io/python_intermedio_2026/tarea_3/web/\n💻 Código y datos: https://github.com/sandypmj/python_intermedio_2026/tree/main/tarea_3\n\nLa voz del video fue generada con IA a partir de mi propia voz. Si tú o alguien que conoces vive violencia, la Línea 100 es gratuita y atiende las 24 horas.\n\n#ViolenciaDeGénero #DataScience #Python #DatosAbiertos #Perú",
+    "x": "49,1 % de las mujeres alguna vez unidas en el Perú sufrió violencia de su pareja (ENDES 2025). Apurímac 66,1 %, Cajamarca 36,8 %. Hice un dashboard con los datos del INEI: [ENLACE] (Voz generada con IA a partir de mi voz)",
+    "facebook": "Casi la mitad de las mujeres que alguna vez tuvieron pareja en el Perú sufrió violencia de su esposo o compañero (ENDES 2025). Bajó desde 2009, pero no en todos lados. Explora los datos por región: [ENLACE]\n\n(Voz generada con IA a partir de mi voz)"
+  }
+}
