@@ -1,11 +1,12 @@
 """Servidor MCP del BCRP. Empiecen aquí: buscar_series ya funciona; completen los TODO hasta que pasen las pruebas.
 
-    uv run pytest                                           # el contrato: las 8 pruebas deben pasar
+    uv run pytest                                           # el contrato: las 10 pruebas deben pasar
     uv run server.py                                        # el servidor, por stdio
     claude mcp add --scope project bcrp -- uv run server.py # conectarlo a Claude Code
 
 Las cuentas las hace Python, no el modelo: así cada cifra sale de una llamada que se puede repetir.
 """
+import json
 import re
 import time
 import unicodedata
@@ -201,9 +202,24 @@ def comparar_series(codigo_a: str, codigo_b: str, desde: str, hasta: str) -> dic
     return {"frecuencia": frecuencia_a, "periodos_coincidentes": len(comunes), "correlacion": r,
             "a": _lado(a, periodos, xs), "b": _lado(b, periodos, ys), "fuentes": [a["fuente"], b["fuente"]]}
 
-# TODO 4 · Un recurso, por ejemplo la plantilla bcrp://serie/{codigo} con la ficha de la serie.
+@mcp.resource("bcrp://serie/{codigo}", mime_type="application/json")
+def ficha_serie(codigo: str) -> str:
+    """La ficha de una serie del BCRP: nombre, categoría, frecuencia, inicio y última actualización."""
+    return json.dumps(_ficha(codigo), ensure_ascii=False)
 
-# TODO 5 · Un prompt, por ejemplo informe(tema) que pida citar el código y el periodo de cada cifra.
+
+@mcp.prompt
+def informe(tema: str) -> str:
+    """Pide un informe breve sobre un tema con cifras del BCRP, cada una con su código de serie y periodo."""
+    return (f"Escribe un informe breve sobre {tema} con datos oficiales del BCRP.\n\n"
+            "1. Busca los códigos de las series con buscar_series.\n"
+            "2. Obtén las cifras con resumen o serie. No hagas cuentas a mano: si necesitas una variación, un promedio "
+            "o un extremo, usa resumen.\n"
+            "3. Cita junto a cada cifra el código de la serie y el periodo, por ejemplo: "
+            "4.55 % (PN01273PM, 2026-09).\n"
+            "4. Si relacionas dos series, usa comparar_series y describe solo cómo se mueven juntas. No afirmes que una "
+            "causa la otra: una correlación no prueba causalidad.\n"
+            "5. Si no encuentras un dato, dilo en vez de estimarlo.")
 
 
 if __name__ == "__main__":
