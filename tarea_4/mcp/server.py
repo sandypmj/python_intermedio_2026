@@ -7,7 +7,9 @@
 Las cuentas las hace Python, no el modelo: así cada cifra sale de una llamada que se puede repetir.
 """
 import re
+import time
 import unicodedata
+from datetime import date
 from functools import cache
 from pathlib import Path
 
@@ -21,6 +23,10 @@ CATALOGO = AQUI / "datos" / "catalogo_bcrp.csv"
 URL_CATALOGO = "https://estadisticas.bcrp.gob.pe/estadisticas/series/metadata"
 API = "https://estadisticas.bcrp.gob.pe/estadisticas/series/api"
 SOLO_LECTURA = {"readOnlyHint": True, "openWorldHint": True}
+# la API escribe setiembre como "Set" en las series diarias y como "Sep" en las mensuales
+MESES = {"Ene": "01", "Feb": "02", "Mar": "03", "Abr": "04", "May": "05", "Jun": "06", "Jul": "07", "Ago": "08",
+         "Sep": "09", "Set": "09", "Oct": "10", "Nov": "11", "Dic": "12"}
+FECHAS = {"Mensual": r"(\d{4})-(\d{1,2})", "Trimestral": r"(\d{4})-T?(\d)", "Diaria": r"\d{4}-\d{2}-\d{2}", "Anual": r"\d{4}"}
 
 mcp = FastMCP("bcrp", instructions=(
     "Series oficiales del Banco Central de Reserva del Perú (BCRP). Primero busca el código con buscar_series; "
@@ -78,16 +84,60 @@ def buscar_series(texto: str, frecuencia: str | None = None, limite: int = 10) -
     return [_ficha(c) for c in orden.sort_values(["vieja", "largo"]).head(limite).codigo]
 
 
-# TODO 1 · serie(codigo, desde, hasta) -> {"codigo", "nombre", "frecuencia", "datos": [{"periodo", "valor"}], "fuente"}
-#   La API se llama así: f"{API}/{codigo}/json/{desde}/{hasta}" y responde
-#   {"config": {...}, "periods": [{"name": "Ene.2025", "values": ["0.81"]}, ...]}
-#   - Fechas que pide la API: 2025-1 (mensual y trimestral), 2025-01-15 (diaria), 2025 (anual).
-#   - Nombres que devuelve: "Ene.2025" (mensual), "01.Oct.26" (diaria), "T1.25" (trimestral), "2025" (anual).
-#     Setiembre viene como "Set". Devuelvan el periodo como "2025-01", "2026-10-01", "2025-T1" o "2025".
-#   - Salten los valores "n.d." y usen la frecuencia de _ficha(codigo) para saber qué formato pedir.
-#   - Si recibe muchos pedidos seguidos, la API responde una página HTML en vez de JSON: esperen unos segundos y
-#     reintenten (y guarden en caché lo que ya bajaron).
-#   - Un código que no existe debe dar un ToolError que diga el código.
+def _fecha_api(fecha, frecuencia):
+    """Pasa una fecha al formato que pide la API: "2025-01" y "2025-T1" se piden como 2025-1."""
+    m = re.fullmatch(FECHAS[frecuencia], fecha)
+    if not m:
+        raise ToolError(f"La fecha {fecha!r} no sirve para una serie {frecuencia.lower()}. Formatos: 2025-01 (mensual), "
+                        "2025-T1 (trimestral), 2025-01-15 (diaria), 2025 (anual).")
+    return f"{m[1]}-{int(m[2])}" if m.groups() else fecha
+
+
+def _anio(yy):
+    """Completa un año de dos dígitos: "26" es 2026, pero "97" es 1997 porque 2097 todavía no llega."""
+    anio = 2000 + int(yy)
+    return anio if anio <= date.today().year else anio - 100
+
+
+def _periodo(nombre, frecuencia):
+    """Pasa el nombre que devuelve la API a un periodo uniforme: "2025-01", "2026-10-01", "2025-T1" o "2025"."""
+    partes = nombre.split(".")
+    if frecuencia == "Mensual":
+        return f"{partes[1]}-{MESES[partes[0]]}"
+    if frecuencia == "Diaria":
+        return f"{_anio(partes[2])}-{MESES[partes[1]]}-{partes[0]}"
+    if frecuencia == "Trimestral":
+        return f"{_anio(partes[1])}-{partes[0]}"
+    return nombre
+
+
+@cache
+def _periodos(url, codigo):
+    """Baja los periodos de la API. Si está saturada responde HTML en vez de JSON: se espera y se reintenta."""
+    for espera in (0, 5, 10, 20):
+        time.sleep(espera)
+        try:
+            return httpx.get(url, timeout=60, follow_redirects=True).json()["periods"]
+        except (ValueError, httpx.HTTPError):  # ValueError: lo que llegó no era JSON
+            continue
+    raise ToolError(f"La API del BCRP no respondió con datos para {codigo}. Prueben de nuevo en un minuto.")
+
+
+@mcp.tool(annotations=SOLO_LECTURA)
+def serie(codigo: str, desde: str, hasta: str) -> dict:
+    """Devuelve los datos oficiales de una serie del BCRP entre dos fechas, ambas incluidas.
+
+    Primero busquen el código con buscar_series, que también dice la frecuencia. Las fechas dependen de ella:
+    "2025-01" (mensual), "2025-T1" (trimestral), "2025-01-15" (diaria) o "2025" (anual). Los periodos vuelven en ese
+    mismo formato y sin los días que no tienen dato; datos viene vacío si no hay nada en ese rango.
+    """
+    ficha = _ficha(codigo)
+    frecuencia = ficha["frecuencia"]
+    url = f"{API}/{codigo}/json/{_fecha_api(desde, frecuencia)}/{_fecha_api(hasta, frecuencia)}"
+    datos = [{"periodo": _periodo(p["name"], frecuencia), "valor": float(p["values"][0])}
+             for p in _periodos(url, codigo) if p["values"][0] != "n.d."]
+    return {"codigo": codigo, "nombre": ficha["nombre"], "frecuencia": frecuencia, "datos": datos, "fuente": url}
+
 
 # TODO 2 · resumen(codigo, desde, hasta): primero, ultimo, cambio, variacion_pct, promedio, maximo y minimo
 #   (los tres últimos con su periodo). Úsenla para que el modelo nunca haga cuentas a mano.
