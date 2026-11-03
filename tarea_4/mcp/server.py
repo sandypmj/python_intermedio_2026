@@ -139,8 +139,29 @@ def serie(codigo: str, desde: str, hasta: str) -> dict:
     return {"codigo": codigo, "nombre": ficha["nombre"], "frecuencia": frecuencia, "datos": datos, "fuente": url}
 
 
-# TODO 2 · resumen(codigo, desde, hasta): primero, ultimo, cambio, variacion_pct, promedio, maximo y minimo
-#   (los tres últimos con su periodo). Úsenla para que el modelo nunca haga cuentas a mano.
+@mcp.tool(annotations=SOLO_LECTURA)
+def resumen(codigo: str, desde: str, hasta: str) -> dict:
+    """Calcula primero, último, cambio, variación, promedio, máximo y mínimo de una serie. No hagan estas cuentas a mano.
+
+    Las fechas van como en serie. cambio está en las unidades de la serie; variacion_pct es ese cambio como porcentaje
+    del primer valor (None si ese valor es 0). Si la serie ya es un porcentaje, como el IPC a 12 meses, para hablar de
+    puntos porcentuales usen cambio. Da un error si no hay datos en el rango.
+    """
+    s = serie(codigo, desde, hasta)
+    datos = s["datos"]
+    if not datos:
+        raise ToolError(f"La serie {codigo} no tiene datos entre {desde} y {hasta}. Su ficha dice que empieza en "
+                        f"{_ficha(codigo)['inicio']}: prueben con otro rango.")
+    primero, ultimo = datos[0], datos[-1]
+    cambio = ultimo["valor"] - primero["valor"]
+    return {"codigo": codigo, "nombre": s["nombre"], "frecuencia": s["frecuencia"],
+            "primero": primero, "ultimo": ultimo, "cambio": cambio,
+            # con abs() el signo sigue al del cambio aunque la serie empiece en negativo
+            "variacion_pct": cambio / abs(primero["valor"]) * 100 if primero["valor"] else None,
+            "promedio": {"periodo": f"{primero['periodo']} a {ultimo['periodo']}",
+                         "valor": sum(d["valor"] for d in datos) / len(datos)},
+            "maximo": max(datos, key=lambda d: d["valor"]), "minimo": min(datos, key=lambda d: d["valor"]),
+            "fuente": s["fuente"]}
 
 # TODO 3 · Una herramienta suya, bien descrita. Ideas:
 #   - comparar_paises con la API del Banco Mundial, que tampoco pide clave:
