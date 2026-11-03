@@ -69,3 +69,28 @@ def test_un_recurso():
 
 def test_un_prompt():
     assert len(asyncio.run(_con_cliente(lambda c: c.list_prompts()))) >= 1
+
+
+def test_comparar_alinea_periodos_y_correlaciona(monkeypatch):
+    # Datos inventados para saber la respuesta: solo coinciden enero, marzo y mayo. Ahí A es 1, 2, 3 y B es 1, 3, 2,
+    # y su correlación es 0.5 a mano. Los valores 100 y -50 no coinciden: si se colaran, cambiarían el resultado.
+    datos = {"PN01271PM": {"2025-01": 1, "2025-02": 100, "2025-03": 2, "2025-05": 3},
+             "PN01273PM": {"2025-01": 1, "2025-03": 3, "2025-04": -50, "2025-05": 2}}
+
+    def serie_falsa(codigo, desde, hasta):
+        return {"codigo": codigo, "nombre": codigo, "frecuencia": "Mensual", "fuente": f"https://bcrp.test/{codigo}",
+                "datos": [{"periodo": p, "valor": v} for p, v in datos[codigo].items()]}
+
+    monkeypatch.setattr("server.serie", serie_falsa)
+    r = llamar("comparar_series", codigo_a="PN01271PM", codigo_b="PN01273PM", desde="2025-01", hasta="2025-05")
+    assert r["periodos_coincidentes"] == 3
+    assert r["correlacion"] == pytest.approx(0.5)
+    assert r["a"]["promedio"] == pytest.approx(2) and r["b"]["promedio"] == pytest.approx(2)
+    assert r["a"]["primero"] == {"periodo": "2025-01", "valor": 1} and r["a"]["ultimo"] == {"periodo": "2025-05", "valor": 3}
+    assert r["b"]["primero"] == {"periodo": "2025-01", "valor": 1} and r["b"]["ultimo"] == {"periodo": "2025-05", "valor": 2}
+    assert r["fuentes"] == ["https://bcrp.test/PN01271PM", "https://bcrp.test/PN01273PM"]
+
+
+def test_comparar_rechaza_frecuencias_distintas():
+    with pytest.raises(ToolError, match="PN01271PM es mensual y PD04638PD es diaria"):
+        llamar("comparar_series", codigo_a="PN01271PM", codigo_b="PD04638PD", desde="2025-01", hasta="2025-12")

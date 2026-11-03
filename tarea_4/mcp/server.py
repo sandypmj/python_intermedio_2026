@@ -12,6 +12,7 @@ import unicodedata
 from datetime import date
 from functools import cache
 from pathlib import Path
+from statistics import StatisticsError, correlation
 
 import httpx
 import pandas as pd
@@ -163,11 +164,42 @@ def resumen(codigo: str, desde: str, hasta: str) -> dict:
             "maximo": max(datos, key=lambda d: d["valor"]), "minimo": min(datos, key=lambda d: d["valor"]),
             "fuente": s["fuente"]}
 
-# TODO 3 · Una herramienta suya, bien descrita. Ideas:
-#   - comparar_paises con la API del Banco Mundial, que tampoco pide clave:
-#     https://api.worldbank.org/v2/country/PER;CHL;COL/indicator/NY.GDP.MKTP.KD.ZG?format=json&date=2015:2025
-#   - correlacion(codigo_a, codigo_b, desde, hasta)
-#   - grafico(codigo, desde, hasta) que guarde un PNG en salidas/ y devuelva la ruta
+def _lado(s, periodos, valores):
+    """Lo que comparar_series informa de cada serie, ya recortada a los periodos que coinciden."""
+    return {"codigo": s["codigo"], "nombre": s["nombre"], "primero": {"periodo": periodos[0], "valor": valores[0]},
+            "ultimo": {"periodo": periodos[-1], "valor": valores[-1]}, "promedio": sum(valores) / len(valores)}
+
+
+@mcp.tool(annotations=SOLO_LECTURA)
+def comparar_series(codigo_a: str, codigo_b: str, desde: str, hasta: str) -> dict:
+    """Compara dos series del BCRP de la misma frecuencia y calcula su correlación de Pearson.
+
+    Úsenla para preguntas como "¿el tipo de cambio y las reservas se mueven juntos?"; para una sola serie usen resumen.
+    Las fechas van como en serie. Solo se usan los periodos con dato en ambas series, y sobre ellos se calculan la
+    correlación, el promedio y el primer y último valor. correlacion va de -1 a 1 y es None si una serie no varía.
+
+    Una correlación no prueba causalidad: dos series pueden moverse juntas por azar o por un tercer factor. No afirmen
+    que una causa la otra basándose solo en este resultado. Da un error si las frecuencias son distintas o si hay
+    menos de 2 periodos en común.
+    """
+    frecuencia_a, frecuencia_b = _ficha(codigo_a)["frecuencia"], _ficha(codigo_b)["frecuencia"]
+    if frecuencia_a != frecuencia_b:
+        raise ToolError(f"No se pueden comparar: {codigo_a} es {frecuencia_a.lower()} y {codigo_b} es "
+                        f"{frecuencia_b.lower()}. Elijan dos series de la misma frecuencia.")
+    a, b = serie(codigo_a, desde, hasta), serie(codigo_b, desde, hasta)
+    valores_b = {d["periodo"]: d["valor"] for d in b["datos"]}
+    comunes = [d for d in a["datos"] if d["periodo"] in valores_b]
+    if len(comunes) < 2:
+        raise ToolError(f"{codigo_a} y {codigo_b} tienen {len(comunes)} periodos con dato en ambas entre {desde} y "
+                        f"{hasta}, y se necesitan al menos 2. Prueben con un rango más amplio.")
+    periodos = [d["periodo"] for d in comunes]
+    xs, ys = [d["valor"] for d in comunes], [valores_b[p] for p in periodos]
+    try:
+        r = correlation(xs, ys)
+    except StatisticsError:  # una de las series no varía
+        r = None
+    return {"frecuencia": frecuencia_a, "periodos_coincidentes": len(comunes), "correlacion": r,
+            "a": _lado(a, periodos, xs), "b": _lado(b, periodos, ys), "fuentes": [a["fuente"], b["fuente"]]}
 
 # TODO 4 · Un recurso, por ejemplo la plantilla bcrp://serie/{codigo} con la ficha de la serie.
 
