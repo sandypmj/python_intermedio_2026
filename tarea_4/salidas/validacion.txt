@@ -1,0 +1,27 @@
+VALIDACIÓN ENAHO 2024 - skill limpiando-enaho
+RESULTADO DE LAS ESENCIALES: APROBADA
+CONTROLES CON FALLÓ: 1
+
+ESENCIALES:
+[APROBADA] Archivo 966-Modulo34.zip: encontrado
+[APROBADA] Archivo 966-Modulo02.zip: encontrado
+[APROBADA] Llave conglome como texto en 966-Modulo34.zip: se exige texto de 6 dígitos en todas las filas
+[APROBADA] Llave vivienda como texto en 966-Modulo34.zip: se exige texto de 3 dígitos en todas las filas
+[APROBADA] Llave hogar como texto en 966-Modulo34.zip: se exige texto de 2 dígitos en todas las filas
+[APROBADA] Llave conglome como texto en 966-Modulo02.zip: se exige texto de 6 dígitos en todas las filas
+[APROBADA] Llave vivienda como texto en 966-Modulo02.zip: se exige texto de 3 dígitos en todas las filas
+[APROBADA] Llave hogar como texto en 966-Modulo02.zip: se exige texto de 2 dígitos en todas las filas
+[APROBADA] Llave codperso como texto en 966-Modulo02.zip: se exige texto de 2 dígitos en todas las filas
+[APROBADA] Llave ubigeo como texto en 966-Modulo02.zip: se exige texto de 6 dígitos en todas las filas
+[APROBADA] Unión m:1 personas-hogares: validate='m:1' superado
+[APROBADA] Unión sin duplicar ni perder filas: 108,664 filas antes, 108,664 después, 0 personas sin hogar
+[APROBADA] Códigos válidos sin vacíos: pobreza en 1-3, estrato en 1-8, p207 en 1-2
+[APROBADA] Pobreza nacional: obtenido 27.53 %, referencia 27.6 % +/- 0.1 puntos
+[APROBADA] Residentes habituales: obtenido 108,664, referencia 108,664
+[APROBADA] Códigos de departamento: obtenido 25 códigos, referencia 25 (01 a 25)
+[APROBADA] Sin duplicados: 0 personas y 0 hogares repetidos
+[APROBADA] Factores válidos: 0 valores vacíos, infinitos o <= 0 en facpob07
+
+CONTROLES:
+[APROBADA] Pobreza urbana: obtenido 24.74 %, referencia 24.8 % +/- 0.1 puntos
+[FALLÓ] Pobreza rural: obtenido 39.44 %, referencia 39.3 % +/- 0.1 puntos
