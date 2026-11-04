@@ -1,0 +1,176 @@
+
+> <ide_opened_file>The user opened the file
+  c:\Users\CLIENTE\Documents\GitHub\python_intermedio_2026\tarea_4\.mcp.json in
+  the IDE. This may or may not be related to the current
+  task.</ide_opened_file>
+
+> ¿Cuál fue la inflación de Lima a 12 meses en setiembre de 2026? Usa el MCP
+  bcrp.
+
+  Called bcrp 2 times (ctrl+o to expand)
+
+● La inflación de Lima Metropolitana a 12 meses en setiembre de 2026 fue de 4,55
+  % (valor exacto: 4,5487 %).
+
+  - Serie: PN01273PM, Índice de precios Lima Metropolitana (var% 12 meses) - IPC
+  - Periodo: 2026-09
+  - Fuente: BCRP (https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PN012
+    73PM/json/2026-9/2026-9)
+
+> Compara la inflación a 12 meses de Lima con la tasa de referencia del BCRP
+  entre 2022-01 y 2024-12. ¿Se movieron juntas?
+
+  Called bcrp (ctrl+o to expand)
+
+● Ya tengo los dos códigos; ahora comparo ambas series y reviso su trayectoria
+  mes a mes.
+
+  Called bcrp 5 times (ctrl+o to expand)
+
+● La API del BCRP falló en tres de las cinco consultas, entre ellas la
+  comparación. Reintento esas tres.
+
+  Called bcrp 3 times (ctrl+o to expand)
+
+● Solo en parte: siguieron la misma dirección general, pero con desfase. La
+  correlación fue positiva pero débil, de 0,30 en los 36 meses comparados. La
+  tasa reaccionó con retraso: alcanzó su máximo 7 meses después del pico de la
+  inflación y empezó a bajar cuando esta ya venía cayendo.
+
+  ┌──────────────────┬───────────────────────────┬──────────────────────────┐
+  │                  │   Inflación a 12 meses    │   Tasa de referencia     │
+  │                  │        (PN01273PM)        │       (PD04722MM)        │
+  ├──────────────────┼───────────────────────────┼──────────────────────────┤
+  │ 2022-01          │ 5,68 %                    │ 3,00 %                   │
+  ├──────────────────┼───────────────────────────┼──────────────────────────┤
+  │ Máximo           │ 8,81 % (2022-06)          │ 7,75 % (2023-01 a        │
+  │                  │                           │ 2023-08)                 │
+  ├──────────────────┼───────────────────────────┼──────────────────────────┤
+  │ Mínimo           │ 1,78 % (2024-09)          │ 3,00 % (2022-01)         │
+  ├──────────────────┼───────────────────────────┼──────────────────────────┤
+  │ 2024-12          │ 1,97 %                    │ 5,00 %                   │
+  ├──────────────────┼───────────────────────────┼──────────────────────────┤
+  │ Promedio         │ 5,51 %                    │ 6,26 %                   │
+  ├──────────────────┼───────────────────────────┼──────────────────────────┤
+  │ Cambio en el     │ −3,72 puntos porcentuales │ +2,00 puntos             │
+  │ periodo          │                           │ porcentuales             │
+  └──────────────────┴───────────────────────────┴──────────────────────────┘
+
+  Las series pasaron por tres fases:
+  1. Suben juntas (2022-01 a 2022-06): la inflación pasó de 5,68 % a 8,81 %, y
+     la tasa de 3,00 % a 5,50 %.
+  2. Se separan (2022-07 a 2023-08): la inflación se mantuvo cerca de 8–8,7 %
+     hasta 2023-03 y luego cayó a 5,58 %. Mientras tanto, la tasa siguió
+     subiendo hasta 7,75 % y se mantuvo ahí.
+  3. Bajan juntas (2023-09 a 2024-12): la inflación bajó de 5,04 % a 1,97 %, y
+     la tasa de 7,50 % a 5,00 %.
+
+  El cruce entre ambas: la inflación estuvo por encima de la tasa hasta 2023-05
+  (7,89 % frente a 7,75 %). Desde 2023-06 quedó por debajo (6,46 % frente a 7,75
+  %) y así siguió hasta el final del periodo.
+
+  Cómo leer el 0,30: esta correlación compara los mismos meses, así que el
+  desfase puede hacerla parecer más débil. No calculé la correlación con rezago,
+  por lo que el desfase se basa en la trayectoria de las series, no en una
+  prueba estadística. Estos datos tampoco prueban que una serie cause los
+  movimientos de la otra.
+
+  Fuentes: BCRP, inflación (https://estadisticas.bcrp.gob.pe/estadisticas/series
+  /api/PN01273PM/json/2022-1/2024-12) y tasa de referencia (https://estadisticas
+  .bcrp.gob.pe/estadisticas/series/api/PD04722MM/json/2022-1/2024-12), 2022-01 a
+  2024-12.
+
+> @bcrp:bcrp://serie/PN01273PM ¿desde cuándo hay datos de esta serie?
+
+● readMcpResource(Read resource "bcrp://serie/PN01273PM" from server "bcrp")
+  ⎿  {
+       "contents": [
+         {
+     … +9 lines (ctrl+o to expand)
+
+● La serie PN01273PM (inflación de Lima Metropolitana a 12 meses) tiene datos
+  desde enero de 1950, con frecuencia mensual. Su última actualización fue el 8
+  de octubre de 2026.
+
+  Esta fecha viene de los metadatos del recurso bcrp://serie/PN01273PM; no
+  consulté el dato de ese primer mes.
+
+> /bcrp:informe (MCP)
+  ⎿  Error: Missing required argument: tema. Usage: /mcp__bcrp__informe tema
+
+> inflación
+
+● El comando falló porque le faltaba el tema, así que tomo "inflación" como
+  tema. Reviso qué pide el prompt informe en el servidor para seguir el mismo
+  formato.
+
+  Searched for 1 pattern, called bcrp 10 times (ctrl+o to expand)
+
+● Informe: inflación en Lima Metropolitana
+
+  La inflación a 12 meses subió con fuerza en el último año: de 1,36 %
+  (PN01273PM, 2025-09) a 4,55 % (PN01273PM, 2026-09). Son 3,19 puntos
+  porcentuales más, y el último dato es el máximo del periodo. El dato más
+  reciente disponible es el de 2026-09: pedí hasta 2026-10 y la serie aún no lo
+  incluye.
+
+  Evolución
+
+  - Piso: se mantuvo cerca de 1,4 % a fines de 2025, con un mínimo de 1,35 %
+    (PN01273PM, 2025-10).
+  - Salto: pasó de 2,21 % (PN01273PM, 2026-02) a 3,80 % (PN01273PM, 2026-03).
+  - Meseta: se mantuvo alrededor de 4 %, con 4,01 % (PN01273PM, 2026-04) y 4,07
+    % (PN01273PM, 2026-07).
+  - Nuevo avance: subió a 4,44 % (PN01273PM, 2026-08) y a 4,55 % (PN01273PM,
+    2026-09).
+
+  Componentes
+
+  ┌──────────────────┬───────────┬─────────┬─────────┬──────────────────────┐
+  │    Componente    │  Código   │ 2025-09 │ 2026-09 │   Cambio (puntos     │
+  │                  │           │         │         │    porcentuales)     │
+  ├──────────────────┼───────────┼─────────┼─────────┼──────────────────────┤
+  │ IPC total        │ PN01273PM │  1,36 % │  4,55 % │                +3,19 │
+  ├──────────────────┼───────────┼─────────┼─────────┼──────────────────────┤
+  │ Subyacente       │ PN01279PM │  2,09 % │  2,85 % │                +0,76 │
+  ├──────────────────┼───────────┼─────────┼─────────┼──────────────────────┤
+  │ No subyacente    │ PN09820PM │ −0,17 % │  8,20 % │                +8,37 │
+  ├──────────────────┼───────────┼─────────┼─────────┼──────────────────────┤
+  │ Alimentos y      │ PN09819PM │  0,83 % │  4,59 % │                +3,76 │
+  │ energía          │           │         │         │                      │
+  ├──────────────────┼───────────┼─────────┼─────────┼──────────────────────┤
+  │ Sin alimentos y  │ PN01277PM │  1,81 % │  4,51 % │                +2,70 │
+  │ energía          │           │         │         │                      │
+  ├──────────────────┼───────────┼─────────┼─────────┼──────────────────────┤
+  │ Transables       │ PN01281PM │  0,68 % │  2,85 % │                +2,17 │
+  ├──────────────────┼───────────┼─────────┼─────────┼──────────────────────┤
+  │ No transables    │ PN01283PM │  1,66 % │  5,29 % │                +3,63 │
+  └──────────────────┴───────────┴─────────┴─────────┴──────────────────────┘
+
+  - Mayor presión: el mayor aumento está en el IPC no subyacente, mientras que
+    el subyacente subió mucho menos.
+  - No solo alimentos y energía: el grupo sin alimentos y energía también llegó
+    a 4,51 % (PN01277PM, 2026-09), muy cerca del grupo con ellos.
+  - Bienes y servicios no transables: subieron más que los transables y
+    terminaron por encima del IPC total.
+
+  Relación con la tasa de referencia
+
+  La tasa de referencia se mantuvo en 4,25 % en los 13 meses (PD04722MM, 2025-09
+  a 2026-09). Por eso no se puede calcular una correlación con la inflación en
+  este periodo: la tasa no varió.
+
+  La inflación estuvo por debajo de la tasa hasta 2026-07 y la superó desde 4,44
+  % (PN01273PM, 2026-08). Esto solo describe cómo se movieron ambas series, no
+  una relación de causa.
+
+  Límites del informe
+
+  - Causas: estas series no explican por qué subió la inflación ni qué productos
+    la impulsaron.
+  - Datos no incluidos: no consulté expectativas de inflación ni proyecciones.
+  - Periodo: elegí de 2025-09 a 2026-09 porque no indicaste uno.
+
+  Fuente: series estadísticas del BCRP
+  (https://estadisticas.bcrp.gob.pe/estadisticas/series/), con los códigos y
+  periodos indicados.

@@ -1,0 +1,1049 @@
+
+> <ide_opened_file>The user opened the file c:\Users\CLIENTE\Documents\GitHub\p
+  ython_intermedio_2026\tarea_4\mcp\server.py in the IDE. This may or may not
+  be related to the current task.</ide_opened_file>
+
+> Por favor, lee mcp/server.py y mcp/test_server.py. Antes de escribir código,
+  explícame con palabras sencillas qué pide el TODO 1, qué formatos de fecha
+  usa la API del BCRP y qué pruebas lo revisan. Ten en cuenta que los archivos
+  están en
+  la carpeta mcp/ y que no debo modificar test_server.py.
+
+  Read 2 files (ctrl+o to expand)
+
+● Leí los dos archivos y no modifiqué nada. Lo de abajo sale del comentario del
+  TODO y de las pruebas; todavía no llamé a la API real.
+
+  Qué pide el TODO 1
+
+  Hay que crear una herramienta MCP llamada serie(codigo, desde, hasta) que
+  descargue del BCRP los datos de una serie y los devuelva ordenados y fáciles
+  de usar:
+
+  {
+    "codigo": "PN01271PM",
+    "nombre": "...",
+    "frecuencia": "Mensual",
+    "datos": [{"periodo": "2025-01", "valor": 0.5}, ...],  # valor de ejemplo
+    "fuente": "https://estadisticas.bcrp.gob.pe/..."
+  }
+
+  Paso a paso, debe:
+  1. Buscar la ficha: llama a _ficha(codigo) para obtener el nombre y la
+     frecuencia. Esta función ya lanza un ToolError con el código si no existe,
+     así que conviene llamarla primero.
+  2. Preparar las fechas: las convierte al formato que pide la API según la
+     frecuencia.
+  3. Consultar la API: usa f"{API}/{codigo}/json/{desde}/{hasta}".
+  4. Limpiar la respuesta: convierte cada periodo a un formato uniforme, pasa
+     cada valor de texto a número y salta los "n.d.".
+  5. Resistir los bloqueos: si recibe muchos pedidos seguidos, la API responde
+     con una página HTML en vez de JSON. En ese caso hay que esperar unos
+     segundos y reintentar, y guardar en caché lo ya descargado.
+
+  Formatos de fecha
+
+  Hay dos conversiones: una para pedir los datos y otra para devolverlos.
+
+  ┌────────────┬──────────────────┬─────────────────┬──────────────────────┐
+  │ Frecuencia │ Cómo se pide a   │ Cómo responde   │ Cómo debe devolverlo │
+  │            │      la API      │     la API      │         serie        │
+  ├────────────┼──────────────────┼─────────────────┼──────────────────────┤
+  │ Mensual    │ 2025-1           │ Ene.2025        │ 2025-01              │
+  ├────────────┼──────────────────┼─────────────────┼──────────────────────┤
+  │ Trimestral │ 2025-1           │ T1.25           │ 2025-T1              │
+  ├────────────┼──────────────────┼─────────────────┼──────────────────────┤
+  │ Diaria     │ 2025-01-15       │ 01.Oct.26       │ 2026-10-01           │
+  ├────────────┼──────────────────┼─────────────────┼──────────────────────┤
+  │ Anual      │ 2025             │ 2025            │ 2025                 │
+  └────────────┴──────────────────┴─────────────────┴──────────────────────┘
+
+  Detalles a cuidar:
+  - Mes con cero: las pruebas envían desde="2025-01", pero la API pide 2025-1,
+    así que hay que quitar ese cero.
+  - Meses en español: setiembre viene como Set, no Sep, y enero como Ene.
+  - Años de dos dígitos: en diaria y trimestral, 26 significa 2026.
+  - Otros meses: el comentario solo muestra Ene, Oct y Set. Supongo que los
+    demás son Feb, Mar, Abr, May, Jun, Jul, Ago, Nov y Dic, pero hay que
+    comprobarlo con la API.
+  - Trimestres: supongo que 2025-1 significa primer trimestre, porque el
+    comentario no lo aclara. Ninguna prueba cubre este caso ni el anual, así que
+    podrían fallar sin que pytest lo avise.
+
+  Qué pruebas lo revisan
+
+  Tres pruebas revisan directamente el TODO 1:
+
+  ┌───────────────────────────────────────────┬──────────────────────────────┐
+  │                  Prueba                   │        Qué comprueba         │
+  ├───────────────────────────────────────────┼──────────────────────────────┤
+  │                                           │ Devuelve 12 datos, el primer │
+  │ test_serie_mensual                        │  periodo es 2025-01, marzo   │
+  │                                           │ vale cerca de 0.81 y fuente  │
+  │                                           │ empieza con la URL del BCRP. │
+  ├───────────────────────────────────────────┼──────────────────────────────┤
+  │                                           │ El primer periodo es         │
+  │ test_serie_diaria                         │ 2026-10-01 y el último dato  │
+  │                                           │ es {"periodo": "2026-10-15", │
+  │                                           │  "valor": ≈3.428}.           │
+  ├───────────────────────────────────────────┼──────────────────────────────┤
+  │ test_codigo_inexistente_da_un_error_claro │ Con XX999 lanza un ToolError │
+  │                                           │  cuyo mensaje incluye XX999. │
+  └───────────────────────────────────────────┴──────────────────────────────┘
+
+  Dos pruebas dependen de él, pero no pasarán solo con el TODO 1:
+  - test_resumen_sin_cuentas_a_mano: también necesita resumen (TODO 2), que
+    tendrá que usar estos mismos datos.
+  - test_cuatro_herramientas_como_minimo: exige que exista serie, pero también
+    resumen y tu herramienta propia (TODO 3).
+
+  Tres cosas que exigen estas pruebas:
+  - Cada dato debe tener solo periodo y valor, porque la prueba diaria compara
+    el diccionario completo.
+  - valor debe ser un número, no texto.
+  - Se necesita internet, porque piden datos reales al BCRP. Un fallo puede
+    deberse a la red o al bloqueo de la API, no a tu código.
+
+  Para correrlas, ejecuta uv run pytest -q dentro de mcp/. Es normal que sigan
+  fallando las de los TODO pendientes.
+
+  ¿Quieres que empiece con el código del TODO 1? Solo tocaría server.py, y antes
+  haría una consulta real a la API para confirmar los nombres de los meses y el
+  formato trimestral.
+
+> Por favor, sí, adelante: primero haz la consulta real a la API para confirmar
+  los meses y el formato trimestral, y luego implementa el TODO 1 en
+  mcp/server.py.
+  Ojo: las pruebas se corren desde la raíz de tarea_4 (no dentro de mcp/),
+  porque pyproject.toml ya tiene pythonpath = ["mcp"]:
+  uv run pytest -q -k serie
+  Cuando pasen, explícame el código nuevo paso a paso.
+
+● Empiezo por la consulta real. Necesito códigos de cada frecuencia, así que
+  primero miro el catálogo y la configuración del proyecto.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● La consulta cambió el plan: setiembre llega como Set en las series diarias y
+  como Sep en las mensuales, así que aceptaré ambos, y la API dice UTF-8 pero
+  sus tildes salen rotas, lo que podría romper r.json(). Antes de escribir
+  código lanzo una segunda consulta para aclarar los valores n.d., los rangos
+  sin datos, los años de dos dígitos y los bytes reales que llegan.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● La segunda consulta confirmó que r.json() no tenía problema con las tildes, y
+  que los � eran de la consola de Windows; ahora voy a implementar teniendo en
+  cuenta la trampa de 2024-T1, los años de dos dígitos y los valores n.d..
+
+● Update(mcp\server.py)
+  ⎿  Added 2 lines
+       7  Las cuentas las hace Python, no el modelo: así cada cifra sale 
+          de una llamada que se puede repetir.
+       8  """
+       9  import re
+      10 +import time                                                    
+      11  import unicodedata
+      12 +from datetime import date                                      
+      13  from functools import cache
+      14  from pathlib import Path
+      15  
+
+● Update(mcp\server.py)
+  ⎿  Added 4 lines
+      23  URL_CATALOGO = "https://estadisticas.bcrp.gob.pe/estadisticas/s
+          eries/metadata"
+      24  API = "https://estadisticas.bcrp.gob.pe/estadisticas/series/api
+          "
+      25  SOLO_LECTURA = {"readOnlyHint": True, "openWorldHint": True}
+      26 +# la API escribe setiembre como "Set" en las series diarias y c
+         +omo "Sep" en las mensuales                                     
+      27 +MESES = {"Ene": "01", "Feb": "02", "Mar": "03", "Abr": "04", "M
+         +ay": "05", "Jun": "06", "Jul": "07", "Ago": "08",              
+      28 +         "Sep": "09", "Set": "09", "Oct": "10", "Nov": "11", "D
+         +ic": "12"}                                                     
+      29 +FECHAS = {"Mensual": r"(\d{4})-(\d{1,2})", "Trimestral": r"(\d{
+         +4})-T?(\d)", "Diaria": r"\d{4}-\d{2}-\d{2}", "Anual": r"\d{4}"}
+      30  
+      31  mcp = FastMCP("bcrp", instructions=(
+      32      "Series oficiales del Banco Central de Reserva del Perú (BC
+          RP). Primero busca el código con buscar_series; "
+
+● Update(mcp\server.py)
+  ⎿  Added 54 lines, removed 10 lines
+       84      return [_ficha(c) for c in orden.sort_values(["vieja", "la
+           rgo"]).head(limite).codigo]
+       85  
+       86  
+       87 -# TODO 1 · serie(codigo, desde, hasta) -> {"codigo", "nombre",
+          - "frecuencia", "datos": [{"periodo", "valor"}], "fuente"}     
+       88 -#   La API se llama así: f"{API}/{codigo}/json/{desde}/{hasta}
+          -" y responde                                                  
+       89 -#   {"config": {...}, "periods": [{"name": "Ene.2025", "values
+          -": ["0.81"]}, ...]}                                           
+       90 -#   - Fechas que pide la API: 2025-1 (mensual y trimestral), 2
+          -025-01-15 (diaria), 2025 (anual).                             
+       91 -#   - Nombres que devuelve: "Ene.2025" (mensual), "01.Oct.26" 
+          -(diaria), "T1.25" (trimestral), "2025" (anual).               
+       92 -#     Setiembre viene como "Set". Devuelvan el periodo como "2
+          -025-01", "2026-10-01", "2025-T1" o "2025".                    
+       93 -#   - Salten los valores "n.d." y usen la frecuencia de _ficha
+          -(codigo) para saber qué formato pedir.                        
+       94 -#   - Si recibe muchos pedidos seguidos, la API responde una p
+          -ágina HTML en vez de JSON: esperen unos segundos y            
+       95 -#     reintenten (y guarden en caché lo que ya bajaron).      
+       96 -#   - Un código que no existe debe dar un ToolError que diga e
+          -l código.                                                     
+       87 +def _fecha_api(fecha, frecuencia):                            
+       88 +    """Pasa una fecha al formato que pide la API: "2025-01" y 
+          +"2025-T1" se piden como 2025-1."""                            
+       89 +    m = re.fullmatch(FECHAS[frecuencia], fecha)               
+       90 +    if not m:                                                 
+       91 +        raise ToolError(f"La fecha {fecha!r} no sirve para una
+          + serie {frecuencia.lower()}. Formatos: 2025-01 (mensual), "   
+       92 +                        "2025-T1 (trimestral), 2025-01-15 (dia
+          +ria), 2025 (anual).")                                         
+       93 +    return f"{m[1]}-{int(m[2])}" if m.groups() else fecha     
+       94  
+       95 +                                                              
+       96 +def _anio(yy):                                                
+       97 +    """Completa un año de dos dígitos: "26" es 2026, pero "97"
+          + es 1997 porque 2097 todavía no llega."""                     
+       98 +    anio = 2000 + int(yy)                                     
+       99 +    return anio if anio <= date.today().year else anio - 100  
+      100 +                                                              
+      101 +                                                              
+      102 +def _periodo(nombre, frecuencia):                             
+      103 +    """Pasa el nombre que devuelve la API a un periodo uniform
+          +e: "2025-01", "2026-10-01", "2025-T1" o "2025"."""            
+      104 +    partes = nombre.split(".")                                
+      105 +    if frecuencia == "Mensual":                               
+      106 +        return f"{partes[1]}-{MESES[partes[0]]}"              
+      107 +    if frecuencia == "Diaria":                                
+      108 +        return f"{_anio(partes[2])}-{MESES[partes[1]]}-{partes
+          +[0]}"                                                         
+      109 +    if frecuencia == "Trimestral":                            
+      110 +        return f"{_anio(partes[1])}-{partes[0]}"              
+      111 +    return nombre                                             
+      112 +                                                              
+      113 +                                                              
+      114 +@cache                                                        
+      115 +def _periodos(url, codigo):                                   
+      116 +    """Baja los periodos de la API. Si está saturada responde 
+          +HTML en vez de JSON: se espera y se reintenta."""             
+      117 +    for espera in (0, 5, 10, 20):                             
+      118 +        time.sleep(espera)                                    
+      119 +        try:                                                  
+      120 +            return httpx.get(url, timeout=60, follow_redirects
+          +=True).json()["periods"]                                      
+      121 +        except (ValueError, httpx.HTTPError):  # ValueError: l
+          +o que llegó no era JSON                                       
+      122 +            continue                                          
+      123 +    raise ToolError(f"La API del BCRP no respondió con datos p
+          +ara {codigo}. Prueben de nuevo en un minuto.")                
+      124 +                                                              
+      125 +                                                              
+      126 +@mcp.tool(annotations=SOLO_LECTURA)                           
+      127 +def serie(codigo: str, desde: str, hasta: str) -> dict:       
+      128 +    """Devuelve los datos oficiales de una serie del BCRP entr
+          +e dos fechas, ambas incluidas.                                
+      129 +                                                              
+      130 +    Primero busquen el código con buscar_series, que también d
+          +ice la frecuencia. Las fechas dependen de ella:               
+      131 +    "2025-01" (mensual), "2025-T1" (trimestral), "2025-01-15" 
+          +(diaria) o "2025" (anual). Los periodos vuelven en ese        
+      132 +    mismo formato y sin los días que no tienen dato; datos vie
+          +ne vacío si no hay nada en ese rango.                         
+      133 +    """                                                       
+      134 +    ficha = _ficha(codigo)                                    
+      135 +    frecuencia = ficha["frecuencia"]                          
+      136 +    url = f"{API}/{codigo}/json/{_fecha_api(desde, frecuencia)
+          +}/{_fecha_api(hasta, frecuencia)}"                            
+      137 +    datos = [{"periodo": _periodo(p["name"], frecuencia), "val
+          +or": float(p["values"][0])}                                   
+      138 +             for p in _periodos(url, codigo) if p["values"][0]
+          + != "n.d."]                                                   
+      139 +    return {"codigo": codigo, "nombre": ficha["nombre"], "frec
+          +uencia": frecuencia, "datos": datos, "fuente": url}           
+      140 +                                                              
+      141 +                                                              
+      142  # TODO 2 · resumen(codigo, desde, hasta): primero, ultimo, cam
+           bio, variacion_pct, promedio, maximo y minimo
+      143  #   (los tres últimos con su periodo). Úsenla para que el mode
+           lo nunca haga cuentas a mano.
+      144  
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Las pruebas pasan, pero ninguna activó los reintentos porque la API nunca nos
+  bloqueó. Voy a simular respuestas HTML para comprobarlo, sin tocar los
+  archivos del proyecto, y después ubicar las líneas para la explicación.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● El TODO 1 ya está implementado en server.py (mcp/server.py) y uv run pytest -q
+  -k serie da 2 passed. Solo cambié ese archivo; test_server.py sigue intacto y
+  no hice commit.
+
+  Resultado de las pruebas
+
+  ┌────────────────────────────────────────┬───────────────────┐
+  │                Comando                 │     Resultado     │
+  ├────────────────────────────────────────┼───────────────────┤
+  │ uv run pytest -q -k serie              │ 2 pasan           │
+  ├────────────────────────────────────────┼───────────────────┤
+  │ uv run pytest -q -k codigo_inexistente │ 1 pasa            │
+  ├────────────────────────────────────────┼───────────────────┤
+  │ uv run pytest -q (todas)               │ 4 pasan, 4 fallan │
+  └────────────────────────────────────────┴───────────────────┘
+
+  - -k serie no cubre todo: solo elige pruebas con "serie" en el nombre, así que
+    deja fuera test_codigo_inexistente_da_un_error_claro. Por eso la corrí
+    aparte.
+  - Las 4 que fallan son de otros TODO: resumen, el mínimo de cuatro
+    herramientas, el recurso y el prompt.
+
+  Qué confirmó la API
+
+  ┌───────────────────┬─────────────────────────────────────────────────────┐
+  │       Duda        │                   Resultado real                    │
+  ├───────────────────┼─────────────────────────────────────────────────────┤
+  │ Meses             │ Ene Feb Mar Abr May Jun Jul Ago Oct Nov Dic, más    │
+  │                   │ setiembre en dos formas                             │
+  ├───────────────────┼─────────────────────────────────────────────────────┤
+  │ Setiembre         │ Set en diarias y Sep en mensuales; el comentario    │
+  │                   │ del TODO solo mencionaba Set                        │
+  ├───────────────────┼─────────────────────────────────────────────────────┤
+  │ Trimestres        │ 2024-2 es el segundo trimestre y la API responde    │
+  │                   │ T2.24                                               │
+  ├───────────────────┼─────────────────────────────────────────────────────┤
+  │ Pedir 2024-T1 a   │ No da error, pero devuelve 0 datos, así que hay que │
+  │ la API            │  convertirlo                                        │
+  ├───────────────────┼─────────────────────────────────────────────────────┤
+  │ Años de dos       │ 97 significa 1997, y hay series trimestrales desde  │
+  │ dígitos           │ 1978                                                │
+  ├───────────────────┼─────────────────────────────────────────────────────┤
+  │ Rango sin datos   │ Devuelve JSON con periods vacío                     │
+  └───────────────────┴─────────────────────────────────────────────────────┘
+
+  El código, paso a paso
+
+  1. Tablas de apoyo (líneas 27-29 (mcp/server.py#L27-L29)). MESES traduce cada
+  mes a su número e incluye tanto Sep como Set. FECHAS define, por frecuencia,
+  qué forma debe tener una fecha válida.
+
+  2. _fecha_api: la fecha que se pide (línea 87 (mcp/server.py#L87)). Convierte
+  tu fecha al formato de la API:
+  - 2025-01 pasa a 2025-1.
+  - 2025-T1 pasa a 2025-1.
+  - Las fechas diarias y anuales quedan igual.
+  - Una fecha inválida, como "enero", da un ToolError que muestra los formatos
+    correctos.
+
+  3. _anio: los años de dos dígitos (línea 96 (mcp/server.py#L96)). Primero suma
+  2000. Si el resultado está en el futuro, resta 100: 26 queda en 2026, y 97
+  pasa de 2097 a 1997.
+
+  4. _periodo: el nombre que devuelve la API (línea 102 (mcp/server.py#L102)).
+  Separa el nombre por los puntos y lo reordena según la frecuencia:
+  - Ene.2025 pasa a 2025-01.
+  - 01.Oct.26 pasa a 2026-10-01.
+  - T1.25 pasa a 2025-T1.
+  - 2025 queda igual.
+
+  5. _periodos: la descarga (línea 115 (mcp/server.py#L115)).
+  - Reintentos: hace hasta 4 intentos, con esperas de 0, 5, 10 y 20 segundos.
+  - Bloqueos: la API responde con estado 200 aunque envíe HTML, así que el
+    estado no sirve para detectarlos. Por eso el código intenta leer JSON: si
+    .json() falla con ValueError, reintenta.
+  - Errores de red: también se reintentan.
+  - Caché: @cache guarda solo las descargas correctas, así que un fallo no queda
+    guardado.
+
+  6. serie: la herramienta (línea 127 (mcp/server.py#L127)). Une todo en este
+  orden:
+  1. Llama a _ficha(codigo), que da el ToolError con XX999 antes de tocar la red
+     y aporta la frecuencia.
+  2. Arma la URL con las fechas convertidas, y esa URL es también el campo
+     fuente.
+  3. Recorre los periodos, salta los n.d. y convierte cada valor a float.
+
+  Su docstring también importa: es lo que lee el modelo para saber cómo usar la
+  herramienta.
+
+  Qué más comprobé
+
+  Estos casos no los cubre ninguna prueba del proyecto, así que los revisé
+  aparte con scripts temporales:
+
+  ┌────────────────────────────────┬────────────────────────────────────────┐
+  │              Caso              │               Resultado                │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ Trimestral con 2024-T1 a       │ Datos correctos                        │
+  │ 2024-T3, y con 2024-2          │                                        │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ Anual, de 2020 a 2021          │ Datos correctos                        │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ Diaria en 1997, cruzando       │ Sale 1997-09-30, no 2097               │
+  │ setiembre y octubre            │                                        │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ Quincena de octubre de 2026    │ 11 periodos, 10 datos: se saltó el     │
+  │                                │ n.d.                                   │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ Rango de 2099                  │ datos vacío, sin error                 │
+  ├────────────────────────────────┼────────────────────────────────────────┤
+  │ Bloqueo HTML (simulado)        │ Reintenta y recupera los datos; si no  │
+  │                                │ lo logra, da ToolError                 │
+  └────────────────────────────────┴────────────────────────────────────────┘
+
+  La API no nos bloqueó en ningún momento, así que los reintentos solo se
+  probaron con esa simulación.
+
+  Cosas a tener en cuenta
+
+  - Comentario del TODO: lo reemplacé por el código, y la excepción de Sep quedó
+    anotada junto a MESES.
+  - Decisión de diseño: con un rango sin datos, serie devuelve datos: [] en vez
+    de un error. Cuando hagas resumen (TODO 2), tendrás que manejar esa lista
+    vacía, porque no hay primero, último ni promedio que calcular.
+  - Caché y datos nuevos: la caché dura mientras el servidor esté abierto. Si
+    pides el mismo rango varias veces, no verás datos nuevos hasta reiniciarlo.
+
+> Por favor, ahora el TODO 2: implementa resumen(codigo, desde, hasta)
+  reutilizando serie. Debe devolver primero, ultimo, cambio, variacion_pct,
+  promedio, maximo y minimo (los tres últimos con su periodo). Si datos viene
+  vacío, que dé un ToolError claro en lugar de fallar. Antes de programar,
+  explícame qué calcula cada campo con un ejemplo de 3 números. Luego corre: uv
+  run pytest -q -k resumen
+
+● Qué calcula cada campo
+
+  Ejemplo con 3 meses:
+
+  ┌─────────┬───────┐
+  │ Periodo │ Valor │
+  ├─────────┼───────┤
+  │ 2025-01 │ 2     │
+  ├─────────┼───────┤
+  │ 2025-02 │ 5     │
+  ├─────────┼───────┤
+  │ 2025-03 │ 3     │
+  └─────────┴───────┘
+
+  ┌───────────────┬───────────────────────┬───────────┬─────────────────────┐
+  │     Campo     │     Qué significa     │  Cuenta   │      Resultado      │
+  ├───────────────┼───────────────────────┼───────────┼─────────────────────┤
+  │               │ El primer dato del    │           │ {"periodo":         │
+  │ primero       │ rango                 │           │ "2025-01", "valor": │
+  │               │                       │           │  2}                 │
+  ├───────────────┼───────────────────────┼───────────┼─────────────────────┤
+  │               │ El último dato del    │           │ {"periodo":         │
+  │ ultimo        │ rango                 │           │ "2025-03", "valor": │
+  │               │                       │           │  3}                 │
+  ├───────────────┼───────────────────────┼───────────┼─────────────────────┤
+  │ cambio        │ Cuánto varió, en las  │ 3 − 2     │ 1                   │
+  │               │ unidades de la serie  │           │                     │
+  ├───────────────┼───────────────────────┼───────────┼─────────────────────┤
+  │               │ Ese cambio como       │ 1 / 2 ×   │                     │
+  │ variacion_pct │ porcentaje del primer │ 100       │ 50.0                │
+  │               │  valor                │           │                     │
+  ├───────────────┼───────────────────────┼───────────┼─────────────────────┤
+  │ promedio      │ La media de todos los │ (2 + 5 +  │ 3.33…               │
+  │               │  datos                │ 3) / 3    │                     │
+  ├───────────────┼───────────────────────┼───────────┼─────────────────────┤
+  │               │ El valor más alto y   │           │ {"periodo":         │
+  │ maximo        │ cuándo ocurrió        │           │ "2025-02", "valor": │
+  │               │                       │           │  5}                 │
+  ├───────────────┼───────────────────────┼───────────┼─────────────────────┤
+  │               │ El valor más bajo y   │           │ {"periodo":         │
+  │ minimo        │ cuándo ocurrió        │           │ "2025-01", "valor": │
+  │               │                       │           │  2}                 │
+  └───────────────┴───────────────────────┴───────────┴─────────────────────┘
+
+  cambio y variacion_pct solo miran los extremos. El 5 del medio no les afecta,
+  pero sí cuenta para promedio y maximo.
+
+  Decisiones para los casos que tu pedido no define:
+  - Periodo del promedio: no pertenece a un solo periodo, así que le pongo el
+    rango: {"periodo": "2025-01 a 2025-03", "valor": 3.33…}.
+  - Primer valor en 0: no se puede dividir entre 0, así que variacion_pct será
+    None.
+  - Primer valor negativo: divido entre su valor absoluto. Así, de −2 a 1 da
+    +150 % y no −150 %, que parecería una caída cuando la serie subió.
+  - Empates: maximo y minimo devuelven el primer periodo en que aparece ese
+    valor.
+
+  Ahora lo implemento.
+
+● Update(mcp\server.py)
+  ⎿  Added 23 lines, removed 2 lines
+      139      return {"codigo": codigo, "nombre": ficha["nombre"], "frec
+           uencia": frecuencia, "datos": datos, "fuente": url}
+      140  
+      141  
+      142 -# TODO 2 · resumen(codigo, desde, hasta): primero, ultimo, cam
+          -bio, variacion_pct, promedio, maximo y minimo                 
+      143 -#   (los tres últimos con su periodo). Úsenla para que el mode
+          -lo nunca haga cuentas a mano.                                 
+      142 +@mcp.tool(annotations=SOLO_LECTURA)                           
+      143 +def resumen(codigo: str, desde: str, hasta: str) -> dict:     
+      144 +    """Calcula primero, último, cambio, variación, promedio, m
+          +áximo y mínimo de una serie. No hagan estas cuentas a mano.   
+      145  
+      146 +    Las fechas van como en serie. cambio está en las unidades 
+          +de la serie; variacion_pct es ese cambio como porcentaje      
+      147 +    del primer valor (None si ese valor es 0). Si la serie ya 
+          +es un porcentaje, como el IPC a 12 meses, para hablar de      
+      148 +    puntos porcentuales usen cambio. Da un error si no hay dat
+          +os en el rango.                                               
+      149 +    """                                                       
+      150 +    s = serie(codigo, desde, hasta)                           
+      151 +    datos = s["datos"]                                        
+      152 +    if not datos:                                             
+      153 +        raise ToolError(f"La serie {codigo} no tiene datos ent
+          +re {desde} y {hasta}. Su ficha dice que empieza en "          
+      154 +                        f"{_ficha(codigo)['inicio']}: prueben 
+          +con otro rango.")                                             
+      155 +    primero, ultimo = datos[0], datos[-1]                     
+      156 +    cambio = ultimo["valor"] - primero["valor"]               
+      157 +    return {"codigo": codigo, "nombre": s["nombre"], "frecuenc
+          +ia": s["frecuencia"],                                         
+      158 +            "primero": primero, "ultimo": ultimo, "cambio": ca
+          +mbio,                                                         
+      159 +            # con abs() el signo sigue al del cambio aunque la
+          + serie empiece en negativo                                    
+      160 +            "variacion_pct": cambio / abs(primero["valor"]) * 
+          +100 if primero["valor"] else None,                            
+      161 +            "promedio": {"periodo": f"{primero['periodo']} a {
+          +ultimo['periodo']}",                                          
+      162 +                         "valor": sum(d["valor"] for d in dato
+          +s) / len(datos)},                                             
+      163 +            "maximo": max(datos, key=lambda d: d["valor"]), "m
+          +inimo": min(datos, key=lambda d: d["valor"]),                 
+      164 +            "fuente": s["fuente"]}                            
+      165 +                                                              
+      166  # TODO 3 · Una herramienta suya, bien descrita. Ideas:
+      167  #   - comparar_paises con la API del Banco Mundial, que tampoc
+           o pide clave:
+      168  #     https://api.worldbank.org/v2/country/PER;CHL;COL/indicat
+           or/NY.GDP.MKTP.KD.ZG?format=json&date=2015:2025
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● El TODO 2 ya está en server.py:143 (mcp/server.py#L143) y uv run pytest -q -k
+  resumen da 1 passed. Como antes, solo cambié ese archivo y no hice commit.
+
+  Con todas las pruebas, ahora son 5 pasan y 3 fallan. Las 3 que fallan
+  corresponden a los TODO pendientes: tu herramienta propia (3), el recurso (4)
+  y el prompt (5).
+
+  Cómo reutiliza serie
+
+  resumen llama a serie(codigo, desde, hasta) y calcula sobre los datos que
+  recibe. Así aprovecha sin repetir código la conversión de fechas, los
+  reintentos, la caché y el salto de los n.d.. Los errores de código inexistente
+  y de fecha inválida también vienen de serie.
+
+  Resultado con datos reales
+
+  Pedí el IPC a 12 meses (PN01273PM) de 2025-12 a 2026-09:
+
+  ┌───────────────┬──────────────────────────┐
+  │     Campo     │        Resultado         │
+  ├───────────────┼──────────────────────────┤
+  │ primero       │ 1.51 (2025-12)           │
+  ├───────────────┼──────────────────────────┤
+  │ ultimo        │ 4.55 (2026-09)           │
+  ├───────────────┼──────────────────────────┤
+  │ cambio        │ 3.04                     │
+  ├───────────────┼──────────────────────────┤
+  │ variacion_pct │ 201.48                   │
+  ├───────────────┼──────────────────────────┤
+  │ promedio      │ 3.42 (2025-12 a 2026-09) │
+  ├───────────────┼──────────────────────────┤
+  │ maximo        │ 4.55 (2026-09)           │
+  ├───────────────┼──────────────────────────┤
+  │ minimo        │ 1.51 (2025-12)           │
+  └───────────────┴──────────────────────────┘
+
+  Aquí redondeo para que se lea mejor, pero la herramienta devuelve los valores
+  sin redondear.
+
+  Cuidado al interpretar este caso: decir que "la inflación subió 3.04 puntos
+  porcentuales" es correcto, pero decir que "subió 201 %" confundiría. Por eso
+  el docstring le indica al modelo que use cambio cuando la serie ya es un
+  porcentaje.
+
+  Casos revisados aparte
+
+  La prueba de resumen no cubre estos casos. Los dos primeros y los errores los
+  corrí aparte contra la API real; las cuentas de los demás, con datos
+  simulados.
+
+  ┌────────────────┬────────────────────────────────────────────────────────┐
+  │      Caso      │                       Resultado                        │
+  ├────────────────┼────────────────────────────────────────────────────────┤
+  │ Rango vacío    │ ToolError: "La serie PN01271PM no tiene datos entre    │
+  │ (2099)         │ 2099-01 y 2099-12. Su ficha dice que empieza en        │
+  │                │ Ene-1950: prueben con otro rango."                     │
+  ├────────────────┼────────────────────────────────────────────────────────┤
+  │ Código XX999   │ ToolError con el código                                │
+  ├────────────────┼────────────────────────────────────────────────────────┤
+  │ Fecha "enero"  │ ToolError con los formatos válidos                     │
+  ├────────────────┼────────────────────────────────────────────────────────┤
+  │ Tu ejemplo: 2, │ Coincide con la tabla que te expliqué                  │
+  │  5, 3          │                                                        │
+  ├────────────────┼────────────────────────────────────────────────────────┤
+  │ Empieza en 0:  │ variacion_pct es None                                  │
+  │ 0, 1           │                                                        │
+  ├────────────────┼────────────────────────────────────────────────────────┤
+  │ Empieza en     │                                                        │
+  │ negativo: −2,  │ variacion_pct es +150                                  │
+  │ 1              │                                                        │
+  ├────────────────┼────────────────────────────────────────────────────────┤
+  │ Un solo dato:  │ cambio y variacion_pct son 0; los demás valen 4        │
+  │ 4              │                                                        │
+  ├────────────────┼────────────────────────────────────────────────────────┤
+  │ Empate: 5, 1,  │ maximo en 2025-01 y minimo en 2025-02                  │
+  │ 5, 1           │                                                        │
+  └────────────────┴────────────────────────────────────────────────────────┘
+
+  Para revisar
+
+  - abs() en la variación: con un primer valor negativo, el resultado difiere de
+    la fórmula de libro (último − primero) / primero, que daría −150 en vez de
+    +150. Si tu profesor espera la fórmula clásica, basta con quitar abs().
+    Ninguna prueba depende de esto.
+  - Periodo del promedio: entendí "los tres últimos con su periodo"
+    literalmente, así que promedio también es un diccionario con su rango. Si en
+    la tarea se refería solo a máximo y mínimo, promedio podría ser un número
+    simple, y la prueba actual también pasaría.
+
+> Por favor, ahora el TODO 3, mi herramienta propia: comparar_series(codigo_a,
+  codigo_b, desde, hasta). Debe reutilizar serie, aceptar solo series de la
+  misma
+  frecuencia (si no, ToolError claro), alinear solo los periodos que tienen
+  dato en ambas, y devolver la correlación de Pearson, el promedio y el
+  primer/último valor de cada una, cuántos periodos coinciden y las dos URLs
+  de fuente. Su docstring debe decir cuándo usarla y aclarar que una
+  correlación no prueba causalidad.
+
+  Además, la tarea exige 2 pruebas propias para esta herramienta: agrégalas AL
+  FINAL de mcp/test_server.py sin modificar las 8 pruebas originales. Una que
+  compruebe la alineación y la correlación, y otra que compruebe el error con
+  frecuencias distintas.
+
+  Antes de programar, explícame con un ejemplo qué es alinear periodos
+  y qué significa una correlación de 0.8 o de -0.3. Luego corre: uv run pytest
+  -q
+
+● Qué es alinear periodos
+
+  Dos series no siempre tienen dato en las mismas fechas. Alinear significa
+  quedarse solo con los periodos que tienen dato en ambas y emparejar cada valor
+  por su fecha, no por su posición en la lista.
+
+  ┌─────────┬──────────┬──────────┬─────────────┐
+  │ Periodo │ Serie A  │ Serie B  │  ¿Se usa?   │
+  ├─────────┼──────────┼──────────┼─────────────┤
+  │ 2025-01 │ 1        │ 1        │ Sí          │
+  ├─────────┼──────────┼──────────┼─────────────┤
+  │ 2025-02 │ 100      │ sin dato │ No: falta B │
+  ├─────────┼──────────┼──────────┼─────────────┤
+  │ 2025-03 │ 2        │ 3        │ Sí          │
+  ├─────────┼──────────┼──────────┼─────────────┤
+  │ 2025-04 │ sin dato │ −50      │ No: falta A │
+  ├─────────┼──────────┼──────────┼─────────────┤
+  │ 2025-05 │ 3        │ 2        │ Sí          │
+  └─────────┴──────────┴──────────┴─────────────┘
+
+  Quedan 3 periodos coincidentes, con A = 1, 2, 3 y B = 1, 3, 2. Sin alinear,
+  compararíamos por posición valores de meses distintos, y el resultado no
+  significaría nada.
+
+  Qué significa una correlación
+
+  La correlación de Pearson va de −1 a 1 y mide si dos series se mueven juntas
+  siguiendo una línea recta.
+
+  ┌───────┬──────────────────────────────────────────────────────────────────┐
+  │ Valor │                           Significado                            │
+  ├───────┼──────────────────────────────────────────────────────────────────┤
+  │ 0.8   │ Relación directa y fuerte: cuando A está por encima de su        │
+  │       │ promedio, B casi siempre también.                                │
+  ├───────┼──────────────────────────────────────────────────────────────────┤
+  │ −0.3  │ Relación inversa y débil: cuando A sube, B tiende a bajar, pero  │
+  │       │ con muchas excepciones.                                          │
+  ├───────┼──────────────────────────────────────────────────────────────────┤
+  │ 0     │ No hay relación lineal, aunque podría existir otro tipo de       │
+  │       │ relación.                                                        │
+  └───────┴──────────────────────────────────────────────────────────────────┘
+
+  Una correlación de 0.8 no prueba que A cause B. Podría ser al revés, o ambas
+  podrían responder a un tercer factor: las ventas de helados y las de
+  bloqueador solar suben juntas porque es verano, no porque una cause la otra.
+
+  Decisiones para los casos que tu pedido no define
+
+  - Promedio, primero y último: se calculan solo sobre los periodos
+    coincidentes, para comparar las series en igualdad de condiciones.
+  - Menos de 2 periodos coincidentes: da ToolError, porque con menos de 2 puntos
+    no se puede calcular una correlación.
+  - Serie constante en esos periodos: correlacion será None, porque
+    matemáticamente no está definida.
+  - Frecuencias distintas: se revisan con _ficha antes de descargar nada, y
+    serie se usa para los datos.
+
+  Ahora lo implemento y agrego las 2 pruebas.
+
+● Update(mcp\server.py)
+  ⎿  Added 1 line
+      12  from datetime import date
+      13  from functools import cache
+      14  from pathlib import Path
+      15 +from statistics import StatisticsError, correlation            
+      16  
+      17  import httpx
+      18  import pandas as pd
+
+● Update(mcp\server.py)
+  ⎿  Added 36 lines, removed 5 lines
+      164              "maximo": max(datos, key=lambda d: d["valor"]), "m
+           inimo": min(datos, key=lambda d: d["valor"]),
+      165              "fuente": s["fuente"]}
+      166  
+      167 -# TODO 3 · Una herramienta suya, bien descrita. Ideas:        
+      168 -#   - comparar_paises con la API del Banco Mundial, que tampoc
+          -o pide clave:                                                 
+      169 -#     https://api.worldbank.org/v2/country/PER;CHL;COL/indicat
+          -or/NY.GDP.MKTP.KD.ZG?format=json&date=2015:2025               
+      170 -#   - correlacion(codigo_a, codigo_b, desde, hasta)           
+      171 -#   - grafico(codigo, desde, hasta) que guarde un PNG en salid
+          -as/ y devuelva la ruta                                        
+      167 +def _lado(s, periodos, valores):                              
+      168 +    """Lo que comparar_series informa de cada serie, ya recort
+          +ada a los periodos que coinciden."""                          
+      169 +    return {"codigo": s["codigo"], "nombre": s["nombre"], "pri
+          +mero": {"periodo": periodos[0], "valor": valores[0]},         
+      170 +            "ultimo": {"periodo": periodos[-1], "valor": valor
+          +es[-1]}, "promedio": sum(valores) / len(valores)}             
+      171  
+      172 +                                                              
+      173 +@mcp.tool(annotations=SOLO_LECTURA)                           
+      174 +def comparar_series(codigo_a: str, codigo_b: str, desde: str, 
+          +hasta: str) -> dict:                                          
+      175 +    """Compara dos series del BCRP de la misma frecuencia y ca
+          +lcula su correlación de Pearson.                              
+      176 +                                                              
+      177 +    Úsenla para preguntas como "¿el tipo de cambio y las reser
+          +vas se mueven juntos?"; para una sola serie usen resumen.     
+      178 +    Las fechas van como en serie. Solo se usan los periodos co
+          +n dato en ambas series, y sobre ellos se calculan la          
+      179 +    correlación, el promedio y el primer y último valor. corre
+          +lacion va de -1 a 1 y es None si una serie no varía.          
+      180 +                                                              
+      181 +    Una correlación no prueba causalidad: dos series pueden mo
+          +verse juntas por azar o por un tercer factor. No afirmen      
+      182 +    que una causa la otra basándose solo en este resultado. Da
+          + un error si las frecuencias son distintas o si hay           
+      183 +    menos de 2 periodos en común.                             
+      184 +    """                                                       
+      185 +    frecuencia_a, frecuencia_b = _ficha(codigo_a)["frecuencia"
+          +], _ficha(codigo_b)["frecuencia"]                             
+      186 +    if frecuencia_a != frecuencia_b:                          
+      187 +        raise ToolError(f"No se pueden comparar: {codigo_a} es
+          + {frecuencia_a.lower()} y {codigo_b} es "                     
+      188 +                        f"{frecuencia_b.lower()}. Elijan dos s
+          +eries de la misma frecuencia.")                               
+      189 +    a, b = serie(codigo_a, desde, hasta), serie(codigo_b, desd
+          +e, hasta)                                                     
+      190 +    valores_b = {d["periodo"]: d["valor"] for d in b["datos"]}
+      191 +    comunes = [d for d in a["datos"] if d["periodo"] in valore
+          +s_b]                                                          
+      192 +    if len(comunes) < 2:                                      
+      193 +        raise ToolError(f"{codigo_a} y {codigo_b} tienen {len(
+          +comunes)} periodos con dato en ambas entre {desde} y "        
+      194 +                        f"{hasta}, y se necesitan al menos 2. 
+          +Prueben con un rango más amplio.")                            
+      195 +    periodos = [d["periodo"] for d in comunes]                
+      196 +    xs, ys = [d["valor"] for d in comunes], [valores_b[p] for 
+          +p in periodos]                                                
+      197 +    try:                                                      
+      198 +        r = correlation(xs, ys)                               
+      199 +    except StatisticsError:  # una de las series no varía     
+      200 +        r = None                                              
+      201 +    return {"frecuencia": frecuencia_a, "periodos_coincidentes
+          +": len(comunes), "correlacion": r,                            
+      202 +            "a": _lado(a, periodos, xs), "b": _lado(b, periodo
+          +s, ys), "fuentes": [a["fuente"], b["fuente"]]}                
+      203 +                                                              
+      204  # TODO 4 · Un recurso, por ejemplo la plantilla bcrp://serie/{
+           codigo} con la ficha de la serie.
+      205  
+      206  # TODO 5 · Un prompt, por ejemplo informe(tema) que pida citar
+            el código y el periodo de cada cifra.
+
+● Update(mcp\test_server.py)
+  ⎿  Added 25 lines
+      69  
+      70  def test_un_prompt():
+      71      assert len(asyncio.run(_con_cliente(lambda c: c.list_prompt
+          s()))) >= 1
+      72 +                                                               
+      73 +                                                               
+      74 +def test_comparar_alinea_periodos_y_correlaciona(monkeypatch): 
+      75 +    # Datos inventados para saber la respuesta: solo coinciden 
+         +enero, marzo y mayo. Ahí A es 1, 2, 3 y B es 1, 3, 2,          
+      76 +    # y su correlación es 0.5 a mano. Los valores 100 y -50 no 
+         +coinciden: si se colaran, cambiarían el resultado.             
+      77 +    datos = {"PN01271PM": {"2025-01": 1, "2025-02": 100, "2025-
+         +03": 2, "2025-05": 3},                                         
+      78 +             "PN01273PM": {"2025-01": 1, "2025-03": 3, "2025-04
+         +": -50, "2025-05": 2}}                                         
+      79 +                                                               
+      80 +    def serie_falsa(codigo, desde, hasta):                     
+      81 +        return {"codigo": codigo, "nombre": codigo, "frecuencia
+         +": "Mensual", "fuente": f"https://bcrp.test/{codigo}",         
+      82 +                "datos": [{"periodo": p, "valor": v} for p, v i
+         +n datos[codigo].items()]}                                      
+      83 +                                                               
+      84 +    monkeypatch.setattr("server.serie", serie_falsa)           
+      85 +    r = llamar("comparar_series", codigo_a="PN01271PM", codigo_
+         +b="PN01273PM", desde="2025-01", hasta="2025-05")               
+      86 +    assert r["periodos_coincidentes"] == 3                     
+      87 +    assert r["correlacion"] == pytest.approx(0.5)              
+      88 +    assert r["a"]["promedio"] == pytest.approx(2) and r["b"]["p
+         +romedio"] == pytest.approx(2)                                  
+      89 +    assert r["a"]["primero"] == {"periodo": "2025-01", "valor":
+         + 1} and r["a"]["ultimo"] == {"periodo": "2025-05", "valor": 3} 
+      90 +    assert r["b"]["primero"] == {"periodo": "2025-01", "valor":
+         + 1} and r["b"]["ultimo"] == {"periodo": "2025-05", "valor": 2} 
+      91 +    assert r["fuentes"] == ["https://bcrp.test/PN01271PM", "htt
+         +ps://bcrp.test/PN01273PM"]                                     
+      92 +                                                               
+      93 +                                                               
+      94 +def test_comparar_rechaza_frecuencias_distintas():             
+      95 +    with pytest.raises(ToolError, match="PN01271PM es mensual y
+         + PD04638PD es diaria"):                                        
+      96 +        llamar("comparar_series", codigo_a="PN01271PM", codigo_
+         +b="PD04638PD", desde="2025-01", hasta="2025-12")               
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● El TODO 3 ya está en server.py:174 (mcp/server.py#L174) y sus 2 pruebas nuevas
+  pasan. uv run pytest -q da 8 passed, 2 failed, y las 2 que fallan son las de
+  los TODO pendientes: test_un_recurso (4) y test_un_prompt (5).
+
+  No hice commit. En test_server.py (mcp/test_server.py), Git muestra 25 líneas
+  añadidas y 0 borradas, así que las 8 pruebas originales siguen intactas.
+
+  Las 2 pruebas nuevas
+
+  Prueba: test_comparar_alinea_periodos_y_correlaciona (mcp/test_server.py#L74)
+  Qué comprueba: Con los datos del ejemplo: 3 periodos coincidentes, correlación
+
+  0.5, promedios, primero, último y las dos fuentes
+  ¿Usa internet?: No
+  ────────────────────────────────────────
+  Prueba: test_comparar_rechaza_frecuencias_distintas (mcp/test_server.py#L94)
+  Qué comprueba: El ToolError dice "PN01271PM es mensual y PD04638PD es diaria"
+  ¿Usa internet?: No
+
+  - Datos inventados en la primera prueba: con monkeypatch reemplazo serie por
+    una versión falsa solo durante esa prueba. Así el resultado se puede
+    calcular a mano y no cambia si el BCRP actualiza sus datos. Los valores 100
+    y −50 están ahí para que el resultado cambie si se colara un periodo no
+    coincidente.
+  - Sin descargas en la segunda prueba: la frecuencia sale del catálogo local,
+    así que el error aparece antes de llamar a la API.
+
+  Qué devuelve con datos reales
+
+  Comparé el tipo de cambio interbancario de venta (PD04638PD) y de compra
+  (PD04637PD) del 1 al 15 de octubre de 2026:
+
+  {
+    "frecuencia": "Diaria",
+    "periodos_coincidentes": 10,
+    "correlacion": 0.9993,   # redondeado aquí; la herramienta da todos los
+  decimales
+    "a": {"codigo": "PD04638PD", "nombre": "...", "primero": {...}, "ultimo":
+  {...}, "promedio": 3.4402},
+    "b": {"codigo": "PD04637PD", "nombre": "...", "primero": {...}, "ultimo":
+  {...}, "promedio": 3.4383},
+    "fuentes": ["https://...PD04638PD/...", "https://...PD04637PD/..."]
+  }
+
+  Tiene sentido que sea casi 1, porque el precio de compra y el de venta se
+  mueven prácticamente igual.
+
+  Qué más comprobé
+
+  ┌──────────────────────────────────┬──────────────────────────────────────┐
+  │               Caso               │              Resultado               │
+  ├──────────────────────────────────┼──────────────────────────────────────┤
+  │ IPC mensual frente a IPC a 12    │ Correlación 0.3547, idéntica a la    │
+  │ meses, 2024-2025 (24 periodos)   │ que calcula pandas por separado      │
+  ├──────────────────────────────────┼──────────────────────────────────────┤
+  │ Rango sin datos (2099)           │ ToolError: 0 periodos en común, se   │
+  │                                  │ necesitan al menos 2                 │
+  ├──────────────────────────────────┼──────────────────────────────────────┤
+  │ Código XX999                     │ ToolError con el código              │
+  ├──────────────────────────────────┼──────────────────────────────────────┤
+  │ Fecha "enero"                    │ ToolError con los formatos válidos   │
+  ├──────────────────────────────────┼──────────────────────────────────────┤
+  │ Serie constante (datos           │ correlacion es None, con 3 periodos  │
+  │ simulados)                       │ coincidentes                         │
+  └──────────────────────────────────┴──────────────────────────────────────┘
+
+  Lo que no pude probar con datos reales: en el caso diario, el n.d. cae el
+  mismo día en ambas series, así que no hubo periodos desalineados. La
+  alineación con huecos distintos solo está probada con los datos inventados de
+  la prueba.
+
+  Detalles a tener en cuenta
+
+  - Docstring desactualizado: la línea 3 de server.py todavía dice "las 8
+    pruebas deben pasar", y ahora son 10. No la cambié porque es texto del
+    enunciado, pero puedes actualizarla.
+  - Aviso de Git: el mensaje LF will be replaced by CRLF solo se refiere a los
+    saltos de línea en Windows y no afecta a las pruebas.
+
+> Por favor, ahora los TODO 4 y 5, los dos en este turno:
+  - TODO 4: un recurso con la plantilla bcrp://serie/{codigo} que devuelva la
+  ficha de la serie (nombre, frecuencia, inicio, última actualización).
+  - TODO 5: un prompt informe(tema) que pida un informe breve citando el código
+  de serie y el periodo de cada cifra, usando resumen o serie en vez de
+  cuentas a mano, y sin afirmar causalidad.
+    Antes de programar, explícame en 3 o 4 líneas la diferencia entre una
+  herramienta, un recurso y un prompt de MCP. Luego corre: uv run pytest -q
+
+● Herramienta: es una acción que el modelo decide ejecutar y que puede calcular
+  o consultar algo, como resumen o serie.
+  Recurso: es información de solo lectura identificada por una dirección, como
+  bcrp://serie/PN01271PM; la aplicación o el usuario suele elegir cuándo
+  cargarla como contexto.
+  Prompt: es una plantilla de instrucciones reutilizable, normalmente elegida
+  por el usuario, que no calcula nada por sí misma y solo le indica al modelo
+  cómo trabajar.
+  En resumen: la herramienta hace, el recurso informa y el prompt guía.
+
+  Ahora los implemento y, además de las pruebas, reviso el servidor real por
+  stdio, porque es la primera vez que estarían completos los cinco TODO.
+● Update(mcp\server.py)
+  ⎿  Added 1 line
+       6  
+       7  Las cuentas las hace Python, no el modelo: así cada cifra sale 
+          de una llamada que se puede repetir.
+       8  """
+       9 +import json                                                    
+      10  import re
+      11  import time
+      12  import unicodedata
+
+● Update(mcp\server.py)
+  ⎿  Added 17 lines, removed 2 lines
+      202      return {"frecuencia": frecuencia_a, "periodos_coincidentes
+           ": len(comunes), "correlacion": r,
+      203              "a": _lado(a, periodos, xs), "b": _lado(b, periodo
+           s, ys), "fuentes": [a["fuente"], b["fuente"]]}
+      204  
+      205 -# TODO 4 · Un recurso, por ejemplo la plantilla bcrp://serie/{
+          -codigo} con la ficha de la serie.                             
+      205 +@mcp.resource("bcrp://serie/{codigo}", mime_type="application/
+          +json")                                                        
+      206 +def ficha_serie(codigo: str) -> str:                          
+      207 +    """La ficha de una serie del BCRP: nombre, categoría, frec
+          +uencia, inicio y última actualización."""                     
+      208 +    return json.dumps(_ficha(codigo), ensure_ascii=False)     
+      209  
+      207 -# TODO 5 · Un prompt, por ejemplo informe(tema) que pida citar
+          - el código y el periodo de cada cifra.                        
+      210  
+      211 +@mcp.prompt                                                   
+      212 +def informe(tema: str) -> str:                                
+      213 +    """Pide un informe breve sobre un tema con cifras del BCRP
+          +, cada una con su código de serie y periodo."""               
+      214 +    return (f"Escribe un informe breve sobre {tema} con datos 
+          +oficiales del BCRP.\n\n"                                      
+      215 +            "1. Busca los códigos de las series con buscar_ser
+          +ies.\n"                                                       
+      216 +            "2. Obtén las cifras con resumen o serie. No hagas
+          + cuentas a mano: si necesitas una variación, un promedio "    
+      217 +            "o un extremo, usa resumen.\n"                    
+      218 +            "3. Cita junto a cada cifra el código de la serie 
+          +y el periodo, por ejemplo: "                                  
+      219 +            "4.55 % (PN01273PM, 2026-09).\n"                  
+      220 +            "4. Si relacionas dos series, usa comparar_series 
+          +y describe solo cómo se mueven juntas. No afirmes que una "   
+      221 +            "causa la otra: una correlación no prueba causalid
+          +ad.\n"                                                        
+      222 +            "5. Si no encuentras un dato, dilo en vez de estim
+          +arlo.")                                                       
+      223  
+      224 +                                                              
+      225  if __name__ == "__main__":
+      226      mcp.run()
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Los TODO 4 y 5 ya están en server.py (mcp/server.py) y uv run pytest -q da 10
+  passed: las 8 originales más tus 2 pruebas. En este turno solo cambié
+  server.py y no hice commit.
+
+  Lo que agregué
+
+  - Recurso ficha_serie (mcp/server.py#L206): responde en bcrp://serie/{codigo}.
+    Reutiliza _ficha y devuelve JSON, conservando tildes como las de
+    "macroeconómicos". Además de lo que pediste, incluye codigo y categoria,
+    porque _ficha ya los trae.
+  - Prompt informe(tema) (mcp/server.py#L212): le da al modelo estas cinco
+    instrucciones:
+    a. Buscar los códigos con buscar_series.
+    b. Obtener las cifras con resumen o serie, sin hacer cuentas a mano.
+    c. Citar el código y el periodo junto a cada cifra, por ejemplo 4.55 %
+       (PN01273PM, 2026-09).
+    d. Si relaciona dos series, usar comparar_series y no afirmar causalidad.
+    e. Si no encuentra un dato, decirlo en vez de estimarlo. Este punto lo añadí
+       yo.
+
+  Qué comprobé en el servidor real
+
+  Las pruebas solo miran que exista al menos un recurso y un prompt, no su
+  contenido. Por eso también arranqué el servidor con uv run server.py y me
+  conecté por stdio, como lo haría Claude Code:
+
+  ┌──────────────────────────────┬──────────────────────────────────────────┐
+  │         Comprobación         │                Resultado                 │
+  ├──────────────────────────────┼──────────────────────────────────────────┤
+  │ Herramientas                 │ buscar_series, comparar_series, resumen  │
+  │                              │ y serie                                  │
+  ├──────────────────────────────┼──────────────────────────────────────────┤
+  │ Leer bcrp://serie/PN02436FQ  │ Trimestral, inicio T1-2012, actualizada  │
+  │                              │ 2026-08-20                               │
+  ├──────────────────────────────┼──────────────────────────────────────────┤
+  │                              │ Error claro: "No existe el código de     │
+  │ Leer bcrp://serie/XX999      │ serie 'XX999'. Búsquenlo con             │
+  │                              │ buscar_series."                          │
+  ├──────────────────────────────┼──────────────────────────────────────────┤
+  │ Pedir informe con "la        │ El tema aparece en el texto y salen las  │
+  │ inflación en Lima"           │ cinco instrucciones                      │
+  ├──────────────────────────────┼──────────────────────────────────────────┤
+  │ Llamar a resumen             │ Último dato: 4.55 en 2026-09             │
+  └──────────────────────────────┴──────────────────────────────────────────┘
+
+  Para tener en cuenta
+
+  - Traza de error en la terminal: si se pide un código inexistente, el servidor
+    imprime una traza larga en su registro. Es solo un registro: el cliente
+    recibe el mensaje claro de arriba.
+  - Sin probar con el modelo: todavía no conecté el servidor a Claude Code ni
+    usé informe con un modelo. Revisé el texto del prompt, pero no si el modelo
+    sigue esas instrucciones.
+  - Docstring desactualizado: la línea 3 de server.py sigue diciendo "las 8
+    pruebas" y ahora son 10.
+
+  El siguiente paso es conectarlo desde mcp/ con claude mcp add --scope project
+  bcrp -- uv run server.py y probar informe con un tema real. El comando está en
+  el docstring de server.py, y ese registro cambia tu configuración de Claude
+  Code, así que lo dejo en tus manos, salvo que prefieras que lo haga yo.
