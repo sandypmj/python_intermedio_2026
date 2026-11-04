@@ -15,7 +15,7 @@ description: Limpia y valida los módulos 34 (sumaria) y 02 (miembros) de la ENA
 3. Lee `salidas/validacion.txt` y muestra su contenido.
 4. Actúa según el resultado:
    - **Falló algo esencial** (el script termina con error): detente, informa qué falló y busca la causa en los datos o en el código. No uses resultados parciales.
-   - **Falló un control** (urbana o rural): la base se genera, pero avisa al usuario de forma visible.
+   - **Falló un control** (urbana o rural, por personas o por hogares): la base se genera, pero avisa al usuario de forma visible.
    - **Todo aprobado:** usa `salidas/personas_2024.parquet` y `salidas/indicadores.csv`.
 
 ## Reglas

@@ -38,6 +38,12 @@ REF_URBANA = 24.8
 REF_RURAL = 39.3
 TOLERANCIA_PUNTOS = 0.1
 
+NOTA_METODOS = (
+    "NOTA: El método por personas pondera a los residentes habituales del módulo 02 con facpob07; el método por hogares pondera cada hogar de la sumaria con factor07 x mieperho.",
+    "Sus tasas difieren porque no cuentan exactamente a las mismas personas: mieperho no coincide con el número de residentes filtrados en todos los hogares.",
+    "Las referencias corresponden al método por hogares; por eso un FALLÓ por personas puede reflejar esta diferencia de método, y no se ajusta ninguna cifra.",
+)
+
 DEPARTAMENTOS = {
     "01": "AMAZONAS", "02": "ANCASH", "03": "APURIMAC", "04": "AREQUIPA",
     "05": "AYACUCHO", "06": "CAJAMARCA", "07": "CALLAO", "08": "CUSCO",
@@ -87,6 +93,7 @@ class Bitacora:
                 lineas += ["", f"{titulo}:"]
             for nombre, ok, detalle, _ in filas:
                 lineas.append(f"[{'APROBADA' if ok else 'FALLÓ'}] {nombre}: {detalle}")
+        lineas += ["", *NOTA_METODOS]
         ruta.write_text("\n".join(lineas) + "\n", encoding="utf-8")
 
 
@@ -208,7 +215,24 @@ def validar(personas, sumaria, bitacora):
     for area, referencia in (("Urbana", REF_URBANA), ("Rural", REF_RURAL)):
         obtenido = tasa_ponderada(personas[personas["area"] == area])
         bitacora.verificar(
-            f"Pobreza {area.lower()}",
+            f"Pobreza {area.lower()} por personas (facpob07)",
+            abs(obtenido - referencia) <= TOLERANCIA_PUNTOS,
+            f"obtenido {obtenido:.2f} %, referencia {referencia} % "
+            f"+/- {TOLERANCIA_PUNTOS} puntos",
+            esencial=False,
+        )
+
+    # Mismo método de la referencia: solo informa, no alimenta la base ni los indicadores.
+    peso = sumaria["factor07"].astype("float64") * sumaria["mieperho"]
+    pobre = sumaria["pobreza"] <= 2
+    urbano = sumaria["estrato"] <= 5
+    for area, en_area, referencia in (
+        ("urbana", urbano, REF_URBANA),
+        ("rural", ~urbano, REF_RURAL),
+    ):
+        obtenido = 100 * peso[en_area & pobre].sum() / peso[en_area].sum()
+        bitacora.verificar(
+            f"Pobreza {area} por hogares (factor07 x mieperho)",
             abs(obtenido - referencia) <= TOLERANCIA_PUNTOS,
             f"obtenido {obtenido:.2f} %, referencia {referencia} % "
             f"+/- {TOLERANCIA_PUNTOS} puntos",

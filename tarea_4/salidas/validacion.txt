@@ -23,5 +23,11 @@ ESENCIALES:
 [APROBADA] Factores válidos: 0 valores vacíos, infinitos o <= 0 en facpob07
 
 CONTROLES:
-[APROBADA] Pobreza urbana: obtenido 24.74 %, referencia 24.8 % +/- 0.1 puntos
-[FALLÓ] Pobreza rural: obtenido 39.44 %, referencia 39.3 % +/- 0.1 puntos
+[APROBADA] Pobreza urbana por personas (facpob07): obtenido 24.74 %, referencia 24.8 % +/- 0.1 puntos
+[FALLÓ] Pobreza rural por personas (facpob07): obtenido 39.44 %, referencia 39.3 % +/- 0.1 puntos
+[APROBADA] Pobreza urbana por hogares (factor07 x mieperho): obtenido 24.81 %, referencia 24.8 % +/- 0.1 puntos
+[APROBADA] Pobreza rural por hogares (factor07 x mieperho): obtenido 39.30 %, referencia 39.3 % +/- 0.1 puntos
+
+NOTA: El método por personas pondera a los residentes habituales del módulo 02 con facpob07; el método por hogares pondera cada hogar de la sumaria con factor07 x mieperho.
+Sus tasas difieren porque no cuentan exactamente a las mismas personas: mieperho no coincide con el número de residentes filtrados en todos los hogares.
+Las referencias corresponden al método por hogares; por eso un FALLÓ por personas puede reflejar esta diferencia de método, y no se ajusta ninguna cifra.

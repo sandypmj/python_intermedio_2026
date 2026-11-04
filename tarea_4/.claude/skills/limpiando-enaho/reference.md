@@ -48,7 +48,7 @@ pobreza_pct = 100 * df.loc[df["pobre"], "facpob07"].sum() / df["facpob07"].sum()
 
 **Esenciales (detienen el proceso):** archivos presentes, llaves como texto, unión m:1 sin duplicar ni perder filas, códigos válidos sin vacíos, pobreza nacional de 27.6 % ± 0.1 puntos, 108,664 residentes, 25 códigos de departamento, sin duplicados y factores válidos.
 
-**Controles (solo avisan):** urbana 24.8 % y rural 39.3 %, ± 0.1 puntos.
+**Controles (solo avisan):** urbana 24.8 % y rural 39.3 %, ± 0.1 puntos, calculados por personas (`facpob07`) y por hogares (`factor07 × mieperho`). El cálculo por hogares solo se usa en estos controles; la base y los indicadores siguen ponderados con `facpob07`.
 
 ## Por qué el control rural da FALLÓ
 
