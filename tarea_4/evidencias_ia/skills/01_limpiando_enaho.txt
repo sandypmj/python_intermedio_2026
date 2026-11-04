@@ -1,0 +1,737 @@
+
+> Por favor, vamos a realizar la Parte 2 de la tarea. Deseo crear la Skill
+  limpiando-enaho en .claude/skills/limpiando-enaho/ con SKILL.md, reference.md
+  y scripts/limpiar.py.
+  Usa como referencia la Sesión 16 del curso: https://github.com/d2cml-ai/Data-
+  Science-Python/tree/main/sessions/16-skills-enaho
+
+  Los datos están en datos/966-Modulo34.zip (sumaria) y datos/966-Modulo02.zip
+  (miembros), sin descomprimir. El script debe:
+  1. Leer ambos módulos con pd.read_stata(convert_categoricals=False) y las
+  llaves conglome, vivienda, hogar como texto, sin perder ceros iniciales.
+  2. Normalizar los nombres de columnas a minúsculas.
+  3. Filtrar residentes habituales con exactamente:
+     ((p204 == 1) & (p205 == 2)) | ((p204 == 2) & (p206 == 1))
+  4. Unir personas y hogares con merge(..., validate="m:1") y verificar que no
+  se dupliquen ni pierdan filas.
+  5. Construir departamento = ubigeo[:2], área urbana (estrato <= 5) y pobre =
+  pobreza <= 2, ponderando con facpob07.
+  6. Validar y escribir salidas/validacion.txt con APROBADA o FALLÓ en cada
+  verificación: pobreza nacional a 0.1 puntos de 27.6 %, 108,664 residentes, 25
+  códigos de departamento, sin duplicados y factores válidos. Como control:
+  urbana 24.8 % y rural 39.3 %.
+  7. Si falla una validación esencial, detenerse con un error explícito. Nunca
+  ajustar cifras para que coincidan con la referencia.
+  8. Guardar salidas/personas_2024.parquet y salidas/indicadores.csv con la
+  pobreza ponderada nacional, por área, sexo y departamento.
+
+  Antes de escribir código, explícame con palabras simples qué es una Skill,
+  qué hace cada paso del pipeline y por qué hay que ponderar con facpob07 en
+  vez de sacar un promedio simple. Luego créala, ejecútala y muéstrame
+  validacion.txt.
+
+● Antes del código
+
+  ¿Qué es una Skill?
+
+  Una Skill es un manual de procedimiento guardado en una carpeta que Claude
+  consulta cuando la tarea lo requiere. Funciona como una receta estándar en una
+  oficina: no hay que explicarla de nuevo cada vez y siempre se sigue igual.
+  Tiene tres piezas:
+
+  - SKILL.md: indica cuándo usarla y qué pasos seguir. Claude lee primero su
+    descripción y solo abre el resto si le hace falta.
+  - reference.md: es el material de consulta, como el diccionario de variables,
+    las cifras de referencia y los errores típicos.
+  - scripts/limpiar.py: es el código que hace el trabajo. Como se ejecuta en
+    lugar de improvisarse, da el mismo resultado cada vez.
+
+  Qué hace cada paso del pipeline
+
+  Paso: 1. Leer con llaves como texto
+  Qué hace: Abre los dos módulos y trata conglome, vivienda y hogar como texto
+  Por qué importa: Como número, "005030" pasaría a ser 5030 y dejaría de
+  coincidir al unir
+  ────────────────────────────────────────
+  Paso: 2. Pasar columnas a minúsculas
+  Qué hace: Hace que P204 y p204 sean el mismo nombre
+  Por qué importa: Los nombres pueden variar entre módulos y el código fallaría
+  ────────────────────────────────────────
+  Paso: 3. Filtrar residentes habituales
+  Qué hace: Deja a los miembros del hogar que no estaban ausentes y a los no
+  miembros que sí estaban presentes
+  Por qué importa: La pobreza se mide sobre quienes viven realmente en el hogar,
+
+  no sobre todos los listados
+  ────────────────────────────────────────
+  Paso: 4. Unir personas y hogares
+  Qué hace: Le pasa a cada persona los datos de su hogar. validate="m:1" exige
+  que cada hogar aparezca una sola vez en sumaria
+  Por qué importa: Si la unión duplica o pierde personas, las cifras salen mal
+  sin ningún aviso
+  ────────────────────────────────────────
+  Paso: 5. Construir variables
+  Qué hace: Crea el departamento (2 primeros dígitos de ubigeo), el área urbana
+  (estrato <= 5) y la condición de pobre (pobreza <= 2, que suma pobres
+  extremos y no extremos)
+  Por qué importa: Son las categorías que se van a reportar
+  ────────────────────────────────────────
+  Paso: 6. Validar
+  Qué hace: Compara los resultados con las cifras oficiales y anota APROBADA o
+  FALLÓ
+  Por qué importa: Es la prueba de que el proceso funcionó
+  ────────────────────────────────────────
+  Paso: 7. Detenerse si algo esencial falla
+  Qué hace: Lanza un error explícito y nunca ajusta las cifras
+  Por qué importa: Forzar la coincidencia ocultaría el error en vez de
+  corregirlo
+  ────────────────────────────────────────
+  Paso: 8. Guardar
+  Qué hace: Escribe el parquet y el CSV de indicadores
+  Por qué importa: Son los productos finales para analizar
+
+  ¿Por qué ponderar con facpob07?
+
+  La ENAHO es una muestra: entrevista a unas 108 mil personas para representar a
+  unos 34 millones. Además, no todas las personas tienen la misma probabilidad
+  de salir elegidas, porque las zonas pequeñas o rurales suelen estar
+  sobrerrepresentadas para poder estudiarlas bien.
+
+  facpob07 indica a cuántas personas de la población representa cada persona
+  entrevistada. Por ejemplo, con dos personas:
+
+  - Ana es pobre y representa a 100 personas.
+  - Beto no es pobre y representa a 900 personas.
+  - Promedio simple: 1 de 2 personas es pobre, o sea 50 %.
+  - Promedio ponderado: 100 de 1,000 personas son pobres, o sea 10 %.
+
+  El promedio simple describe a quienes salieron en la muestra. El ponderado
+  estima lo que pasa en el Perú. Por eso la tasa se calcula como suma(facpob07 ×
+  pobre) / suma(facpob07). Sin ponderar, la cifra no se puede comparar con el
+  27.6 % oficial.
+
+  Ahora reviso la Sesión 16 y los datos antes de escribir el script.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● El zip de sumaria trae dos archivos (sumaria-2024.dta y sumaria-2024-12g.dta),
+  así que comparo ambos sin descomprimirlos a disco para elegir cuál usar.
+
+● Fetch(https://github.com/d2cml-ai/Data-Science-Python/tree/main/sessions/16-sk
+       ills-enaho)
+  ⎿  Received 250KB (200 OK)
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Las llaves vienen como texto con ceros a la izquierda y facpob07 está en
+  float32, así que lo pasaré a float64 antes de sumar. Después leeré el README
+  completo, compararé los dos archivos de sumaria y revisaré qué columnas se
+  repiten entre módulos.
+
+  Ran 2 shell commands (ctrl+o to expand)
+
+● Los dos archivos de sumaria coinciden en sus llaves, así que uso
+  sumaria-2024.dta como base fija. La cifra real sale 27.53 %, dentro de la
+  tolerancia, y añadiré una verificación de códigos válidos porque pobreza <= 2
+  daría falso ante valores vacíos.
+
+● Write(.claude\skills\limpiando-enaho\scripts\limpiar.py)
+  ⎿  Wrote 313 lines to .claude\skills\limpiando-enaho\scripts\limpiar.py
+      1 """Limpia la ENAHO 2024 del INEI: une miembros (módulo 02) y suma
+        ria (módulo 34).
+      2
+      3 Uso, desde la raíz del proyecto:
+      4     uv run python .claude/skills/limpiando-enaho/scripts/limpiar.
+        py
+      5
+      6 Salidas en salidas/:
+      7     validacion.txt         siempre, con APROBADA o FALLÓ en cada
+        verificación
+     … +306 lines (ctrl+o to expand)
+
+● Write(.claude\skills\limpiando-enaho\SKILL.md)
+  ⎿  Wrote 30 lines to .claude\skills\limpiando-enaho\SKILL.md
+      1 ---
+      2 name: limpiando-enaho
+      3 description: Limpia y valida los módulos 34 (sumaria) y 02 (miemb
+        ros) de la ENAHO 2024 del INEI, y genera una base de personas con
+         pobreza y factor de expansión más indicadores ponderados. Se usa
+         cuando piden limpiar, unir o analizar la ENAHO, o calcular pobre
+        za nacional, urbana, rural, por sexo o por departamento del Perú.
+      4 ---
+      5
+      6 # Limpiar la ENAHO 2024
+     … +24 lines (ctrl+o to expand)
+
+● Write(.claude\skills\limpiando-enaho\reference.md)
+  ⎿  Wrote 83 lines to .claude\skills\limpiando-enaho\reference.md
+       1 # Referencia: ENAHO 2024
+       2
+       3 ## Archivos
+       4
+       5 | Zip | Archivo usado | Una fila por | Filas | Llaves |
+       6 |---|---|---|---|---|
+       7 | `966-Modulo34.zip` | `sumaria-2024.dta` | hogar | 33,691 | `co
+         nglome`, `vivienda`, `hogar` |
+       8 | `966-Modulo02.zip` | `enaho01-2024-200.dta` | persona | 117,72
+         1 | las tres + `codperso` |
+     … +75 lines (ctrl+o to expand)
+
+● Ejecuto la Skill de verdad. Después hago dos comprobaciones por separado: si
+  el script se detiene cuando debe y si los resultados coinciden con un cálculo
+  independiente.
+
+● Bash(uv run python .claude/skills/limpiando-enaho/scripts/limpiar.py; echo
+      "exit=$?"; echo; ls -la salidas; echo; cat salidas/validacion.txt; echo;
+      cat salidas/indic…)
+  ⎿  Created salidas\indicadores.csv (+31 -0)
+       1 +nivel,codigo,categoria,pobreza_pct,personas_muestra,poblacion_e
+         +xpandida                                                       
+       2 +Nacional,,Nacional,27.53,108664,34147766                       
+       3 +Área,,Rural,39.44,36071,6486385                                
+       4 +Área,,Urbana,24.74,72593,27661381                              
+       5 +Sexo,,Hombre,27.37,52587,16453003                              
+       6 +Sexo,,Mujer,27.68,56077,17694763                               
+       7 +Departamento,01,AMAZONAS,26.08,3911,430252                     
+       8 +Departamento,02,ANCASH,22.88,4576,1199410                      
+       9 +Departamento,03,APURIMAC,24.09,2500,474458                     
+      10 +Departamento,04,AREQUIPA,15.77,4645,1415224                    
+      11 +Departamento,05,AYACUCHO,33.04,3308,755197                     
+      12 +Departamento,06,CAJAMARCA,44.99,4468,1547849                   
+      13 +Departamento,07,CALLAO,33.77,3457,1138852                      
+      14 +Departamento,08,CUSCO,18.54,3777,1380357                       
+      15 +Departamento,09,HUANCAVELICA,33.61,3244,525028                 
+      16 +Departamento,10,HUANUCO,39.47,3903,910900                      
+      17 +Departamento,11,ICA,5.91,4838,855183                           
+      18 +Departamento,12,JUNIN,18.61,4658,1436462                       
+      19 +Departamento,13,LA LIBERTAD,30.07,5028,2064878                 
+      20 +Departamento,14,LAMBAYEQUE,14.05,4405,1348585                  
+      21 +Departamento,15,LIMA,26.89,14823,11233286                      
+      22 +Departamento,16,LORETO,42.61,5678,1121012                      
+      23 +Departamento,17,MADRE DE DIOS,11.14,2045,165829                
+      24 +Departamento,18,MOQUEGUA,10.88,2511,196788                     
+      25 +Departamento,19,PASCO,39.28,2746,323033                        
+      26 +Departamento,20,PIURA,31.81,5876,1970217                       
+      27 +Departamento,21,PUNO,40.42,3112,1535441                        
+      28 +Departamento,22,SAN MARTIN,21.99,4619,937167                   
+      29 +Departamento,23,TACNA,23.88,3622,375607                        
+      30 +Departamento,24,TUMBES,26.6,2771,261973                        
+      31 +Departamento,25,UCAYALI,27.12,4143,544778                      
+  ⎿  Created salidas\validacion.txt (+26 -0)
+       1 +VALIDACIÓN ENAHO 2024 - skill limpiando-enaho                  
+       2 +RESULTADO GENERAL: APROBADA                                    
+       3 +                                                               
+       4 +ESENCIALES:                                                    
+       5 +[APROBADA] Archivo 966-Modulo34.zip: C:\Users\CLIENTE\Documents
+         +\GitHub\python_intermedio_2026\tarea_4\datos\966-Modulo34.zip  
+       6 +[APROBADA] Archivo 966-Modulo02.zip: C:\Users\CLIENTE\Documents
+         +\GitHub\python_intermedio_2026\tarea_4\datos\966-Modulo02.zip  
+       7 +[APROBADA] Llave conglome como texto en 966-Modulo34.zip: 6 díg
+         +itos en todas las filas, con ceros iniciales                   
+       8 +[APROBADA] Llave vivienda como texto en 966-Modulo34.zip: 3 díg
+         +itos en todas las filas, con ceros iniciales                   
+       9 +[APROBADA] Llave hogar como texto en 966-Modulo34.zip: 2 dígito
+         +s en todas las filas, con ceros iniciales                      
+      10 +[APROBADA] Llave conglome como texto en 966-Modulo02.zip: 6 díg
+         +itos en todas las filas, con ceros iniciales                   
+      11 +[APROBADA] Llave vivienda como texto en 966-Modulo02.zip: 3 díg
+         +itos en todas las filas, con ceros iniciales                   
+      12 +[APROBADA] Llave hogar como texto en 966-Modulo02.zip: 2 dígito
+         +s en todas las filas, con ceros iniciales                      
+      13 +[APROBADA] Llave codperso como texto en 966-Modulo02.zip: 2 díg
+         +itos en todas las filas, con ceros iniciales                   
+      14 +[APROBADA] Llave ubigeo como texto en 966-Modulo02.zip: 6 dígit
+         +os en todas las filas, con ceros iniciales                     
+      15 +[APROBADA] Unión m:1 personas-hogares: validate='m:1' superado 
+      16 +[APROBADA] Unión sin duplicar ni perder filas: 108,664 filas an
+         +tes, 108,664 después, 0 personas sin hogar                     
+      17 +[APROBADA] Códigos válidos sin vacíos: pobreza en 1-3, estrato 
+         +en 1-8, p207 en 1-2                                            
+      18 +[APROBADA] Pobreza nacional: obtenido 27.53 %, referencia 27.6 
+         +% +/- 0.1 puntos                                               
+      19 +[APROBADA] Residentes habituales: obtenido 108,664, referencia 
+         +108,664                                                        
+      20 +[APROBADA] Códigos de departamento: obtenido 25 códigos, refere
+         +ncia 25 (01 a 25)                                              
+      21 +[APROBADA] Sin duplicados: 0 personas y 0 hogares repetidos    
+      22 +[APROBADA] Factores válidos: 0 valores vacíos, infinitos o <= 0
+         + en facpob07                                                   
+      23 +                                                               
+      24 +CONTROLES:                                                     
+      25 +[APROBADA] Pobreza urbana: obtenido 24.74 %, referencia 24.8 % 
+         ++/- 0.1 puntos                                                 
+      26 +[FALLÓ] Pobreza rural: obtenido 39.44 %, referencia 39.3 % +/- 
+         +0.1 puntos                                                     
+  ⎿  (timeout 5m)
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● El control rural falla por 0.14 puntos (39.44 % frente a 39.3 %), y sospecho
+  que las referencias del curso se calcularon por hogares. Voy a comprobarlo sin
+  tocar la Skill ni la tolerancia.
+
+● Update(.claude\skills\limpiando-enaho\scripts\limpiar.py)
+  ⎿  Added 4 lines, removed 1 line
+      244  def ejecutar(datos, salidas, bitacora):
+      245      zip_sumaria, zip_miembros = datos / ZIP_SUMARIA, datos / Z
+           IP_MIEMBROS
+      246      for ruta in (zip_sumaria, zip_miembros):
+      247 -        bitacora.verificar(f"Archivo {ruta.name}", ruta.is_fil
+          -e(), str(ruta))                                               
+      247 +        existe = ruta.is_file()                               
+      248 +        bitacora.verificar(                                   
+      249 +            f"Archivo {ruta.name}", existe, "encontrado" if ex
+          +iste else f"falta en {datos}"                                 
+      250 +        )                                                     
+      251      bitacora.detener_si_falla()
+      252  
+      253      print("1-2. Leyendo módulos y normalizando columnas...")
+
+● Update(.claude\skills\limpiando-enaho\scripts\limpiar.py)
+  ⎿  Added 1 line, removed 1 line
+      103          bitacora.verificar(
+      104              f"Llave {col} como texto en {ruta_zip.name}",
+      105              ok,
+      106 -            f"{ancho} dígitos en todas las filas, con ceros in
+          -iciales",                                                     
+      106 +            f"se exige texto de {ancho} dígitos en todas las f
+          +ilas",                                                        
+      107          )
+      108      return df
+      109  
+
+● Update(.claude\skills\limpiando-enaho\scripts\limpiar.py)
+  ⎿  Added 2 lines, removed 1 line
+      76          aprobada = self.completa and not self.fallos(esencial=T
+          rue)
+      77          lineas = [
+      78              "VALIDACIÓN ENAHO 2024 - skill limpiando-enaho",
+      79 -            f"RESULTADO GENERAL: {'APROBADA' if aprobada else '
+         -FALLÓ'}",                                                      
+      79 +            f"RESULTADO DE LAS ESENCIALES: {'APROBADA' if aprob
+         +ada else 'FALLÓ'}",                                            
+      80 +            f"CONTROLES CON FALLÓ: {len(self.fallos(esencial=Fa
+         +lse))}",                                                       
+      81          ]
+      82          if not self.completa:
+      83              lineas.append("El pipeline se detuvo antes de compl
+          etar las verificaciones.")
+
+● Bash(S="C:/Users/CLIENTE/AppData/Local/Temp/claude/c6d1324998372a5d/7099330f-a
+      64b-45a5-8292-7f639f77c3a3/scratchpad"
+      cat > "$S/diagnostico.py" <<'EOF'…)
+  ⎿  Updated salidas\validacion.txt (+12 -11)
+       1  VALIDACIÓN ENAHO 2024 - skill limpiando-enaho
+       2 -RESULTADO GENERAL: APROBADA                                    
+       2 +RESULTADO DE LAS ESENCIALES: APROBADA                          
+       3 +CONTROLES CON FALLÓ: 1                                         
+       4  
+       5  ESENCIALES:
+       5 -[APROBADA] Archivo 966-Modulo34.zip: C:\Users\CLIENTE\Documents
+         -\GitHub\python_intermedio_2026\tarea_4\datos\966-Modulo34.zip  
+       6 -[APROBADA] Archivo 966-Modulo02.zip: C:\Users\CLIENTE\Documents
+         -\GitHub\python_intermedio_2026\tarea_4\datos\966-Modulo02.zip  
+       7 -[APROBADA] Llave conglome como texto en 966-Modulo34.zip: 6 díg
+         -itos en todas las filas, con ceros iniciales                   
+       8 -[APROBADA] Llave vivienda como texto en 966-Modulo34.zip: 3 díg
+         -itos en todas las filas, con ceros iniciales                   
+       9 -[APROBADA] Llave hogar como texto en 966-Modulo34.zip: 2 dígito
+         -s en todas las filas, con ceros iniciales                      
+      10 -[APROBADA] Llave conglome como texto en 966-Modulo02.zip: 6 díg
+         -itos en todas las filas, con ceros iniciales                   
+      11 -[APROBADA] Llave vivienda como texto en 966-Modulo02.zip: 3 díg
+         -itos en todas las filas, con ceros iniciales                   
+      12 -[APROBADA] Llave hogar como texto en 966-Modulo02.zip: 2 dígito
+         -s en todas las filas, con ceros iniciales                      
+      13 -[APROBADA] Llave codperso como texto en 966-Modulo02.zip: 2 díg
+         -itos en todas las filas, con ceros iniciales                   
+      14 -[APROBADA] Llave ubigeo como texto en 966-Modulo02.zip: 6 dígit
+         -os en todas las filas, con ceros iniciales                     
+       6 +[APROBADA] Archivo 966-Modulo34.zip: encontrado                
+       7 +[APROBADA] Archivo 966-Modulo02.zip: encontrado                
+       8 +[APROBADA] Llave conglome como texto en 966-Modulo34.zip: se ex
+         +ige texto de 6 dígitos en todas las filas                      
+       9 +[APROBADA] Llave vivienda como texto en 966-Modulo34.zip: se ex
+         +ige texto de 3 dígitos en todas las filas                      
+      10 +[APROBADA] Llave hogar como texto en 966-Modulo34.zip: se exige
+         + texto de 2 dígitos en todas las filas                         
+      11 +[APROBADA] Llave conglome como texto en 966-Modulo02.zip: se ex
+         +ige texto de 6 dígitos en todas las filas                      
+      12 +[APROBADA] Llave vivienda como texto en 966-Modulo02.zip: se ex
+         +ige texto de 3 dígitos en todas las filas                      
+      13 +[APROBADA] Llave hogar como texto en 966-Modulo02.zip: se exige
+         + texto de 2 dígitos en todas las filas                         
+      14 +[APROBADA] Llave codperso como texto en 966-Modulo02.zip: se ex
+         +ige texto de 2 dígitos en todas las filas                      
+      15 +[APROBADA] Llave ubigeo como texto en 966-Modulo02.zip: se exig
+         +e texto de 6 dígitos en todas las filas                        
+      16  [APROBADA] Unión m:1 personas-hogares: validate='m:1' superado
+      17  [APROBADA] Unión sin duplicar ni perder filas: 108,664 filas an
+          tes, 108,664 después, 0 personas sin hogar
+      18  [APROBADA] Códigos válidos sin vacíos: pobreza en 1-3, estrato 
+          en 1-8, p207 en 1-2
+  ⎿  (timeout 5m)
+
+● Hipótesis confirmada: calculando por hogares, el rural da exactamente 39.30 %.
+  Dejo esto documentado en reference.md y repito las pruebas de fallo con la
+  versión final del script.
+
+● Update(.claude\skills\limpiando-enaho\reference.md)
+  ⎿  Added 12 lines, removed 2 lines
+      50  
+      51  **Controles (solo avisan):** urbana 24.8 % y rural 39.3 %, ± 0.
+          1 puntos.
+      52  
+      53 -Con personas y `facpob07`, la pobreza nacional sin redondear es
+         - cercana a 27.53 %. Con la sumaria y `factor07 × mieperho` es 2
+         -7.58 %. Ambas redondean a 27.6 %, así que esa diferencia es esp
+         -erada.                                                         
+      53 +## Por qué el control rural da FALLÓ                           
+      54  
+      55 +Las referencias coinciden con un cálculo por hogares, mientras 
+         +que este pipeline pondera personas, como pide la tarea. Son dos
+         + métodos distintos:                                            
+      56 +                                                               
+      57 +| Cifra (%) | Personas residentes y `facpob07` | Sumaria y `fac
+         +tor07 × mieperho` | Referencia |                               
+      58 +|---|---|---|---|                                              
+      59 +| Nacional | 27.53 | 27.58 | 27.6 |                            
+      60 +| Urbana | 24.74 | 24.81 | 24.8 |                              
+      61 +| Rural | 39.44 | 39.30 | 39.3 |                               
+      62 +                                                               
+      63 +`mieperho` suma 109,842 personas y el filtro deja 108,664. Sus 
+         +conteos difieren en 1,846 hogares. La diferencia rural de 0.14 
+         +puntos no es un error de limpieza. No la corrijas cambiando el 
+         +método o la tolerancia para aprobar el control: repórtala.     
+      64 +                                                               
+      65  ## Pobreza por departamento según el curso
+      66  
+      57 -Cifras de la Sesión 16, para consulta. El script no las valida.
+      67 +Cifras de la Sesión 16, para consulta. El script no las valida.
+         + Coinciden con el cálculo por hogares (diferencia máxima de 0.0
+         +5 puntos). `indicadores.csv` pondera personas y puede diferir h
+         +asta 0.52 puntos (Puno).                                       
+      68  
+      69  | Código | Departamento | % | Código | Departamento | % |
+      70  |---|---|---|---|---|---|
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● La Skill limpiando-enaho está creada y ejecutada: todas las validaciones
+  esenciales pasaron, pero el control de pobreza rural dio FALLÓ. Como no es
+  esencial, el script terminó sin error y generó las salidas. No ajusté ninguna
+  cifra.
+
+  salidas/validacion.txt
+
+  VALIDACIÓN ENAHO 2024 - skill limpiando-enaho
+  RESULTADO DE LAS ESENCIALES: APROBADA
+  CONTROLES CON FALLÓ: 1
+
+  ESENCIALES:
+  [APROBADA] Archivo 966-Modulo34.zip: encontrado
+  [APROBADA] Archivo 966-Modulo02.zip: encontrado
+  [APROBADA] Llave conglome como texto en 966-Modulo34.zip: se exige texto de 6
+  dígitos en todas las filas
+  [APROBADA] Llave vivienda como texto en 966-Modulo34.zip: se exige texto de 3
+  dígitos en todas las filas
+  [APROBADA] Llave hogar como texto en 966-Modulo34.zip: se exige texto de 2
+  dígitos en todas las filas
+  [APROBADA] Llave conglome como texto en 966-Modulo02.zip: se exige texto de 6
+  dígitos en todas las filas
+  [APROBADA] Llave vivienda como texto en 966-Modulo02.zip: se exige texto de 3
+  dígitos en todas las filas
+  [APROBADA] Llave hogar como texto en 966-Modulo02.zip: se exige texto de 2
+  dígitos en todas las filas
+  [APROBADA] Llave codperso como texto en 966-Modulo02.zip: se exige texto de 2
+  dígitos en todas las filas
+  [APROBADA] Llave ubigeo como texto en 966-Modulo02.zip: se exige texto de 6
+  dígitos en todas las filas
+  [APROBADA] Unión m:1 personas-hogares: validate='m:1' superado
+  [APROBADA] Unión sin duplicar ni perder filas: 108,664 filas antes, 108,664
+  después, 0 personas sin hogar
+  [APROBADA] Códigos válidos sin vacíos: pobreza en 1-3, estrato en 1-8, p207 en
+  1-2
+  [APROBADA] Pobreza nacional: obtenido 27.53 %, referencia 27.6 % +/- 0.1
+  puntos
+  [APROBADA] Residentes habituales: obtenido 108,664, referencia 108,664
+  [APROBADA] Códigos de departamento: obtenido 25 códigos, referencia 25 (01 a
+  25)
+  [APROBADA] Sin duplicados: 0 personas y 0 hogares repetidos
+  [APROBADA] Factores válidos: 0 valores vacíos, infinitos o <= 0 en facpob07
+
+  CONTROLES:
+  [APROBADA] Pobreza urbana: obtenido 24.74 %, referencia 24.8 % +/- 0.1 puntos
+  [FALLÓ] Pobreza rural: obtenido 39.44 %, referencia 39.3 % +/- 0.1 puntos
+
+  Por qué falla el control rural
+
+  No parece un error de limpieza: las cifras de referencia coinciden con un
+  cálculo por hogares, y tú pediste ponderar personas con facpob07.
+
+  ┌───────────┬────────────────────────┬──────────────────────┬────────────┐
+  │ Pobreza   │  Personas y facpob07   │ Hogares y factor07 × │ Referencia │
+  │    (%)    │     (este script)      │       mieperho       │            │
+  ├───────────┼────────────────────────┼──────────────────────┼────────────┤
+  │ Nacional  │ 27.53                  │ 27.58                │ 27.6       │
+  ├───────────┼────────────────────────┼──────────────────────┼────────────┤
+  │ Urbana    │ 24.74                  │ 24.81                │ 24.8       │
+  ├───────────┼────────────────────────┼──────────────────────┼────────────┤
+  │ Rural     │ 39.44                  │ 39.30                │ 39.3       │
+  └───────────┴────────────────────────┴──────────────────────┴────────────┘
+
+  Los dos métodos no cuentan exactamente a las mismas personas: mieperho suma
+  109,842 y el filtro de residentes deja 108,664. El README de la Sesión 16
+  también distingue el 27.53 % del 27.58 %.
+
+  Comprobaciones
+
+  - Paradas ante errores: simulé cuatro fallos esenciales: una referencia
+    alterada, hogares duplicados, un factor inválido y llaves numéricas. En los
+    cuatro, el script se detuvo con error y borró las salidas anteriores. Un
+    control fallido solo genera una advertencia.
+  - Promedio sin ponderar: daría 25.61 %, lejos del 27.53 % ponderado, y esa es
+    justo la diferencia que te expliqué al inicio.
+  - Datos entre módulos: estrato y ubigeo coinciden en ambos módulos, y ningún
+    hogar de sumaria quedó sin residentes.
+
+  Antes de la siguiente parte
+
+  - Diferencias por departamento: indicadores.csv puede diferir hasta 0.52
+    puntos de la tabla del curso (Puno: 40.42 % frente a 39.9 %). Cusco da 18.54
+    % y Cajamarca 44.99 %, pero Ica da 5.91 %, que redondea a 5.9 % y no al 6.0
+    % esperado.
+  - Activar la Skill: como .claude/skills es una carpeta nueva, quizá debas
+    reiniciar Claude Code para que la detecte.
+  - Git: no hice commit. personas_2024.parquet queda fuera por tu .gitignore,
+    así que no se subirá, pero se puede regenerar con el script.
+
+  Decisión para ti
+
+  ¿Dejas la tolerancia del control rural en 0.1 puntos? No indicaste una para
+  los controles, así que usé la misma de la pobreza nacional. Te recomiendo
+  mantenerla y explicar el FALLÓ en tu entrega, porque ampliarla ahora sería
+  ajustar la prueba al resultado. Si tu docente define otra, se cambia en
+  TOLERANCIA_PUNTOS, aunque esa constante también rige la pobreza nacional.
+
+  Los archivos están en .claude/skills/limpiando-enaho/:
+  - SKILL.md (.claude/skills/limpiando-enaho/SKILL.md)
+  - reference.md (.claude/skills/limpiando-enaho/reference.md)
+  - limpiar.py (.claude/skills/limpiando-enaho/scripts/limpiar.py)
+
+  Las salidas están en salidas/:
+  - validacion.txt (salidas/validacion.txt)
+  - indicadores.csv (salidas/indicadores.csv)
+  - personas_2024.parquet (salidas/personas_2024.parquet)
+
+> <ide_opened_file>The user opened the file c:\Users\CLIENTE\Documents\GitHub\p
+  ython_intermedio_2026\tarea_4\notas_proceso.md in the IDE. This may or may
+  not be related to the current task.</ide_opened_file>
+
+> Por favor, mantén el control rural por personas con su FALLÓ y la tolerancia
+  en 0.1.
+  Agrega en validacion.txt dos controles más calculados con la sumaria y
+  factor07 × mieperho (el mismo método de la referencia): urbana y rural.
+  Al final de validacion.txt, añade una nota de 2 o 3 líneas que explique la
+  diferencia entre ambos métodos. No cambies ninguna cifra de referencia.
+
+● Agrego los dos controles por hogares y la nota sin tocar el control por
+  personas, la tolerancia ni las referencias. También compruebo que los
+  productos de datos no cambien.
+
+● Update(.claude\skills\limpiando-enaho\scripts\limpiar.py)  ⎿  Added 18 lines, removed 1 line
+      208      for area, referencia in (("Urbana", REF_URBANA), ("Rural",
+            REF_RURAL)):
+      209          obtenido = tasa_ponderada(personas[personas["area"] ==
+            area])
+      210          bitacora.verificar(
+      211 -            f"Pobreza {area.lower()}",                        
+      211 +            f"Pobreza {area.lower()} por personas (facpob07)",
+      212              abs(obtenido - referencia) <= TOLERANCIA_PUNTOS,
+      213              f"obtenido {obtenido:.2f} %, referencia {referenci
+           a} % "
+      214              f"+/- {TOLERANCIA_PUNTOS} puntos",
+      215              esencial=False,
+      216          )
+      217  
+      218 +    # Mismo método de la referencia: solo informa, no alimenta
+          + la base ni los indicadores.                                  
+      219 +    peso = sumaria["factor07"].astype("float64") * sumaria["mi
+          +eperho"]                                                      
+      220 +    pobre = sumaria["pobreza"] <= 2                           
+      221 +    urbano = sumaria["estrato"] <= 5                          
+      222 +    for area, en_area, referencia in (                        
+      223 +        ("urbana", urbano, REF_URBANA),                       
+      224 +        ("rural", ~urbano, REF_RURAL),                        
+      225 +    ):                                                        
+      226 +        obtenido = 100 * peso[en_area & pobre].sum() / peso[en
+          +_area].sum()                                                  
+      227 +        bitacora.verificar(                                   
+      228 +            f"Pobreza {area} por hogares (factor07 x mieperho)
+          +",                                                            
+      229 +            abs(obtenido - referencia) <= TOLERANCIA_PUNTOS,  
+      230 +            f"obtenido {obtenido:.2f} %, referencia {referenci
+          +a} % "                                                        
+      231 +            f"+/- {TOLERANCIA_PUNTOS} puntos",                
+      232 +            esencial=False,                                   
+      233 +        )                                                     
+      234  
+      235 +                                                              
+      236  def calcular_indicadores(personas):
+      237      """Paso 8: pobreza ponderada nacional, por área, sexo y de
+           partamento."""
+      238      grupos = [
+
+● Update(.claude\skills\limpiando-enaho\scripts\limpiar.py)
+  ⎿  Added 1 line
+      87                  lineas += ["", f"{titulo}:"]
+      88              for nombre, ok, detalle, _ in filas:
+      89                  lineas.append(f"[{'APROBADA' if ok else 'FALLÓ'
+          }] {nombre}: {detalle}")
+      90 +        lineas += ["", *NOTA_METODOS]                          
+      91          ruta.write_text("\n".join(lineas) + "\n", encoding="utf
+          -8")
+      92  
+      93  
+
+● Update(.claude\skills\limpiando-enaho\scripts\limpiar.py)
+  ⎿  Added 6 lines
+      38  REF_RURAL = 39.3
+      39  TOLERANCIA_PUNTOS = 0.1
+      40  
+      41 +NOTA_METODOS = (                                               
+      42 +    "NOTA: El método por personas pondera a los residentes habi
+         +tuales del módulo 02 con facpob07; el método por hogares ponder
+         +a cada hogar de la sumaria con factor07 x mieperho.",          
+      43 +    "Sus tasas difieren porque no cuentan exactamente a las mis
+         +mas personas: mieperho no coincide con el número de residentes 
+         +filtrados en todos los hogares.",                              
+      44 +    "Las referencias corresponden al método por hogares; por es
+         +o un FALLÓ por personas puede reflejar esta diferencia de métod
+         +o, y no se ajusta ninguna cifra.",                             
+      45 +)                                                              
+      46 +                                                               
+      47  DEPARTAMENTOS = {
+      48      "01": "AMAZONAS", "02": "ANCASH", "03": "APURIMAC", "04": "
+          AREQUIPA",
+      49      "05": "AYACUCHO", "06": "CAJAMARCA", "07": "CALLAO", "08": 
+          "CUSCO",
+
+● Update(.claude\skills\limpiando-enaho\reference.md)
+  ⎿  Added 1 line, removed 1 line
+      48  
+      49  **Esenciales (detienen el proceso):** archivos presentes, llave
+          s como texto, unión m:1 sin duplicar ni perder filas, códigos v
+          álidos sin vacíos, pobreza nacional de 27.6 % ± 0.1 puntos, 108
+          ,664 residentes, 25 códigos de departamento, sin duplicados y f
+          actores válidos.
+      50  
+      51 -**Controles (solo avisan):** urbana 24.8 % y rural 39.3 %, ± 0.
+         -1 puntos.                                                      
+      51 +**Controles (solo avisan):** urbana 24.8 % y rural 39.3 %, ± 0.
+         +1 puntos, calculados por personas (`facpob07`) y por hogares (`
+         +factor07 × mieperho`). El cálculo por hogares solo se usa en es
+         +tos controles; la base y los indicadores siguen ponderados con 
+         +`facpob07`.                                                    
+      52  
+      53  ## Por qué el control rural da FALLÓ
+      54  
+
+● Update(.claude\skills\limpiando-enaho\SKILL.md)
+  ⎿  Added 1 line, removed 1 line
+      15  3. Lee `salidas/validacion.txt` y muestra su contenido.
+      16  4. Actúa según el resultado:
+      17     - **Falló algo esencial** (el script termina con error): det
+          ente, informa qué falló y busca la causa en los datos o en el c
+          ódigo. No uses resultados parciales.
+      18 -   - **Falló un control** (urbana o rural): la base se genera, 
+         -pero avisa al usuario de forma visible.                        
+      18 +   - **Falló un control** (urbana o rural, por personas o por h
+         +ogares): la base se genera, pero avisa al usuario de forma visi
+         +ble.                                                           
+      19     - **Todo aprobado:** usa `salidas/personas_2024.parquet` y `
+          salidas/indicadores.csv`.
+      20  
+      21  ## Reglas
+
+● Bash(S="C:/Users/CLIENTE/AppData/Local/Temp/claude/c6d1324998372a5d/7099330f-a
+      64b-45a5-8292-7f639f77c3a3/scratchpad"
+      sha256sum salidas/indicadores.csv salidas/person…)
+  ⎿  Updated salidas\validacion.txt (+8 -2)
+      23  [APROBADA] Factores válidos: 0 valores vacíos, infinitos o <= 0
+           en facpob07
+      24  
+      25  CONTROLES:
+      26 -[APROBADA] Pobreza urbana: obtenido 24.74 %, referencia 24.8 % 
+         -+/- 0.1 puntos                                                 
+      27 -[FALLÓ] Pobreza rural: obtenido 39.44 %, referencia 39.3 % +/- 
+         -0.1 puntos                                                     
+      26 +[APROBADA] Pobreza urbana por personas (facpob07): obtenido 24.
+         +74 %, referencia 24.8 % +/- 0.1 puntos                         
+      27 +[FALLÓ] Pobreza rural por personas (facpob07): obtenido 39.44 %
+         +, referencia 39.3 % +/- 0.1 puntos                             
+      28 +[APROBADA] Pobreza urbana por hogares (factor07 x mieperho): ob
+         +tenido 24.81 %, referencia 24.8 % +/- 0.1 puntos               
+      29 +[APROBADA] Pobreza rural por hogares (factor07 x mieperho): obt
+         +enido 39.30 %, referencia 39.3 % +/- 0.1 puntos                
+      30 +                                                               
+      31 +NOTA: El método por personas pondera a los residentes habituale
+         +s del módulo 02 con facpob07; el método por hogares pondera cad
+         +a hogar de la sumaria con factor07 x mieperho.                 
+      32 +Sus tasas difieren porque no cuentan exactamente a las mismas p
+         +ersonas: mieperho no coincide con el número de residentes filtr
+         +ados en todos los hogares.                                     
+      33 +Las referencias corresponden al método por hogares; por eso un 
+         +FALLÓ por personas puede reflejar esta diferencia de método, y 
+         +no se ajusta ninguna cifra.                                    
+  ⎿  (timeout 10m)
+  ⎿  1 skill available
+
+● Listo: validacion.txt ya incluye los dos controles por hogares y la nota de 3
+  líneas al final. El control rural por personas sigue en FALLÓ, con la
+  tolerancia en 0.1 y las mismas cifras de referencia, y los dos nuevos
+  controles dieron APROBADA.
+
+  Lo nuevo en salidas/validacion.txt
+
+  Las validaciones esenciales no cambiaron y todas siguen en APROBADA. Esta es
+  la parte final del archivo:
+
+  CONTROLES:
+  [APROBADA] Pobreza urbana por personas (facpob07): obtenido 24.74 %,
+  referencia 24.8 % +/- 0.1 puntos
+  [FALLÓ] Pobreza rural por personas (facpob07): obtenido 39.44 %, referencia
+  39.3 % +/- 0.1 puntos
+  [APROBADA] Pobreza urbana por hogares (factor07 x mieperho): obtenido 24.81 %,
+  referencia 24.8 % +/- 0.1 puntos
+  [APROBADA] Pobreza rural por hogares (factor07 x mieperho): obtenido 39.30 %,
+  referencia 39.3 % +/- 0.1 puntos
+
+  NOTA: El método por personas pondera a los residentes habituales del módulo 02
+  con facpob07; el método por hogares pondera cada hogar de la sumaria con
+  factor07 x mieperho.
+  Sus tasas difieren porque no cuentan exactamente a las mismas personas:
+  mieperho no coincide con el número de residentes filtrados en todos los
+  hogares.
+  Las referencias corresponden al método por hogares; por eso un FALLÓ por
+  personas puede reflejar esta diferencia de método, y no se ajusta ninguna
+  cifra.
+
+  Comprobaciones
+
+  - Datos sin cambios: indicadores.csv y personas_2024.parquet son idénticos
+    byte a byte a los anteriores, así que el cálculo por hogares solo aparece en
+    los controles.
+  - Referencias: siguen en 27.6, 108,664, 24.8 y 39.3.
+  - Paradas ante errores: repetí las pruebas con la versión final; los cuatro
+    fallos esenciales simulados detienen el script, y un control fallido solo
+    genera una advertencia.
+
+  Otros cambios
+
+  - Nombres de los controles: añadí "por personas (facpob07)" a los dos que ya
+    existían, para distinguirlos de los nuevos. Sus resultados no cambiaron.
+  - Documentación: actualicé SKILL.md (.claude/skills/limpiando-enaho/SKILL.md)
+    y reference.md (.claude/skills/limpiando-enaho/reference.md) para que
+    mencionen los cuatro controles.
+  - Git: estos cambios siguen sin commit.

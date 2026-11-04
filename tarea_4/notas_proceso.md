@@ -12,4 +12,4 @@
 
 ## ENAHO
 - La pobreza rural por personas (facpob07) da 39.44 %, frente al 39.3 % de referencia (diferencia de 0.14 puntos). La referencia se calcula por hogares (factor07 × mieperho), y con ese método se obtiene 39.30 %. No se ajustó la tolerancia: se documenta la diferencia de método.
-- Algunos departamentos difieren de la tabla de la Sesión 16 (Puno 40.42 % frente a 39.9 %; Ica 5.91 % frente a 6.0 %), probablemente por el mismo motivo.
+- Los departamentos por personas (facpob07) difieren de la tabla de la Sesión 16 en 14 de 25 casos (máximo 0.52 puntos, Puno). Por hogares (factor07 × mieperho) coinciden los 25 a 0.05 puntos o menos: las diferencias se explican por el método, no por errores de limpieza.
