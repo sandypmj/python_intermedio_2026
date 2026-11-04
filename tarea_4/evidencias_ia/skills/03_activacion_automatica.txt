@@ -1,0 +1,125 @@
+
+> Haz un mapa de la pobreza monetaria por departamento con ENAHO 2024.
+
+● Skill(mapeando-enaho)
+  ⎿  Successfully loaded skill
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Falta salidas/personas_2024.parquet, así que la skill indica correr primero
+  limpiando-enaho.
+
+● Skill(limpiando-enaho)
+  ⎿  Successfully loaded skill
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● La limpieza aprobó las validaciones esenciales, con un control fallido en
+  pobreza rural por personas, que luego reporto. Ahora corro el mapa.
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● El mapa está listo: en 2024, la pobreza monetaria fue más alta en Cajamarca
+  (45.0 %) y más baja en Ica (5.9 %). Une los 25 departamentos por código, con
+  Lima y Callao separados, y revisé que ninguna etiqueta quede cortada o
+  encimada. Huancavelica y Ayacucho quedan muy juntas, pero se leen bien.
+
+  ┌─────────────┬───────────────────────────────────────────────────────────┐
+  │             │               Departamentos con su tasa (%)               │
+  ├─────────────┼───────────────────────────────────────────────────────────┤
+  │ 5 más altos │ Cajamarca 45.0, Loreto 42.6, Puno 40.4, Huánuco 39.5,     │
+  │             │ Pasco 39.3                                                │
+  ├─────────────┼───────────────────────────────────────────────────────────┤
+  │ 5 más bajos │ Ica 5.9, Moquegua 10.9, Madre de Dios 11.1, Lambayeque    │
+  │             │ 14.1, Arequipa 15.8                                       │
+  ├─────────────┼───────────────────────────────────────────────────────────┤
+  │ Lima y      │ Lima 26.9, Callao 33.8                                    │
+  │ Callao      │                                                           │
+  └─────────────┴───────────────────────────────────────────────────────────┘
+
+  ⚠️ Control fallido en la limpieza
+
+  Faltaba la base de personas, así que primero corrí la limpieza. Pasaron las 18
+  validaciones esenciales y 3 de los 4 controles:
+
+  ┌────────────────────────────────┬──────────┬─────────────────┬───────────┐
+  │            Control             │ Obtenido │   Referencia    │ Resultado │
+  │                                │          │     (±0.1)      │           │
+  ├────────────────────────────────┼──────────┼─────────────────┼───────────┤
+  │ Pobreza nacional (validación   │ 27.53 %  │ 27.6 %          │ Aprobado  │
+  │ esencial)                      │          │                 │           │
+  ├────────────────────────────────┼──────────┼─────────────────┼───────────┤
+  │ Urbana por personas            │ 24.74 %  │ 24.8 %          │ Aprobado  │
+  ├────────────────────────────────┼──────────┼─────────────────┼───────────┤
+  │ Rural por personas             │ 39.44 %  │ 39.3 %          │ Falló     │
+  ├────────────────────────────────┼──────────┼─────────────────┼───────────┤
+  │ Urbana por hogares             │ 24.81 %  │ 24.8 %          │ Aprobado  │
+  ├────────────────────────────────┼──────────┼─────────────────┼───────────┤
+  │ Rural por hogares              │ 39.30 %  │ 39.3 %          │ Aprobado  │
+  └────────────────────────────────┴──────────┴─────────────────┴───────────┘
+
+  El fallo parece deberse al método: según validacion.txt, las referencias usan
+  el cálculo por hogares, y por ese método la tasa rural coincide. No ajusté
+  ninguna cifra.
+
+  Comparación con la referencia
+
+  Ningún departamento quedó con una diferencia sin explicar: 11 coinciden y 14
+  difieren solo por el método. Por hogares, todos quedan a 0.05 puntos o menos
+  de la referencia.
+
+  Estos son los 14 departamentos que difieren (explicada_por_metodo), en puntos
+  porcentuales respecto a la referencia:
+
+  ┌──────────────┬─────────────────────┬─────────────┐
+  │ Departamento │ Por personas (mapa) │ Por hogares │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Puno         │ +0.52               │ +0.04       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Huánuco      │ +0.47               │ −0.04       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Loreto       │ −0.39               │ −0.03       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Amazonas     │ +0.38               │ +0.05       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Tumbes       │ −0.30               │ 0.00        │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Pasco        │ +0.28               │ −0.03       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Ayacucho     │ +0.24               │ −0.04       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Huancavelica │ +0.21               │ 0.00        │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Lima         │ −0.21               │ −0.03       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Callao       │ −0.13               │ −0.04       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ La Libertad  │ −0.13               │ −0.01       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Moquegua     │ −0.12               │ −0.03       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Tacna        │ −0.12               │ −0.01       │
+  ├──────────────┼─────────────────────┼─────────────┤
+  │ Junín        │ +0.11               │ 0.00        │
+  └──────────────┴─────────────────────┴─────────────┘
+
+  El mapa usa siempre el cálculo por personas (facpob07), así que algunas cifras
+  difieren de la referencia, como Puno con 40.4 frente a 39.9.
+
+  Cómo leer el mapa
+
+  - Tasa, no cantidad: el área no representa población; un color intenso en
+    Loreto no significa que tenga más personas pobres que Lima.
+  - Promedio departamental: el color oculta las diferencias internas y no
+    describe a provincias, distritos ni personas.
+  - Sin márgenes de error: la ENAHO es una muestra, así que dos colores
+    distintos no prueban una diferencia significativa.
+  - Dónde, no por qué: el mapa muestra dónde es alta la tasa, pero no sus
+    causas.
+
+  Archivos
+
+  Están en tarea_4:
+  - mapas/pobreza_departamento.png
+  - salidas/comparacion_mapa.csv
+  - salidas/validacion.txt
