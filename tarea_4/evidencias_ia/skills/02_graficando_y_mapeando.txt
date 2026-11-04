@@ -1,0 +1,558 @@
+
+> Por favor, Ahora las Skills 2 y 3 de la Parte 2. Ya existe limpiando-enaho y
+  la base salidas/personas_2024.parquet. Usa como referencia la Sesión 16:
+  https://github.com/d2cml-ai/Data-Science-Python/tree/main/sessions/16-skills-
+  enaho
+
+  Skill graficando-enaho (.claude/skills/graficando-enaho/ con SKILL.md y
+  scripts/):
+  - Gráficos de pobreza ponderada con facpob07: por área urbana/rural, por sexo
+  y por departamento (como mínimo).
+  - Barras desde cero, título analítico que diga qué se observa y el año,
+  unidad (% de personas), fuente «INEI, ENAHO 2024» al pie.
+  - Guardar PNG a 200 dpi en figuras/.
+
+  Skill mapeando-enaho (.claude/skills/mapeando-enaho/ con SKILL.md y
+  scripts/):
+  - Mapa coroplético de pobreza por departamento con el GeoJSON:
+  https://raw.githubusercontent.com/d2cml-ai/Data-Science-Python/main/sessions/
+  06-geoespacial/lab/Data/peru_departamental_simple.geojson
+    (guárdalo en datos/).
+  - Unir por código: ubigeo[:2] con FIRST_IDDP como texto, nunca por nombre.
+  - Exigir 25 departamentos con dato, Lima (15) y Callao (07) separados.
+  - Escala de un solo color desde 0, leyenda «% de personas en pobreza
+  monetaria».
+  - Comparar con la referencia de la Sesión 16
+  (referencias/pobreza_departamento_2024.csv) y guardar la comparación en
+  salidas/comparacion_mapa.csv. Si hay diferencias, calcula también por hogares
+  (factor07 × mieperho) para ver si se explican por el método, como pasó con
+  la pobreza rural. No ajustes cifras.
+  - Guardar el mapa en mapas/.
+
+  En los dos SKILL.md escribe: «Si no existe salidas/personas_2024.parquet, usa
+  primero la skill limpiando-enaho».
+
+  Antes de programar, explícame los alcances y límites del mapa coroplético y
+  por qué unir por código y no por nombre. Luego créalas, ejecútalas y
+  muéstrame los gráficos y el mapa.
+
+● Antes de programar: alcances y límites del mapa coroplético
+
+  Qué permite ver
+  - El patrón territorial de un vistazo: qué departamentos concentran la pobreza
+    y si forman agrupaciones, algo difícil de captar en una tabla o un gráfico
+    de barras.
+  - Es adecuado para la pobreza porque esta es una tasa (% de personas),
+    comparable entre departamentos de distinto tamaño.
+
+  Qué no permite ver
+  - Superficie frente a población: Loreto ocupa mucho espacio en el mapa y Lima,
+    con cerca de un tercio de la población, muy poco. El mapa muestra dónde es
+    alta la tasa, no dónde vive la mayoría de los pobres. Eso requiere conteos
+    de personas.
+  - Promedios internos: cada departamento recibe un solo color. Se ocultan las
+    brechas urbano-rural y entre provincias, y no se puede inferir nada sobre
+    distritos o personas (falacia ecológica).
+  - Incertidumbre: la ENAHO es una muestra. Dos colores distintos pueden
+    corresponder a tasas cuya diferencia no es estadísticamente significativa,
+    sobre todo en departamentos con muestra pequeña.
+  - Clases de color: los cortes elegidos cambian la impresión visual, así que
+    una escala que parte de 0 evita exagerar las diferencias.
+  - Causalidad: el mapa describe dónde ocurre la pobreza, no por qué.
+
+  Por qué unir por código y no por nombre
+  - Los nombres varían entre fuentes: tildes, mayúsculas, espacios o variantes
+    como «Lima» y «Lima Metropolitana» pueden hacer que una fila no se una, sin
+    que aparezca ningún error.
+  - El código es un identificador estable: ubigeo[:2] y FIRST_IDDP son la misma
+    clave oficial del INEI.
+  - Debe ser texto: como número, 07 se convierte en 7 y Callao ya no coincide.
+    Por eso se lee con ceros a la izquierda.
+  - Lima y Callao quedan separados: 15 y 07 son claves distintas, y la
+    validación de 25 departamentos detecta cualquier pérdida.
+
+  Ahora reviso el repositorio y la Sesión 16.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Skill(dataviz)
+  ⎿  Successfully loaded skill
+
+  Read 1 file, ran 6 shell commands (ctrl+o to expand)
+
+● Bash(mkdir -p referencias && S=C:/Users/CLIENTE/AppData/Local/Temp/claude/c6d1
+      324998372a5d/afb78265-cf8c-48b4-ae86-cd402467a01a/scratchpad; cp
+      $S/s16_ref.csv referen…)
+  ⎿  Created referencias\pobreza_departamento_2024.csv (+26 -0)
+       1 +ccdd,departamento,pobreza_pct                                  
+       2 +01,AMAZONAS,25.7                                               
+       3 +02,ANCASH,22.8                                                 
+       4 +03,APURIMAC,24.0                                               
+       5 +04,AREQUIPA,15.8                                               
+       6 +05,AYACUCHO,32.8                                               
+       7 +06,CAJAMARCA,45.0                                              
+       8 +07,CALLAO,33.9                                                 
+       9 +08,CUSCO,18.5                                                  
+      10 +09,HUANCAVELICA,33.4                                           
+      11 +10,HUANUCO,39.0                                                
+      12 +11,ICA,6.0                                                     
+      13 +12,JUNIN,18.5                                                  
+      14 +13,LA LIBERTAD,30.2                                            
+      15 +14,LAMBAYEQUE,14.0                                             
+      16 +15,LIMA,27.1                                                   
+      17 +16,LORETO,43.0                                                 
+      18 +17,MADRE DE DIOS,11.1                                          
+      19 +18,MOQUEGUA,11.0                                               
+      20 +19,PASCO,39.0                                                  
+      21 +20,PIURA,31.9                                                  
+      22 +21,PUNO,39.9                                                   
+      23 +22,SAN MARTIN,22.0                                             
+      24 +23,TACNA,24.0                                                  
+      25 +24,TUMBES,26.9                                                 
+      26 +25,UCAYALI,27.1                                                
+
+  Read 1 file (ctrl+o to expand)
+
+● Ya tengo la referencia de la Sesión 16 y el GeoJSON; el método de tu sospecha
+  coincide con lo que usó el mapa de referencia. Escribo las dos skills a
+  continuación.
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● El comando del shell falló al interpretar el texto, antes de crear ningún
+  archivo. Los escribo con la herramienta de archivos, y de paso simplifico la
+  redacción de los títulos.
+
+● Write(.claude\skills\graficando-enaho\SKILL.md)
+  ⎿  Wrote 35 lines to .claude\skills\graficando-enaho\SKILL.md
+       1 ---
+       2 name: graficando-enaho
+       3 description: Genera gráficos de barras de la pobreza monetaria p
+         onderada con facpob07, por área urbana y rural, por sexo y por d
+         epartamento, a partir de la ENAHO 2024 del INEI. Se usa cuando p
+         iden graficar, comparar o visualizar la pobreza del Perú con la
+         ENAHO.
+       4 ---
+       5
+       6 # Graficar la pobreza de la ENAHO 2024
+     … +29 lines (ctrl+o to expand)
+
+● Write(.claude\skills\graficando-enaho\scripts\graficar.py)
+  ⎿  Wrote 220 lines to .claude\skills\graficando-enaho\scripts\graficar.py
+       1 """Grafica la pobreza monetaria de la ENAHO 2024, ponderada con
+         facpob07.
+       2
+       3 Uso, desde la raíz del proyecto:
+       4     uv run python .claude/skills/graficando-enaho/scripts/grafic
+         ar.py
+       5
+       6 Salidas en figuras/ (PNG a 200 dpi):
+       7     pobreza_area.png  pobreza_sexo.png  pobreza_departamento.png
+       8
+     … +212 lines (ctrl+o to expand)
+
+● Write(.claude\skills\mapeando-enaho\SKILL.md)
+  ⎿  Wrote 41 lines to .claude\skills\mapeando-enaho\SKILL.md
+       1 ---
+       2 name: mapeando-enaho
+       3 description: Genera un mapa coroplético de la pobreza monetaria
+         por departamento del Perú con la ENAHO 2024 del INEI, uniendo po
+         r código de ubigeo, y lo compara con la referencia de la Sesión
+         16. Se usa cuando piden un mapa de pobreza por departamento o re
+         gión, o validar sus cifras.
+       4 ---
+       5
+       6 # Mapear la pobreza de la ENAHO 2024
+     … +35 lines (ctrl+o to expand)
+
+● Write(.claude\skills\mapeando-enaho\scripts\mapear.py)
+  ⎿  Wrote 303 lines to .claude\skills\mapeando-enaho\scripts\mapear.py
+       1 """Mapa coroplético de la pobreza por departamento, ENAHO 2024.
+       2
+       3 Uso, desde la raíz del proyecto:
+       4     uv run python .claude/skills/mapeando-enaho/scripts/mapear.p
+         y
+       5
+       6 Salidas, solo si la unión pasa todas las validaciones:
+       7     mapas/pobreza_departamento.png
+       8     salidas/comparacion_mapa.csv
+       9
+     … +294 lines (ctrl+o to expand)
+
+● Bash(uv run python .claude/skills/graficando-enaho/scripts/graficar.py; echo
+      "exit graficar=$?"; uv run python
+      .claude/skills/mapeando-enaho/scripts/mapear.py; echo…)
+  ⎿  Created salidas\comparacion_mapa.csv (+26 -0)
+       1 +ccdd,departamento,referencia_pct,personas_pct,dif_personas,hoga
+         +res_pct,dif_hogares,estado                                     
+       2 +01,AMAZONAS,25.7,26.08,0.38,25.75,0.05,explicada_por_metodo    
+       3 +02,ANCASH,22.8,22.88,0.08,22.77,-0.03,coincide                 
+       4 +03,APURIMAC,24.0,24.09,0.09,23.96,-0.04,coincide               
+       5 +04,AREQUIPA,15.8,15.77,-0.03,15.78,-0.02,coincide              
+       6 +05,AYACUCHO,32.8,33.04,0.24,32.76,-0.04,explicada_por_metodo   
+       7 +06,CAJAMARCA,45.0,44.99,-0.01,45.01,0.01,coincide              
+       8 +07,CALLAO,33.9,33.77,-0.13,33.86,-0.04,explicada_por_metodo    
+       9 +08,CUSCO,18.5,18.54,0.04,18.54,0.04,coincide                   
+      10 +09,HUANCAVELICA,33.4,33.61,0.21,33.4,0.0,explicada_por_metodo  
+      11 +10,HUANUCO,39.0,39.47,0.47,38.96,-0.04,explicada_por_metodo    
+      12 +11,ICA,6.0,5.91,-0.09,6.01,0.01,coincide                       
+      13 +12,JUNIN,18.5,18.61,0.11,18.5,-0.0,explicada_por_metodo        
+      14 +13,LA LIBERTAD,30.2,30.07,-0.13,30.19,-0.01,explicada_por_metod
+         +o                                                              
+      15 +14,LAMBAYEQUE,14.0,14.05,0.05,14.04,0.04,coincide              
+      16 +15,LIMA,27.1,26.89,-0.21,27.07,-0.03,explicada_por_metodo      
+      17 +16,LORETO,43.0,42.61,-0.39,42.97,-0.03,explicada_por_metodo    
+      18 +17,MADRE DE DIOS,11.1,11.14,0.04,11.15,0.05,coincide           
+      19 +18,MOQUEGUA,11.0,10.88,-0.12,10.97,-0.03,explicada_por_metodo  
+      20 +19,PASCO,39.0,39.28,0.28,38.97,-0.03,explicada_por_metodo      
+      21 +20,PIURA,31.9,31.81,-0.09,31.86,-0.04,coincide                 
+      22 +21,PUNO,39.9,40.42,0.52,39.94,0.04,explicada_por_metodo        
+      23 +22,SAN MARTIN,22.0,21.99,-0.01,22.02,0.02,coincide             
+      24 +23,TACNA,24.0,23.88,-0.12,23.99,-0.01,explicada_por_metodo     
+      25 +24,TUMBES,26.9,26.6,-0.3,26.9,0.0,explicada_por_metodo         
+      26 +25,UCAYALI,27.1,27.12,0.02,27.07,-0.03,coincide                
+  ⎿  … 4 more files changed
+  ⎿  (timeout 5m)
+  ⎿  2 skills available
+
+● Las 14 diferencias se explican por el método: por hogares, todos los
+  departamentos quedan a 0.05 puntos o menos de la referencia. Ahora reviso cómo
+  quedaron las imágenes.
+
+  Read 4 files (ctrl+o to expand)
+
+● Los números están bien, pero la revisión visual muestra problemas de lectura
+  en el mapa, los gráficos y el CSV, que voy a corregir.
+
+● Update(.claude\skills\mapeando-enaho\scripts\mapear.py)
+  ⎿  Removed 8 lines
+      170      return tabla[columnas].reset_index()
+      171  
+      172  
+      173 -def color_etiqueta(cmap, norm, valor):                        
+      174 -    """Texto oscuro sobre fondos claros y blanco sobre fondos 
+          -oscuros."""                                                   
+      175 -    r, g, b, _ = cmap(norm(valor))                            
+      176 -    canal = [c / 12.92 if c <= 0.03928 else ((c + 0.055) / 1.0
+          -55) ** 2.4 for c in (r, g, b)]                                
+      177 -    luminancia = 0.2126 * canal[0] + 0.7152 * canal[1] + 0.072
+          -2 * canal[2]                                                  
+      178 -    return COLOR_TEXTO if luminancia > 0.22 else "white"      
+      179 -                                                              
+      180 -                                                              
+      173  def dibujar(mapa, ruta):
+      174      cmap = LinearSegmentedColormap.from_list("azules", RAMPA)
+      175      tope = math.ceil(mapa["pobreza_pct"].max() / 10) * 10
+
+● Update(.claude\skills\mapeando-enaho\scripts\mapear.py)
+  ⎿  Added 20 lines, removed 9 lines
+      180      fig, ax = plt.subplots(figsize=(8.5, 10.5))
+      181      fig.patch.set_facecolor("white")
+      182      mapa.plot(ax=ax, color=colores, edgecolor="white", linewid
+           th=0.7)
+      183 +    x_min, x_max = ax.get_xlim()                              
+      184 +    ax.set_xlim(x_min - 1.0, x_max)  # Espacio para las etique
+          +tas en el mar.                                                
+      185      ax.set_axis_off()
+      186  
+      187 +    # El halo blanco mantiene el texto legible sobre cualquier
+          + tono.                                                        
+      188 +    halo = [patheffects.withStroke(linewidth=2, foreground="wh
+          +ite")]                                                        
+      189 +    linea_guia = {"arrowstyle": "-", "color": COLOR_SECUNDARIO
+          +, "linewidth": 0.6}                                           
+      190      for codigo, fila in indice.iterrows():
+      191          if codigo == CALLAO:  # Demasiado pequeño: se rotula e
+           n el recuadro.
+      192              continue
+      193          punto = fila.geometry.representative_point()
+      194          ax.annotate(
+      195              f"{NOMBRES[codigo]}\n{fila['pobreza_pct']:.1f}",
+      191 -            xy=(punto.x, punto.y), ha="center", va="center", f
+          -ontsize=7.5, linespacing=1.05,                                
+      192 -            color=color_etiqueta(cmap, norm, fila["pobreza_pct
+          -"]),                                                          
+      196 +            xy=(punto.x, punto.y), xytext=POSICIONES.get(codig
+          +o, (punto.x, punto.y)),                                       
+      197 +            ha="center", va="center", fontsize=7.5, linespacin
+          +g=1.05,                                                       
+      198 +            color=COLOR_TEXTO, path_effects=halo,             
+      199 +            arrowprops=linea_guia if codigo in ETIQUETAS_EN_EL
+          +_MAR else None,                                               
+      200          )
+      201  
+      202      # Recuadro: Callao no se distingue a escala nacional.
+      196 -    x0, y0, x1, y1 = indice.loc[CALLAO, "geometry"].bounds    
+      203 +    callao = indice.loc[CALLAO, "geometry"]                   
+      204 +    x0, y0, x1, y1 = callao.bounds                            
+      205      margen = 0.12
+      206      recuadro = ax.inset_axes([0.0, 0.05, 0.3, 0.27])
+      207      mapa.plot(ax=recuadro, color=colores, edgecolor="white", l
+           inewidth=1)
+     ...
+      209      recuadro.set_ylim(y0 - margen, y1 + margen)
+      210      recuadro.set_xticks([])
+      211      recuadro.set_yticks([])
+      204 -    recuadro.set_title("Lima y Callao, separados", fontsize=9,
+          - color=COLOR_TEXTO)                                           
+      212 +    recuadro.set_xlabel("")                                   
+      213 +    recuadro.set_ylabel("")                                   
+      214 +    recuadro.set_title("Lima y Callao", fontsize=9, color=COLO
+          +R_TEXTO)                                                      
+      215      for lado in recuadro.spines.values():
+      216          lado.set_color(COLOR_SECUNDARIO)
+      217          lado.set_linewidth(0.6)
+      218      recuadro.text(
+      219          0.72, 0.5, f"Lima\n{indice.loc[LIMA, 'pobreza_pct']:.1
+           f}", transform=recuadro.transAxes,
+      210 -        ha="center", va="center", fontsize=9,                 
+      211 -        color=color_etiqueta(cmap, norm, indice.loc[LIMA, "pob
+          -reza_pct"]),                                                  
+      220 +        ha="center", va="center", fontsize=9, color=COLOR_TEXT
+          +O, path_effects=halo,                                         
+      221      )
+      213 -    recuadro.text(                                            
+      214 -        0.13, 0.5, f"Callao\n{indice.loc[CALLAO, 'pobreza_pct'
+          -]:.1f}", transform=recuadro.transAxes,                        
+      215 -        ha="center", va="center", fontsize=9, color=COLOR_TEXT
+          -O,                                                            
+      222 +    punto_callao = callao.representative_point()              
+      223 +    recuadro.annotate(                                        
+      224 +        f"Callao\n{indice.loc[CALLAO, 'pobreza_pct']:.1f}",   
+      225 +        xy=(punto_callao.x, punto_callao.y), xytext=(0.15, 0.5
+          +), textcoords="axes fraction",                                
+      226 +        ha="center", va="center", fontsize=9, color=COLOR_TEXT
+          +O, arrowprops=linea_guia,                                     
+      227      )
+      228      ax.indicate_inset_zoom(recuadro, edgecolor=COLOR_SECUNDARI
+           O, alpha=0.8)
+      229  
+
+● Update(.claude\skills\mapeando-enaho\scripts\mapear.py)
+  ⎿  Added 4 lines
+      63  COLOR_TEXTO = "#1f1f1d"
+      64  COLOR_SECUNDARIO = "#5f5f5a"
+      65  
+      66 +# Etiquetas (longitud, latitud) que no caben en el punto interi
+         +or de su polígono.                                             
+      67 +POSICIONES = {"15": (-76.3, -11.55), "24": (-81.75, -3.45), "14
+         +": (-81.45, -6.85)}                                            
+      68 +ETIQUETAS_EN_EL_MAR = {"14", "24"}                             
+      69  
+      70 +                                                               
+      71  class ErrorValidacion(Exception):
+      72      """La unión o sus insumos no son confiables: no se genera e
+          l mapa."""
+      73  
+
+● Update(.claude\skills\mapeando-enaho\scripts\mapear.py)
+  ⎿  Added 1 line
+      26  import matplotlib.pyplot as plt
+      27  import numpy as np
+      28  import pandas as pd
+      29 +from matplotlib import patheffects                             
+      30  from matplotlib.cm import ScalarMappable
+      31  from matplotlib.colors import LinearSegmentedColormap, Normaliz
+          e
+      32  
+
+● Update(.claude\skills\mapeando-enaho\scripts\mapear.py)
+  ⎿  Added 1 line, removed 1 line
+      158  
+      159      tabla = ref.rename(columns={"pobreza_pct": "referencia_pct
+           "}).set_index("ccdd")
+      160      tabla["personas_pct"] = tasas.reindex(tabla.index)
+      161 -    tabla["dif_personas"] = (tabla["personas_pct"] - tabla["re
+          -ferencia_pct"]).round(2)                                      
+      161 +    tabla["dif_personas"] = (tabla["personas_pct"] - tabla["re
+          +ferencia_pct"]).round(2) + 0.0                                
+      162  
+      163      # Se calcula por hogares solo si hay diferencias que expli
+           car.
+      164      tabla["hogares_pct"] = np.nan
+
+● Update(.claude\skills\mapeando-enaho\scripts\mapear.py)
+  ⎿  Added 1 line, removed 1 line
+      165      hay_diferencias = (tabla["dif_personas"].abs() > TOLERANCI
+           A_PUNTOS).any()
+      166      if hay_diferencias and ruta_zip.is_file():
+      167          tabla["hogares_pct"] = tasas_hogares(ruta_zip).reindex
+           (tabla.index)
+      168 -    tabla["dif_hogares"] = (tabla["hogares_pct"] - tabla["refe
+          -rencia_pct"]).round(2)                                        
+      168 +    tabla["dif_hogares"] = (tabla["hogares_pct"] - tabla["refe
+          +rencia_pct"]).round(2) + 0.0                                  
+      169      tabla["estado"] = tabla.apply(clasificar, axis=1)
+      170  
+      171      tabla["personas_pct"] = tabla["personas_pct"].round(2)
+● Update(.claude\skills\graficando-enaho\scripts\graficar.py)
+  ⎿  Added 9 lines, removed 1 line
+       87  
+       88  
+       89  def pct(valor):
+       90 -    return f"{valor:.1f} %"                                   
+       90 +    return f"{valor:.1f} %"  # Espacio duro: el % no se separa
+          + de su cifra.                                                 
+       91  
+       92  
+       93 +def rotular(ax, barras, etiquetas, **formato):                
+       94 +    """Valores con fondo blanco, para que la línea nacional no
+          + los cruce."""                                                
+       95 +    textos = ax.bar_label(barras, labels=etiquetas, padding=4,
+          + color=COLOR_TEXTO, **formato)                                
+       96 +    for texto in textos:                                      
+       97 +        texto.set_bbox({"facecolor": "white", "edgecolor": "no
+          +ne", "pad": 1})                                               
+       98 +        texto.set_zorder(5)                                   
+       99 +                                                              
+      100 +                                                              
+      101  def titulo_brecha(tasas, frases):
+      102      """Título que afirma una brecha solo si alcanza DIFERENCIA
+           _MINIMA."""
+      103      a, b = frases[tasas.index[0]], frases[tasas.index[1]]
+
+● Update(.claude\skills\graficando-enaho\scripts\graficar.py)
+  ⎿  Added 1 line, removed 4 lines
+      136      fig, ax = preparar_figura((7, 5.2), titulo, 60)
+      137      posiciones = list(range(len(tasas)))
+      138      barras = ax.bar(posiciones, tasas.values, width=0.5, color
+           =COLOR_BARRA)
+      139 -    ax.bar_label(                                             
+      140 -        barras, labels=[pct(v) for v in tasas.values], padding
+          -=4,                                                           
+      141 -        fontsize=12, fontweight="bold", color=COLOR_TEXTO,    
+      142 -    )                                                         
+      139 +    rotular(ax, barras, [pct(v) for v in tasas.values], fontsi
+          +ze=12, fontweight="bold")                                     
+      140      ax.set_xticks(posiciones, list(tasas.index), fontsize=12)
+      141      ax.set_ylim(0, 50)
+      142      ax.set_ylabel(UNIDAD, color=COLOR_SECUNDARIO)
+
+● Update(.claude\skills\graficando-enaho\scripts\graficar.py)
+  ⎿  Added 1 line, removed 4 lines
+      157          [NOMBRES[c] for c in ordenadas.index], ordenadas.value
+           s,
+      158          height=0.72, color=COLOR_BARRA,
+      159      )
+      160 -    ax.bar_label(                                             
+      161 -        barras, labels=[f"{v:.1f}" for v in ordenadas.values],
+          - padding=4,                                                   
+      162 -        fontsize=9, color=COLOR_TEXTO,                        
+      163 -    )                                                         
+      160 +    rotular(ax, barras, [f"{v:.1f}" for v in ordenadas.values]
+          +, fontsize=9)                                                 
+      161      ax.set_xlim(0, 50)
+      162      ax.set_ylim(-0.6, len(ordenadas) + 0.3)
+      163      ax.set_xlabel(UNIDAD, color=COLOR_SECUNDARIO)
+
+● Bash(uv run python .claude/skills/graficando-enaho/scripts/graficar.py >
+      /dev/null; echo "exit graficar=$?"; uv run python
+      .claude/skills/mapeando-enaho/scripts/mape…)
+  ⎿  Updated salidas\comparacion_mapa.csv (+1 -1)
+      10  09,HUANCAVELICA,33.4,33.61,0.21,33.4,0.0,explicada_por_metodo
+      11  10,HUANUCO,39.0,39.47,0.47,38.96,-0.04,explicada_por_metodo
+      12  11,ICA,6.0,5.91,-0.09,6.01,0.01,coincide
+      13 -12,JUNIN,18.5,18.61,0.11,18.5,-0.0,explicada_por_metodo        
+      13 +12,JUNIN,18.5,18.61,0.11,18.5,0.0,explicada_por_metodo         
+      14  13,LA LIBERTAD,30.2,30.07,-0.13,30.19,-0.01,explicada_por_metod
+          o
+      15  14,LAMBAYEQUE,14.0,14.05,0.05,14.04,0.04,coincide
+      16  15,LIMA,27.1,26.89,-0.21,27.07,-0.03,explicada_por_metodo
+  ⎿  … 4 more files changed
+  ⎿  (timeout 5m)
+
+● Las validaciones rechazan los casos alterados: código numérico, Callao ausente
+  y Callao fusionado con Lima. Reviso cómo quedaron las imágenes corregidas.
+
+  Read 4 files, ran 1 shell command (ctrl+o to expand)
+
+● Las dos skills están creadas y ejecutadas, y el mapa tiene los 25
+  departamentos con dato, con Lima y Callao separados. Dejé los tres gráficos y
+  el mapa abiertos en pestañas de VS Code. No hice ningún commit.
+
+  Gráficos y mapa
+
+  ┌─────────────────────────────────────────┬───────────────────────────────┐
+  │                 Archivo                 │        Qué se observa         │
+  ├─────────────────────────────────────────┼───────────────────────────────┤
+  │ pobreza_area.png                        │ La pobreza rural (39.4 %)     │
+  │ (figuras/pobreza_area.png)              │ superó a la urbana (24.7 %)   │
+  ├─────────────────────────────────────────┼───────────────────────────────┤
+  │ pobreza_sexo.png                        │ La pobreza de las mujeres     │
+  │ (figuras/pobreza_sexo.png)              │ (27.7 %) fue casi igual a la  │
+  │                                         │ de los hombres (27.4 %)       │
+  ├─────────────────────────────────────────┼───────────────────────────────┤
+  │ pobreza_departamento.png                │ Varió de 5.9 % en Ica a 45.0  │
+  │ (figuras/pobreza_departamento.png)      │ % en Cajamarca                │
+  ├─────────────────────────────────────────┼───────────────────────────────┤
+  │                                         │ Lima 26.9 % y Callao 33.8 %;  │
+  │ pobreza_departamento.png (mapa)         │ Callao se ve en un recuadro   │
+  │ (mapas/pobreza_departamento.png)        │ ampliado porque a escala      │
+  │                                         │ nacional casi no se distingue │
+  └─────────────────────────────────────────┴───────────────────────────────┘
+
+  Los títulos se calculan desde los datos. Todas las imágenes están a 200 dpi.
+
+  Comparación con la Sesión 16
+
+  Con una tolerancia de ±0.1 puntos, la misma de limpiando-enaho, el cálculo por
+  personas difiere de la referencia en 14 de los 25 departamentos. Por hogares,
+  todas esas diferencias desaparecen:
+
+  ┌─────────────────────┬────────────────────────┬──────────────────────────┐
+  │       Método        │ Diferencia máxima con  │  Departamentos a ±0.1    │
+  │                     │     la referencia      │      puntos o menos      │
+  ├─────────────────────┼────────────────────────┼──────────────────────────┤
+  │ Personas (facpob07) │ 0.52 puntos (Puno)     │ 11 de 25                 │
+  ├─────────────────────┼────────────────────────┼──────────────────────────┤
+  │ Hogares (factor07 × │ 0.05 puntos            │ 25 de 25                 │
+  │  mieperho)          │                        │                          │
+  └─────────────────────┴────────────────────────┴──────────────────────────┘
+
+  - Causa: las diferencias se explican por el método, igual que en la pobreza
+    rural. El pie del mapa de referencia de la Sesión 16 también indica que usó
+    factor07 × mieperho.
+  - Cifras: no ajusté ninguna; el mapa sigue ponderado con facpob07. La tabla
+    completa está en comparacion_mapa.csv (salidas/comparacion_mapa.csv).
+
+  Pruebas de las validaciones
+
+  ┌───────────────────────────────┬─────────────────────────────────────────┐
+  │        Caso de prueba         │                Resultado                │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ Falta personas_2024.parquet   │ Error; pide usar limpiando-enaho        │
+  │ (ambas skills)                │                                         │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ FIRST_IDDP numérico           │ Error; no genera mapa                   │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ GeoJSON sin Callao            │ Error; no genera mapa                   │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ Callao fusionado con Lima     │ Error; no genera mapa                   │
+  ├───────────────────────────────┼─────────────────────────────────────────┤
+  │ Falta el zip de la sumaria    │ Genera el mapa con advertencia y marca  │
+  │                               │ 14 departamentos como sin_verificar     │
+  └───────────────────────────────┴─────────────────────────────────────────┘
+
+  Antes de entregar
+
+  - Cifras distintas a la pauta: la Sesión 16 espera 39.3 % rural, 24.8 % urbano
+    e Ica 6.0 %. Tus figuras muestran 39.4 %, 24.7 % y 5.9 % porque usan
+    facpob07, como pediste. Si la revisión compara esos números, conviene citar
+    esta diferencia de método.
+  - Interpretación de hombres y mujeres: el título dice «casi igual» porque la
+    brecha es de 0.3 puntos. No calculé márgenes de error, así que eso no prueba
+    que no haya diferencia.
+  - GeoJSON fuera de git: datos/ está en .gitignore, así que el archivo no se
+    subirá. mapear.py lo descarga si falta, y también la referencia, que quedó
+    en referencias/ (referencias/pobreza_departamento_2024.csv) y sí se puede
+    versionar.
+  - Agregados al mapa y a los gráficos: el pie añade «Tasas ponderadas con
+    facpob07» a la fuente, y los gráficos incluyen una línea con la tasa
+    nacional (27.5 %).
+  - Nota pendiente: notas_proceso.md dice que las diferencias departamentales se
+    deben «probablemente» al método. Ahora ya está comprobado, así que puedes
+    actualizar esa línea; no la toqué.
+
+  Las skills están en graficando-enaho
+  (.claude/skills/graficando-enaho/SKILL.md) y mapeando-enaho
+  (.claude/skills/mapeando-enaho/SKILL.md).
