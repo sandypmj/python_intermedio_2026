@@ -161,6 +161,6 @@ Filas 1 y 2: cifras del BCRP. Fila 3: cifra de la ENAHO.
 
 | Afirmación | Valor del informe | Valor verificado | Fuente | Coincide | Diferencia |
 |---|---|---|---|---|---|
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
+| Máximo de la inflación a 12 meses de Lima en 2020-2024 | 8.81 % (PN01273PM, 2022-06) | 8.81 % (Jun22) | [BCRP, PN01273PM, 2022](https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN01273PM/html/2022-1/2022-12/) | Sí | 0 |
+| Máximo de la tasa de referencia del BCRP, alcanzado en 2023-01 | 7.75 % (PD04722MM, 2023-01) | 7.75 % (Ene23; se mantiene hasta Ago23) | [BCRP, PD04722MM, 2023](https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PD04722MM/html/2023-1/2023-12/) | Sí | 0 |
+| Pobreza monetaria nacional 2024 | 27.53 % (ENAHO 2024, facpob07) | 27.53 % (recálculo propio); 27.6 % (INEI) | Recálculo independiente con pandas sobre salidas/personas_2024.parquet: suma(pobre × facpob07) / suma(facpob07); cifra oficial del INEI | Sí | 0.07 puntos frente al INEI, por redondeo y método de ponderación (personas frente a hogares) |
