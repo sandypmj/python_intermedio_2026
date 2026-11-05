@@ -1,0 +1,304 @@
+
+> Por favor, vamos con la Parte 3 del trabajo, actúa como agente de
+  investigación.
+
+  Pregunta de investigación: ¿Cómo evolucionó la inflación de Lima y la tasa de
+  referencia del BCRP entre 2020 y 2024, y qué diferencias territoriales y
+  entre áreas urbana y rural presentaba la pobreza monetaria al cierre de ese
+  periodo (ENAHO 2024)?
+  Por favor, primero escribe un plan de análisis breve. Luego ejecútalo en esta
+  misma conversación:
+
+  1. BCRP con el MCP bcrp: usa buscar_series para confirmar los códigos,
+  resumen para la inflación a 12 meses de Lima de 2020-01 a 2024-12, y
+  comparar_series para inflación frente a tasa de referencia en ese periodo. No
+  hagas cuentas a mano.
+  2. Gráfico del BCRP: crea informes/graficar_bcrp.py, que importe la función
+  serie de mcp/server.py (no llames a la API por otro camino), y guarde
+  figuras/bcrp_inflacion_tasa_2020_2024.png con las dos series, título,
+  unidades y fuente con los códigos de serie.
+  3. ENAHO con las skills: usa limpiando-enaho para confirmar la validación,
+  graficando-enaho para el gráfico por área y mapeando-enaho para el mapa.
+  4. Escribe informes/informe_final.md con estas 7 secciones: pregunta de
+  investigación; fuentes y metodología; resultados (al menos 3 hallazgos, cada
+  cifra con su fuente entre paréntesis); visualizaciones (inserta el gráfico
+  del BCRP, el de ENAHO y el mapa); interpretación; limitaciones (periodos
+  distintos, IPC de Lima frente a pobreza nacional, diferencia de método
+  personas/hogares, error muestral, sin causalidad); y reproducibilidad
+  (comandos, scripts, archivos y códigos de serie).
+  5. Al final del informe agrega una sección «Verificación manual» con una
+  tabla vacía para 3 cifras (2 del BCRP y 1 de ENAHO): afirmación, valor del
+  informe, valor verificado, fuente, coincide, diferencia. Yo la llenaré a
+  mano.
+
+  Si una herramienta falla o no encuentra datos, dilo y reintenta; nunca
+  inventes cifras. Al terminar, lista qué herramientas MCP y qué skills usaste.
+
+● Plan de análisis
+
+  1. BCRP: confirmar los códigos con buscar_series, obtener el resumen de la
+     inflación de Lima (2020-01 a 2024-12) con resumen y compararla con la tasa
+     de referencia con comparar_series. Las cifras saldrán de las herramientas,
+     sin cálculos a mano.
+  2. Gráfico BCRP: crear informes/graficar_bcrp.py, que importa serie de
+     mcp/server.py, y generar la figura con ambas series.
+  3. ENAHO: ejecutar las skills limpiando-enaho (validación), graficando-enaho
+     (gráfico por área) y mapeando-enaho (mapa por departamento).
+  4. Informe: escribir informes/informe_final.md con las 7 secciones y citar la
+     fuente de cada cifra, usando solo valores devueltos por las herramientas.
+  5. Verificación manual: añadir la tabla vacía para 3 cifras y listar las
+     herramientas MCP y skills usadas.
+
+  Empiezo por cargar las herramientas del BCRP, revisar el repositorio y activar
+  las skills.
+
+● Skill(limpiando-enaho)
+  ⎿  Successfully loaded skill
+
+● Skill(graficando-enaho)
+  ⎿  Successfully loaded skill
+
+● Skill(mapeando-enaho)
+  ⎿  Successfully loaded skill
+
+  Called bcrp 3 times, ran 2 shell commands (ctrl+o to expand)
+
+● Los códigos quedaron confirmados: PN01273PM (IPC Lima) y PD04722MM (tasa de
+  referencia). La limpieza superó las validaciones esenciales, pero un control
+  falló: la pobreza rural por personas da 39.44 % frente al 39.3 % de
+  referencia, y sigo con la consulta al BCRP y las otras dos skills.
+
+  Called bcrp 3 times, ran 1 shell command (ctrl+o to expand)
+
+● Las tres consultas al BCRP y las dos skills salieron sin errores. Ahora pido
+  las series mensuales para fechar los cambios de tasa, reviso las cifras de
+  ENAHO y cargo la guía de visualización antes del gráfico.
+
+  Read 4 files, called bcrp 2 times (ctrl+o to expand)
+
+● Skill(dataviz)
+  ⎿  Successfully loaded skill
+
+  Ran 1 shell command (ctrl+o to expand)
+
+● Write(informes\graficar_bcrp.py)
+  ⎿  Wrote 113 lines to informes\graficar_bcrp.py
+       1 """Grafica la inflación de Lima y la tasa de referencia del BCRP
+         , 2020-2024.
+       2
+       3 Los datos salen solo de la función serie de mcp/server.py; aquí
+         no se llama a la API por otro camino.
+       4
+       5     uv run python informes/graficar_bcrp.py
+       6 """
+       7 import sys
+       8 from pathlib import Path
+     … +105 lines (ctrl+o to expand)
+
+● Bash(cd "C:/Users/CLIENTE/AppData/Local/Temp/claude/bundled-skills/2.1.318/a57
+      c70ce27ea9cfbbca6179764324357/dataviz" && node scripts/validate_palette.js
+      "#2a78d6,#eb…)
+  ⎿  1 file changed (binary, mode only or too large to show)
+  ⎿  (timeout 5m)
+
+  Read 1 file (ctrl+o to expand)
+
+● El gráfico se generó, pero la etiqueta «Máximo: 7.75 %» pisa la línea de
+  inflación. La muevo debajo del punto.
+
+● Bash(cd "C:/Users/CLIENTE/Documents/GitHub/python_intermedio_2026/tarea_4" &&
+      sed -i 's/textcoords="offset points", ha="center", va="bottom",
+      fontsize=9, color=COLOR…)
+  ⎿  Updated informes\graficar_bcrp.py (+3 -2)
+      48      fecha, valor = s.idxmax(), s.max()
+      49      ax.plot(fecha, valor, "o", color=color, markersize=7, marke
+          redgecolor="white", markeredgewidth=1.5, zorder=4)
+      50      ax.annotate(f"Máximo: {valor:.2f} %\n({mes(fecha)})", (fech
+          a, valor), xytext=desplazamiento,
+      51 -                textcoords="offset points", ha="center", va="bo
+         -ttom", fontsize=9, color=COLOR_TEXTO)                          
+      51 +                textcoords="offset points", ha="center", va="bo
+         +ttom" if desplazamiento[1] > 0 else "top",                     
+      52 +                fontsize=9, color=COLOR_TEXTO)                 
+      53  
+      54  
+      55  def main():
+     ...
+      66              label=f"Tasa de referencia de la política monetaria
+          , % ({TASA})")
+      67  
+      68      marcar_maximo(ax, inflacion, COLOR_INFLACION, (-22, 8))
+      68 -    marcar_maximo(ax, tasa, COLOR_TASA, (42, 8))               
+      69 +    marcar_maximo(ax, tasa, COLOR_TASA, (0, -28))              
+      70  
+      71      # Último valor de cada serie, a la derecha de la línea
+      72      for s, color in ((inflacion, COLOR_INFLACION), (tasa, COLOR
+          _TASA)):
+  ⎿  … 1 more file changed
+  ⎿  (timeout 5m)
+
+  Read 1 file (ctrl+o to expand)
+
+● La etiqueta roza un escalón, así que la ajusto un poco. Algunas cifras del
+  informe no salen directamente de las herramientas, así que las calcularé con
+  un script corto que se pueda volver a ejecutar.
+
+● Write(informes\calculos_informe.py)
+  ⎿  Wrote 70 lines to informes\calculos_informe.py
+       1 """Calcula las cifras derivadas de informe_final.md, para que ni
+         nguna se haga a mano.
+       2
+       3     uv run python informes/calculos_informe.py
+       4
+       5 BCRP: usa la función serie de mcp/server.py. ENAHO: usa salidas/
+         personas_2024.parquet y salidas/indicadores.csv.
+       6 """
+       7 import sys
+       8 from pathlib import Path
+     … +62 lines (ctrl+o to expand)
+
+● Bash(cd "C:/Users/CLIENTE/Documents/GitHub/python_intermedio_2026/tarea_4" &&
+      sed -i 's/marcar_maximo(ax, tasa, COLOR_TASA, (0, -28))/marcar_maximo(ax,
+      tasa, COLOR_T…)
+  ⎿  Updated informes\graficar_bcrp.py (+1 -1)
+      66              label=f"Tasa de referencia de la política monetaria
+          , % ({TASA})")
+      67  
+      68      marcar_maximo(ax, inflacion, COLOR_INFLACION, (-22, 8))
+      69 -    marcar_maximo(ax, tasa, COLOR_TASA, (0, -28))              
+      69 +    marcar_maximo(ax, tasa, COLOR_TASA, (3, -34))              
+      70  
+      71      # Último valor de cada serie, a la derecha de la línea
+      72      for s, color in ((inflacion, COLOR_INFLACION), (tasa, COLOR
+          _TASA)):
+  ⎿  … 1 more file changed
+  ⎿  (timeout 5m)
+
+● Write(informes\informe_final.md)
+  ⎿  Wrote 166 lines to informes\informe_final.md
+      1 # Inflación, tasa de referencia y pobreza monetaria en el Perú, 2
+        020-2024
+      2
+      3 ## 1. Pregunta de investigación
+      4
+      5 ¿Cómo evolucionó la inflación de Lima y la tasa de referencia del
+         BCRP entre 2020 y 2024, y qué diferencias territoriales y entre
+        áreas urbana y rural presentaba la pobreza monetaria al cierre de
+         ese periodo (ENAHO 2024)?
+      6
+     … +160 lines (ctrl+o to expand)
+
+  Read 1 file, ran 1 shell command (ctrl+o to expand)
+
+● Corrijo una frase de la interpretación que generalizaba de más: el recorte de
+  la tasa en 2020 no siguió a un giro de la inflación.
+
+● Update(informes\informe_final.md)
+  ⎿  Added 1 line, removed 1 line
+      73  
+      74  ## 5. Interpretación
+      75  
+      76 -**Inflación y tasa.** Entre 2020 y 2024 hubo un ciclo completo:
+         - inflación baja con tasa mínima, luego un alza de ambas series 
+         -y, por último, una caída de ambas. Cada giro de la tasa llegó m
+         -ás tarde que el de la inflación: alcanzó su máximo 7 meses desp
+         -ués y empezó a bajar en 2023-09. Ese orden es compatible con un
+         -a política monetaria que reacciona a la inflación, pero los dat
+         -os no lo demuestran. La correlación de 0.57 indica solo que las
+         - series se movieron en la misma dirección de forma moderada.   
+      76 +**Inflación y tasa.** Entre 2020 y 2024 hubo un ciclo completo:
+         + inflación baja con tasa mínima, luego un alza de ambas series 
+         +y, por último, una caída de ambas. Durante esa alza y esa caída
+         +, la tasa fue detrás de la inflación: alcanzó su máximo 7 meses
+         + después y recién empezó a bajar en 2023-09. El recorte de 2020
+         + no siguió ese patrón, porque la inflación se mantuvo casi esta
+         +ble mientras la tasa bajaba. Ese orden es compatible con una po
+         +lítica monetaria que reacciona a la inflación, pero los datos n
+         +o lo demuestran. La correlación de 0.57 indica solo que las ser
+         +ies se movieron en la misma dirección de forma moderada.       
+      77  
+      78  **Cierre del periodo.** A fines de 2024, la inflación estaba ce
+          rca de su nivel de inicios de 2020, mientras que la tasa seguía
+           2.75 puntos por encima de su valor inicial. La diferencia de 3
+          .03 puntos entre ambas compara datos del mismo mes y no equival
+          e a una tasa de interés real, que suele calcularse con la infla
+          ción esperada.
+      79  
+
+● Escrito para: quien evalúe la Parte 3 de la tarea, con un lector que conoce el
+  curso, las skills y el servidor MCP.
+
+  La Parte 3 está completa: el informe tiene las 7 secciones y la tabla
+  «Verificación manual», vacía para que la llenes (filas 1 y 2 BCRP, fila 3
+  ENAHO). No hice commit. Revisé las figuras visualmente, pero no abrí la vista
+  previa del Markdown.
+
+  Resultados principales
+
+  - Inflación de Lima: pasó de 1.89 % (2020-01) a 1.97 % (2024-12), con un
+    máximo de 8.81 % en 2022-06 (PN01273PM).
+  - Tasa de referencia: pasó de 2.25 % a 5.00 %, con un mínimo de 0.25 % y un
+    máximo de 7.75 %, alcanzado en 2023-01, 7 meses después del pico de
+    inflación (PD04722MM).
+  - Relación entre ambas: la correlación fue de 0.57 en 60 meses, lo que no
+    prueba causalidad.
+  - Pobreza por área: 39.44 % en el área rural y 24.74 % en la urbana. Aun así,
+    el 72.8 % de las personas pobres vive en el área urbana.
+  - Pobreza por departamento: va de 44.99 % en Cajamarca a 5.91 % en Ica. Lima
+    está bajo el promedio nacional, pero reúne al 32.1 % de las personas pobres.
+
+  Avisos
+
+  - Falló un control de ENAHO: la pobreza rural por personas da 39.44 %, frente
+    a 39.3 % ± 0.1 de referencia. Por hogares da 39.30 %, así que se explica por
+    el método; no ajusté nada y queda documentado en el informe. Todas las
+    validaciones esenciales aprobaron.
+  - Comparación del mapa: 11 departamentos coinciden con la referencia y 14
+    difieren por el método (hasta 0.52 puntos en Puno). Ninguno queda sin
+    explicar.
+  - Archivo adicional: creé informes/calculos_informe.py, que no pediste, para
+    calcular con código las fechas, brechas y número de personas pobres, en
+    lugar de hacerlo a mano.
+  - Consulta adicional: también usé serie y resumen de la tasa, para fechar sus
+    cambios.
+  - Cifras sin intervalos de confianza: el informe no calcula márgenes de error,
+    así que las diferencias pequeñas entre departamentos no deben leerse como
+    un ranking firme.
+
+  Fallos de herramientas
+
+  Las herramientas MCP y las skills de ENAHO respondieron sin errores, así que
+  no hubo que reintentar ni falta ningún dato. Lo único que no se pudo ejecutar
+  fue el validador de colores de dataviz, porque node no está instalado. Usé los
+  dos primeros colores de la paleta de esa skill, pero esa combinación no quedó
+  validada; no afecta a ninguna cifra, y las líneas también se distinguen por
+  su forma y su leyenda.
+
+  Herramientas usadas
+
+  MCP (bcrp):
+  - buscar_series
+  - resumen
+  - comparar_series
+  - serie
+
+  Skills:
+  - limpiando-enaho
+  - graficando-enaho
+  - mapeando-enaho
+  - dataviz
+
+  Archivos
+
+  En informes/:
+  - informe_final.md (informes/informe_final.md)
+  - graficar_bcrp.py (informes/graficar_bcrp.py)
+  - calculos_informe.py (informes/calculos_informe.py)
+
+  En figuras/:
+  - bcrp_inflacion_tasa_2020_2024.png
+    (figuras/bcrp_inflacion_tasa_2020_2024.png)
+  - pobreza_area.png (figuras/pobreza_area.png)
+
+  En mapas/:
+  - pobreza_departamento.png (mapas/pobreza_departamento.png)
