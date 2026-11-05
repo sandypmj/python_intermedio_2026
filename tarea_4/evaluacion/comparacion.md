@@ -127,26 +127,74 @@ Resumen: mejoró: 6, igual: 4.
 
 ## Mi análisis
 
-### ¿Qué cambió entre el modo «sin» y el modo «con»?
+### Aciertos
 
-_(Pendiente)_
+El modo «con» acertó 7 de 10 preguntas; el modo «sin», 1 de 10 más 1 parcial. Toda la diferencia está
+en las cifras del BCRP. Con el MCP, las 4 preguntas BCRP y la parte BCRP de las 2 mixtas fueron correctas,
+y cada respuesta citó el código de serie y el periodo. Sin herramientas, ninguna lo fue. En las preguntas
+ENAHO, ambos modos acertaron 1 de 4.
 
-### Preguntas BCRP frente a preguntas ENAHO
+Sin herramientas, el modelo no inventó ninguna cifra: respondió `null` en 8 casos y dijo que no tenía
+acceso a datos. Lo único que acertó de memoria fue la pobreza nacional 2024 (27.6 %), una cifra publicada
+por el INEI en 2025.
 
-_(Pendiente)_
+### Errores y preguntas sin respuesta
 
-### Preguntas mixtas: cifras e interpretación
+No hubo respuestas incorrectas en ningún modo. El modo «con» no respondió 3 preguntas ENAHO (rural,
+Cajamarca y pobreza extrema), y en ninguna de las 10 usó la herramienta `Skill`. Según los registros,
+buscó la cifra en archivos en lugar de calcularla. Además, las reglas de permisos negaban comandos
+completos que mezclaban rutas permitidas y bloqueadas. Por eso no llegó a `datos/`, o concluyó que
+estaba bloqueada. Las salidas ya generadas por las skills (`salidas/indicadores.csv`: rural 39.44 %,
+Cajamarca 44.99 %) habrían dado dos respuestas correctas. La pobreza extrema no la calcula ninguna skill.
 
-_(Pendiente)_
+### Tiempos
 
-### ¿Inventó cifras el modelo sin herramientas o reconoció que no sabía?
+| Tipo | sin (s) | con (s) |
+|---|---|---|
+| BCRP | 5.4 | 12.9 |
+| ENAHO | 6.1 | 19.5 |
+| Mixta | 6.6 | 36.5 |
+| Todas | 5.9 | 20.3 |
 
-_(Pendiente)_
+El modo «con» tardó unas 3.4 veces más. La pregunta más lenta, `mixta_ipc_lima` (45.3 s), es la única
+en la que el modelo calculó una cifra con los microdatos de la ENAHO.
 
-### Accesos indebidos y validez de los resultados
+### Preguntas que mejoraron
 
-_(Pendiente)_
+Mejoraron 6, quedaron igual 4 y no empeoró ninguna. Las 6 mejoras tienen en común una cifra del BCRP
+obtenida con el MCP. Las 4 que quedaron igual son todas ENAHO.
 
-### Costo en tiempo y conclusiones
+### Validez de las filas con acceso indebido
 
-_(Pendiente)_
+| Pregunta | Qué vio | Origen de la cifra ENAHO | Validez |
+|---|---|---|---|
+| enaho_pobreza_nacional | `reference.md`, constantes `REF_*` de `limpiar.py` y `validacion.txt` (con Grep) | Copiada del valor de referencia (27.6) | No demuestra uso de skills; además, el modo «sin» ya la sabía |
+| mixta_pbi_pobreza | `reference.md` (con Grep); sus intentos de leer `evaluacion/registros/` fueron negados | Copiada de `reference.md` (27.6) | Solo la cifra BCRP es válida |
+| mixta_ipc_lima | `reference.md` completo y el código de `limpiar.py` | Calculada con código propio sobre los microdatos (28.03); el proyecto no tiene esa cifra como referencia | Cifra válida, pero no usó la skill: reimplementó su cálculo |
+
+Si se descuentan las cifras ENAHO copiadas de referencias, el modo «con» queda en 5 aciertos limpios
+(4 BCRP y `mixta_ipc_lima`) y 1 parcial (`mixta_pbi_pobreza`). Aun así supera al modo «sin»: 1 acierto
+y 1 parcial, ambos con la cifra de pobreza recordada de memoria.
+
+Límites de las barreras:
+
+- El modelo conocía los nombres de los archivos de `evaluacion/registros/`, probablemente por el estado
+  de git que Claude Code incluye al arrancar. Intentó leerlos, pero todas las lecturas fueron negadas.
+- Las búsquedas salieron de `tarea_4` hacia otras tareas del curso, donde no había barreras.
+- La detección automática marcó un falso positivo (una lectura fallida de una ruta inexistente) y no
+  detectó que un Grep mostró una cifra de `reference.md`. Por eso cada fila marcada se revisó a mano.
+
+### Conclusión
+
+El MCP del BCRP produce una mejora clara y verificable: el modelo pasa de no saber a citar la serie
+oficial correcta, y sin inventar cifras en ningún modo. Las skills de la ENAHO no aportaron en este
+experimento: el modelo nunca las usó. Sus aciertos ENAHO salieron de copiar valores de referencia o de
+un cálculo propio. El resultado no muestra que las skills sean inútiles. Muestra que, con Haiku y
+preguntas redactadas como «según el INEI», el modelo no las activa por sí solo. Para una próxima corrida:
+
+- ejecutar el modo «con» desde una copia sin historial git y con los registros fuera del proyecto;
+- separar los permisos por ruta para que una regla no bloquee comandos válidos;
+- añadir la pobreza extrema a `limpiando-enaho`;
+- repetir con un modelo mayor.
+
+Los resultados se reportan tal como salieron; las filas con acceso indebido se revisaron a mano y se describen en la tabla de validez.
